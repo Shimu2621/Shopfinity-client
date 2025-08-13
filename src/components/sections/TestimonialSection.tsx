@@ -21,13 +21,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { ShinyButton } from "@/components/magicui/shiny-button";
+
 const testimonials = [
   {
     id: 1,
     name: "Angel Whites",
     role: "Marketing Manager",
     company: "TechCorp Inc.",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3235.jpg",
     rating: 5,
     text: "This platform has completely transformed how we approach our marketing campaigns. The results have been outstanding and the support team is incredibly responsive.",
     bgColor: "from-blue-50 to-cyan-50",
@@ -37,7 +41,8 @@ const testimonials = [
     name: "Michael Chen",
     role: "Product Designer",
     company: "Design Studio",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/professional-male-entrepreneur-hd-8k-wallpaper-stock-photographic-image_1033957-28697.jpg",
     rating: 5,
     text: "The user experience is phenomenal. Every feature is thoughtfully designed and the interface is incredibly intuitive. Highly recommend to any creative professional.",
     bgColor: "from-purple-50 to-pink-50",
@@ -47,7 +52,8 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "CEO",
     company: "StartupXYZ",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3233.jpg",
     rating: 5,
     text: "As a startup founder, I need tools that scale with my business. This solution has been perfect - powerful, flexible, and cost-effective.",
     bgColor: "from-green-50 to-emerald-50",
@@ -57,7 +63,8 @@ const testimonials = [
     name: "David Rodriguez",
     role: "Software Engineer",
     company: "DevTech Solutions",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/professional-male-entrepreneur-hd-8k-wallpaper-stock-photographic-image_1033957-28697.jpg",
     rating: 5,
     text: "The technical implementation is flawless. Great API documentation, excellent performance, and the development experience is top-notch.",
     bgColor: "from-orange-50 to-yellow-50",
@@ -67,7 +74,8 @@ const testimonials = [
     name: "Emily Watson",
     role: "Operations Director",
     company: "Global Enterprises",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3234.jpg",
     rating: 5,
     text: "We've seen a 40% increase in efficiency since implementing this solution. The automation features have saved us countless hours every week.",
     bgColor: "from-indigo-50 to-blue-50",
@@ -77,7 +85,8 @@ const testimonials = [
     name: "James Thompson",
     role: "Creative Director",
     company: "Brand Agency",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://img.freepik.com/premium-photo/portrait-smart-handsome-business-man_1004054-30862.jpg?w=360",
     rating: 5,
     text: "The creative possibilities are endless. This tool has become an essential part of our workflow and has elevated the quality of our deliverables.",
     bgColor: "from-rose-50 to-pink-50",
@@ -88,12 +97,12 @@ export function TestimonialSection() {
   const swiperRef = useRef<SwiperType>(null);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+    <section className="py-20 px-4 bg-secondary relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl"></div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
+      <div className="container mx-auto max-w-[90rem] relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,46 +110,105 @@ export function TestimonialSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-block bg-blue-100 text-blue-600 px-6 py-3 rounded-full text-sm font-medium mb-6">
+          <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-6 bg-badge text-rose-800 overflow-hidden">
             ✨ Testimonials
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            What Our <span className="text-blue-600 italic">Amazing</span>
+          </ShinyButton>
+
+          <h2 className="text-4xl lg:text-5xl font-bold text-forground mb-6">
+            What Our{" "}
+            <AuroraText className="text-blue-600 italic">Amazing</AuroraText>
             <br />
             Customers Say About Us
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className=" text-muted-foreground max-w-3xl mx-auto">
             Don&rsquo;t just take our word for it. Here&rsquo;s what real
             customers have to say about their experience with our platform.
           </p>
+
+          {/* new */}
+          <div className="flex items-center justify-center gap-4">
+            {/* Overlapping Profile Photos */}
+            <div className="flex -space-x-3">
+              <Image
+                src="https://img.freepik.com/premium-photo/profile-attractive-lady-toothy-smiling-arms-crossed_274222-27447.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="Customer 1"
+                width={60}
+                height={60}
+                className="rounded-full border-3 border-white object-cover"
+              />
+              <Image
+                src="https://img.freepik.com/free-photo/dreamy-european-lady-with-wavy-hairstyle-posing-white-wall-indoor-photo-joyful-girl-black-blouse_197531-11755.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="Customer 2"
+                width={48}
+                height={48}
+                className="rounded-full border-3 border-white object-cover"
+              />
+              <Image
+                src="https://img.freepik.com/premium-photo/portrait-handsome-young-business-man-looking-camera-while-standing-office_519356-2238.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="Customer 3"
+                width={48}
+                height={48}
+                className="rounded-full border-3 border-white object-cover"
+              />
+
+              <Image
+                src="https://img.freepik.com/premium-photo/portrait-bearded-man-black-background_544249-1322.jpg"
+                alt="Customer 3"
+                width={48}
+                height={48}
+                className="rounded-full border-3 border-white object-cover"
+              />
+            </div>
+
+            {/* Rating and Reviews */}
+            <div className="flex items-center gap-3">
+              {/* Stars */}
+              <div className="flex gap-1">
+                {[...Array(4)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                  />
+                ))}
+                <Star className="w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Rating Text */}
+              <span className="text-white font-semibold text-lg">
+                4.5/5 (100+ Reviews)
+              </span>
+            </div>
+          </div>
+          {/* new */}
         </motion.div>
 
         <div className="relative">
           {/* Custom Navigation Buttons */}
-          <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-10">
+          <div className="absolute top-1/2 -translate-y-1/2 -left-6 z-10">
             <Button
               variant="outline"
               size="icon"
-              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-300 shadow-lg transition-all duration-300"
+              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-rose-200 hover:bg-rose-50 hover:border-rose-300 shadow-lg transition-all duration-300"
               onClick={() => swiperRef.current?.slidePrev()}
             >
-              <ChevronLeft className="w-5 h-5 text-blue-600" />
+              <ChevronLeft className="w-5 h-5 text-rose-600" />
             </Button>
           </div>
 
-          <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-10">
+          <div className="absolute top-1/2 -translate-y-1/2 -right-6 z-10">
             <Button
               variant="outline"
               size="icon"
-              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-300 shadow-lg transition-all duration-300"
+              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-rose-200 hover:bg-rose-50 hover:border-rose-300 shadow-lg transition-all duration-300"
               onClick={() => swiperRef.current?.slideNext()}
             >
-              <ChevronRight className="w-5 h-5 text-blue-600" />
+              <ChevronRight className="w-5 h-5 text-rose-600" />
             </Button>
           </div>
 
           <Swiper
             modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
+            loop={true}
             spaceBetween={30}
             slidesPerView={1}
             centeredSlides={true}
@@ -196,18 +264,18 @@ export function TestimonialSection() {
                   className="h-full"
                 >
                   <Card
-                    className={`h-full bg-gradient-to-br ${testimonial.bgColor} border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group`}
+                    className={`h-full bg-gradient-to-br ${testimonial.bgColor} dark:from-gray-900 dark:to-black border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group`}
                   >
-                    <CardContent className="p-8 h-full flex flex-col">
+                    <CardContent className="relative p-8 h-full flex flex-col">
                       {/* Quote Icon */}
                       <div className="mb-6">
-                        <div className="w-12 h-12 bg-white/80 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <Quote className="w-6 h-6 text-blue-600" />
+                        <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <Quote className="w-6 h-6 text-rose-600" />
                         </div>
                       </div>
 
                       {/* Testimonial Text */}
-                      <blockquote className="text-gray-700 text-lg leading-relaxed mb-8 flex-grow italic">
+                      <blockquote className="text-muted-forground text-lg leading-relaxed mb-8 flex-grow italic">
                         &rdquo;{testimonial.text}&rdquo;
                       </blockquote>
 
@@ -239,13 +307,13 @@ export function TestimonialSection() {
                           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                         </div>
                         <div>
-                          <h4 className="font-bold text-gray-900 text-lg">
+                          <h4 className="font-bold text-forground text-lg">
                             {testimonial.name}
                           </h4>
-                          <p className="text-gray-600 text-sm">
+                          <p className="text-muted-forground text-sm">
                             {testimonial.role}
                           </p>
-                          <p className="text-blue-600 text-sm font-medium">
+                          <p className="text-blue-700 text-sm font-medium">
                             {testimonial.company}
                           </p>
                         </div>
@@ -278,12 +346,12 @@ export function TestimonialSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/80 transition-all duration-300"
+              className="rounded-lg shadow-lg p-6 border border-border  hover:bg-white/10 transition-all duration-300"
             >
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+              <div className="text-4xl font-bold text-blue-700 mb-2">
                 {stat.number}
               </div>
-              <div className="text-gray-600 font-medium">{stat.label}</div>
+              <div className="text-forground font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

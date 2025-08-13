@@ -25,6 +25,7 @@ import Image from "next/image";
 import airpodImg from "@/app/assets/airpod.png";
 import iphoneImg from "@/app/assets/iphone.png";
 import macbookImg from "@/app/assets/macbook.png";
+// import { RainbowButton } from "@/components/magicui/rainbow-button";
 
 const categories = [
   {
@@ -137,7 +138,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-1"
         >
-          <Card className="p-4 h-[640px] flex flex-col">
+          <Card className="p-4 h-[675px] flex flex-col">
             <Button className="font-semibold text-white text-lg flex-shrink-0 gap-3  bg-rose-700 hover:shadow-sm">
               <LayoutGrid className="w-5 h-5" />
               All Categories
@@ -261,6 +262,10 @@ export default function HeroSection() {
                               >
                                 Shop Now
                               </Button>
+                              {/* <RainbowButton variant="outline">
+                                Get Unlimited Access
+                              </RainbowButton> */}
+
                               <Button
                                 size="lg"
                                 variant="outline"
@@ -296,12 +301,14 @@ export default function HeroSection() {
           {/* Special Offers */}
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Fast Delivery Card */}
-            <Card className=" p-6 rounded-lg shadow-lg ">
+            <Card className=" p-4 rounded-lg shadow-lg text-center ">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Gift className="w-5 h-5" />
-                  <h4 className="text-lg font-semibold">Special Offer!</h4>
+                <div className="relative flex items-center justify-center animate-pulse mx-auto mb-2 p-3 bg-rose-100 rounded-full w-16 h-16  transition-all duration-300 hover:rotate-6">
+                  <div className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-rose-300">
+                    <Gift className="w-6 h-6 text-rose-600" />
+                  </div>
                 </div>
+                <h4 className="text-lg font-semibold">Special Offer!</h4>
                 <p className="text-sm mb-3">
                   Limited time only! Get 20% off + free shipping on your first
                   order.
@@ -309,7 +316,7 @@ export default function HeroSection() {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="bg-white text-black hover:bg-white/90"
+                  className="bg-rose-600 text-white hover:bg-rose-600"
                 >
                   Claim Now
                 </Button>
@@ -317,12 +324,15 @@ export default function HeroSection() {
             </Card>
 
             {/* Exclusive Membership Card */}
-            <Card className="bg-gradient-to-r from-purple-500 to-indigo-700 p-6 rounded-lg shadow-lg text-white">
+            <Card className=" p-4 rounded-lg shadow-lg text-center">
               <div className="space-y-2">
-                <h4 className="text-xl font-bold">
-                  {" "}
-                  <Users /> Exclusive Member Perks
-                </h4>
+                <div className="relative flex items-center justify-center animate-pulse mx-auto mb-2 p-3 bg-rose-100 rounded-full w-16 h-16  transition-all duration-300 hover:rotate-6">
+                  <div className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-rose-300">
+                    <Users className="w-6 h-6 text-rose-600" />
+                  </div>
+                </div>
+
+                <h4 className="text-xl font-bold"> Exclusive Member Perks</h4>
                 <p className="text-sm">
                   Join our loyalty program and get early access to deals and new
                   arrivals.
@@ -330,7 +340,7 @@ export default function HeroSection() {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="bg-white text-black hover:bg-white/90"
+                  className="bg-rose-600 text-white hover:bg-rose-500"
                 >
                   Join Now
                 </Button>
