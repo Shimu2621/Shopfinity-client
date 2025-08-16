@@ -2,7 +2,6 @@
 
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -15,18 +14,13 @@ import {
   CreditCard,
   RotateCcw,
   Award,
-  Globe,
   Clock,
-  Users,
-  Package,
   Star,
-  Zap,
   Heart,
   Gift,
-  MapPin,
-  Smartphone,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ShinyButton } from "../magicui/shiny-button";
 
 const services = [
   {
@@ -34,50 +28,44 @@ const services = [
     title: "Free Shipping",
     description: "Free shipping on orders over $50",
     badge: "Popular",
-    iconBg: "bg-blue-500",
+    iconBg: "bg-blue-600",
   },
   {
     icon: Shield,
     title: "Secure Payment",
     description: "100% secure payment processing",
-    badge: null,
-    iconBg: "bg-purple-500",
+    badge: "Trusted",
+    iconBg: "bg-purple-600",
   },
   {
     icon: Headphones,
     title: "24/7 Support",
     description: "Round-the-clock customer service",
-    badge: null,
+    badge: "Premium",
     iconBg: "bg-cyan-500",
   },
   {
     icon: CreditCard,
     title: "Easy Payments",
     description: "Multiple payment options available",
-    badge: null,
-    iconBg: "bg-pink-500",
+    badge: "Exclusive",
+    iconBg: "bg-pink-600",
   },
   {
     icon: RotateCcw,
     title: "Easy Returns",
     description: "30-day hassle-free returns",
-    badge: null,
-    iconBg: "bg-indigo-500",
+    badge: "Trusted",
+    iconBg: "bg-indigo-600",
   },
   {
     icon: Award,
     title: "Quality Guarantee",
     description: "Premium quality products only",
     badge: "Trusted",
-    iconBg: "bg-emerald-500",
+    iconBg: "bg-teal-600",
   },
-  {
-    icon: Globe,
-    title: "Global Delivery",
-    description: "Worldwide shipping to 150+ countries",
-    badge: null,
-    iconBg: "bg-orange-500",
-  },
+
   {
     icon: Clock,
     title: "Fast Processing",
@@ -85,39 +73,20 @@ const services = [
     badge: "New",
     iconBg: "bg-red-500",
   },
-  {
-    icon: Users,
-    title: "Community",
-    description: "Join our community of satisfied customers",
-    badge: null,
-    iconBg: "bg-teal-500",
-  },
-  {
-    icon: Package,
-    title: "Gift Wrapping",
-    description: "Beautiful gift wrapping available",
-    badge: null,
-    iconBg: "bg-violet-500",
-  },
+
   {
     icon: Star,
     title: "Premium Quality",
     description: "Hand-picked products from trusted brands",
     badge: "Premium",
-    iconBg: "bg-yellow-500",
+    iconBg: "bg-sky-500",
   },
-  {
-    icon: Zap,
-    title: "Lightning Fast",
-    description: "Express delivery in major cities",
-    badge: null,
-    iconBg: "bg-lime-500",
-  },
+
   {
     icon: Heart,
     title: "Wishlist",
     description: "Save your favorite items for later",
-    badge: null,
+    badge: "New",
     iconBg: "bg-rose-500",
   },
   {
@@ -126,20 +95,6 @@ const services = [
     description: "Earn points with every purchase",
     badge: "Exclusive",
     iconBg: "bg-amber-500",
-  },
-  {
-    icon: MapPin,
-    title: "Store Locator",
-    description: "Find our physical stores near you",
-    badge: null,
-    iconBg: "bg-slate-500",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile App",
-    description: "Shop on-the-go with our mobile app",
-    badge: "Download",
-    iconBg: "bg-sky-500",
   },
 ];
 
@@ -167,15 +122,15 @@ export function BasicServicesSection() {
   return (
     <>
       <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-8px);
-          }
-        }
+        // @keyframes float {
+        //   0%,
+        //   100% {
+        //     transform: translateY(0px);
+        //   }
+        //   50% {
+        //     transform: translateY(-8px);
+        //   }
+        // }
 
         // @keyframes wave {
         //   0%,
@@ -255,6 +210,9 @@ export function BasicServicesSection() {
                 : "opacity-0 translate-y-8"
             }`}
           >
+            <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
+              ✨ OUR SERVICES
+            </ShinyButton>
             <h2 className="text-3xl font-bold tracking-tight mb-4">
               What can{" "}
               <span className="text-blue-500 animate-pulse">EcomStore</span> do
@@ -266,18 +224,9 @@ export function BasicServicesSection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {services.map((service, index) => {
               const IconComponent = service.icon;
-              const getAnimationClass = (index: number) => {
-                const animations = [
-                  "float-animation wave-animation",
-                  //   "spin-animation",
-                  //   "pulse-scale-animation",
-                  "wiggle-animation",
-                ];
-                return animations[index % 4];
-              };
 
               return (
                 <Card
@@ -291,15 +240,13 @@ export function BasicServicesSection() {
                     transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
                   }}
                 >
-                  <CardHeader className="pb-4 text-center">
-                    <div className="flex flex-col items-center mb-4">
+                  <CardHeader className="text-center">
+                    <div className="flex flex-col items-center ">
                       <div
-                        className={`p-3 ${service.iconBg} rounded-2xl w-fit mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
+                        className={`p-4 ${service.iconBg} rounded-lg w-fit mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
                       >
                         <IconComponent
-                          className={`h-5 w-5 text-white ${getAnimationClass(
-                            index
-                          )}`}
+                          className="h-6 w-6 text-white font-extrabold wiggle-animation"
                           style={{
                             animationDelay: `${index * 100}ms`,
                           }}
@@ -308,7 +255,7 @@ export function BasicServicesSection() {
                       {service.badge && (
                         <Badge
                           variant="secondary"
-                          className="text-xs mb-2 animate-pulse"
+                          className="text-xs animate-pulse"
                         >
                           {service.badge}
                         </Badge>
@@ -317,14 +264,17 @@ export function BasicServicesSection() {
                     <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                       {service.title}
                     </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center">
-                    <CardDescription className="text-sm leading-relaxed text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+                    <CardDescription className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
                       {service.description}
                     </CardDescription>
-                  </CardContent>
+                  </CardHeader>
+                  {/* <CardContent className="text-center">
+                    <CardDescription className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+                      {service.description}
+                    </CardDescription>
+                  </CardContent> */}
 
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10"></div>
+                  {/* <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10"></div> */}
                 </Card>
               );
             })}
