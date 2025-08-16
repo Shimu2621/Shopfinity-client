@@ -92,7 +92,7 @@ export default function FeaturedCategory() {
                   <CardTitle className="text-md font-semibold">
                     {category.name}
                   </CardTitle>
-                  <p className="text-xs text-gray-500 line-clamp-1 truncate max-w-[150px]">
+                  <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[150px]">
                     {category.description}
                   </p>
                 </CardContent>

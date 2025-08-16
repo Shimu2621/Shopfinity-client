@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ShinyButton } from "../magicui/shiny-button";
+import { AuroraText } from "../magicui/aurora-text";
 
 const services = [
   {
@@ -201,7 +202,7 @@ export function BasicServicesSection() {
         }
       `}</style>
 
-      <section ref={sectionRef} className="py-16 px-4 bg-white">
+      <section ref={sectionRef} className="py-16 px-4 bg-background">
         <div className="max-w-7xl mx-auto">
           <div
             className={`text-center mb-12 transition-all duration-1000 ${
@@ -210,15 +211,17 @@ export function BasicServicesSection() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
+            <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden dark:font-bold">
               ✨ OUR SERVICES
             </ShinyButton>
-            <h2 className="text-3xl font-bold tracking-tight mb-4">
+            <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-4">
               What can{" "}
-              <span className="text-blue-500 animate-pulse">EcomStore</span> do
-              for you?
+              <AuroraText className="text-blue-800 italic">
+                ShopFinity
+              </AuroraText>{" "}
+              <br /> do for you?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-center mx-auto text-muted-foreground max-w-2xl mb-8">
               We provide exceptional services to ensure the best shopping
               experience for our customers
             </p>
@@ -231,7 +234,7 @@ export function BasicServicesSection() {
               return (
                 <Card
                   key={index}
-                  className={`relative group hover:shadow-xl hover:-translate-y-2 transition-all duration-500 border-0 shadow-sm bg-white cursor-pointer ${
+                  className={`relative group hover:shadow-xl hover:-translate-y-2 transition-all duration-500 border-0  shadow-sm bg-background dark:border dark:border-gray-400 cursor-pointer ${
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-12"
@@ -255,16 +258,16 @@ export function BasicServicesSection() {
                       {service.badge && (
                         <Badge
                           variant="secondary"
-                          className="text-xs animate-pulse"
+                          className="text-xs bg-foreground text-secondary animate-pulse"
                         >
                           {service.badge}
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                    <CardTitle className="text-lg font-bold group-hover:text-blue-600 transition-colors duration-300">
                       {service.title}
                     </CardTitle>
-                    <CardDescription className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+                    <CardDescription className="text-sm text-muted-foreground group-hover:text-gray-800 transition-colors duration-300">
                       {service.description}
                     </CardDescription>
                   </CardHeader>
