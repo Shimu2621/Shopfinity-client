@@ -261,6 +261,7 @@ export function BasicServicesSection() {
                           className="text-xs bg-foreground text-secondary animate-pulse"
                         >
                           {service.badge}
+                          {}
                         </Badge>
                       )}
                     </div>
