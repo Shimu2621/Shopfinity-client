@@ -23,6 +23,7 @@ import "swiper/css/effect-coverflow";
 
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { ShinyButton } from "@/components/magicui/shiny-button";
+import { AvatarCircles } from "@/components/magicui/avatar-circles";
 
 const testimonials = [
   {
@@ -93,6 +94,39 @@ const testimonials = [
   },
 ];
 
+const avatars = [
+  {
+    imageUrl:
+      "https://img.freepik.com/premium-photo/portrait-smart-handsome-business-man_1004054-30862.jpg?w=360",
+    profileUrl: "https://github.com/dillionverma",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3234.jpg",
+    profileUrl: "https://github.com/tomonarifeehan",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/premium-photo/professional-male-entrepreneur-hd-8k-wallpaper-stock-photographic-image_1033957-28697.jpg",
+    profileUrl: "https://github.com/BankkRoll",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3235.jpg",
+    profileUrl: "https://github.com/safethecode",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/free-photo/dreamy-european-lady-with-wavy-hairstyle-posing-white-wall-indoor-photo-joyful-girl-black-blouse_197531-11755.jpg?semt=ais_hybrid&w=740&q=80",
+    profileUrl: "https://github.com/sanjay-mali",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/premium-photo/profile-attractive-lady-toothy-smiling-arms-crossed_274222-27447.jpg?semt=ais_hybrid&w=740&q=80",
+    profileUrl: "https://github.com/itsarghyadas",
+  },
+];
+
 export function TestimonialSection() {
   const swiperRef = useRef<SwiperType>(null);
 
@@ -129,35 +163,7 @@ export function TestimonialSection() {
           <div className="flex items-center justify-center gap-4">
             {/* Overlapping Profile Photos */}
             <div className="flex -space-x-3">
-              <Image
-                src="https://img.freepik.com/premium-photo/profile-attractive-lady-toothy-smiling-arms-crossed_274222-27447.jpg?semt=ais_hybrid&w=740&q=80"
-                alt="Customer 1"
-                width={60}
-                height={60}
-                className="rounded-full border-3 border-white object-cover"
-              />
-              <Image
-                src="https://img.freepik.com/free-photo/dreamy-european-lady-with-wavy-hairstyle-posing-white-wall-indoor-photo-joyful-girl-black-blouse_197531-11755.jpg?semt=ais_hybrid&w=740&q=80"
-                alt="Customer 2"
-                width={48}
-                height={48}
-                className="rounded-full border-3 border-white object-cover"
-              />
-              <Image
-                src="https://img.freepik.com/premium-photo/portrait-handsome-young-business-man-looking-camera-while-standing-office_519356-2238.jpg?semt=ais_hybrid&w=740&q=80"
-                alt="Customer 3"
-                width={48}
-                height={48}
-                className="rounded-full border-3 border-white object-cover"
-              />
-
-              <Image
-                src="https://img.freepik.com/premium-photo/portrait-bearded-man-black-background_544249-1322.jpg"
-                alt="Customer 3"
-                width={48}
-                height={48}
-                className="rounded-full border-3 border-white object-cover"
-              />
+              <AvatarCircles numPeople={99} avatarUrls={avatars} />
             </div>
 
             {/* Rating and Reviews */}
@@ -174,7 +180,7 @@ export function TestimonialSection() {
               </div>
 
               {/* Rating Text */}
-              <span className="text-white font-semibold text-lg">
+              <span className="text-muted-foreground">
                 4.5/5 (100+ Reviews)
               </span>
             </div>
