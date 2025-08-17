@@ -203,7 +203,7 @@ export function BasicServicesSection() {
       `}</style>
 
       <section ref={sectionRef} className="py-16 px-4 bg-background">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div
             className={`text-center mb-12 transition-all duration-1000 ${
               isVisible
