@@ -38,6 +38,7 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-badge: var(--badge);
+  --color-white: var(--white);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -124,6 +125,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --badge: #FFE4E6;
+  --white: oklch(0.985 0 0);
   --color-1: oklch(66.2% 0.225 25.9);
   --color-2: oklch(60.4% 0.26 302);
   --color-3: oklch(69.6% 0.165 251);
@@ -164,6 +166,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
    --badge: #FFA1AD;
+   --white: oklch(0.985 0 0);
    --color-1: oklch(66.2% 0.225 25.9);
    --color-2: oklch(60.4% 0.26 302);
    --color-3: oklch(69.6% 0.165 251);

@@ -1,7 +1,9 @@
 import { BasicServicesSection } from "@/components/sections/BasicServicesSection";
+import { ContactUsSection } from "@/components/sections/ContactUsSection";
 import FeaturedCategory from "@/components/sections/FeaturedCategory";
 import HeroSection from "@/components/sections/HeroSection";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
+import { SpecialOfferSection } from "@/components/sections/SpecialOfferSection";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 
 export default function HomePage() {
@@ -10,8 +12,10 @@ export default function HomePage() {
       <HeroSection />
       <FeaturedCategory />
       <BasicServicesSection />
+      <SpecialOfferSection />
       <NewsletterSection />
       <TestimonialSection />
+      <ContactUsSection />
     </div>
   );
 }

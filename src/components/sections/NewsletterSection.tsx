@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
+import { ShinyButton } from "../magicui/shiny-button";
+import { AuroraText } from "../magicui/aurora-text";
 
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
@@ -31,7 +33,7 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden">
+    <section className="relative  flex items-center justify-center px-4 py-10 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
         {/* Animated gradient overlay with color shifting */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 animate-gradient-shift" />
@@ -47,6 +49,10 @@ export function NewsletterSection() {
         <div className="absolute top-3/4 left-1/4 w-2 h-2 bg-blue-300/80 rounded-full animate-particle-2" />
         <div className="absolute top-1/2 right-1/4 w-4 h-4 bg-purple-300/70 rounded-full animate-particle-3" />
         <div className="absolute bottom-1/3 right-1/2 w-2 h-2 bg-pink-300/60 rounded-full animate-particle-4" />
+        <div className="absolute top-1/6 left-1/3 w-3 h-3 bg-cyan-300/70 rounded-full animate-particle-5" />
+        <div className="absolute bottom-1/4 right-1/3 w-5 h-5 bg-yellow-300/50 rounded-full animate-particle-6" />
+        <div className="absolute top-2/3 left-1/6 w-2 h-2 bg-green-300/80 rounded-full animate-particle-7" />
+        <div className="absolute top-1/3 right-1/6 w-4 h-4 bg-orange-300/60 rounded-full animate-particle-8" />
 
         {/* Moving light beams */}
         <div className="absolute inset-0 opacity-40">
@@ -62,18 +68,23 @@ export function NewsletterSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-2xl mx-auto text-center space-y-8">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-2xl">
-          Stay Updated with{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 animate-text-glow">
-            Exclusive Deals
-          </span>
-        </h1>
+      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-8">
+        <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-rose-200 text-black overflow-hidden dark:bg-rose-300 dark:font-bold">
+          ✨ OUR NEWSLETTER
+        </ShinyButton>
+        <h2 className="text-4xl lg:text-5xl text-center font-bold text-white mb-4">
+          Exclusive Deals & Fresh{" "}
+          <AuroraText className="text-blue-800 italic mb-0">
+            Arrivals,
+          </AuroraText>
+          <br />
+          just for you.
+        </h2>
 
-        <p className="text-lg md:text-xl text-blue-100 leading-relaxed max-w-xl mx-auto animate-fade-in-up">
-          Be the first to know about flash sales, new arrivals, and member-only
-          discounts. Join thousands of smart shoppers saving big on premium
-          products.
+        <p className="text-blue-100 leading-relaxed max-w-2xl mx-auto animate-fade-in-up">
+          Sign up today to receive exclusive promotions! Be part of our growing
+          community! Subscribe and enjoy early access to sales, trending
+          products, and special discounts only for subscribers.
         </p>
 
         <form
@@ -91,14 +102,14 @@ export function NewsletterSection() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 animate-button-glow"
+            className="h-12 px-8 bg-rose-700 hover:bg-rose-600 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 animate-button-glow"
           >
             {isLoading ? "Subscribing..." : "Get Deals"}
           </Button>
         </form>
 
         {/* Social proof */}
-        <div className="flex items-center justify-center gap-4 pt-4">
+        <div className="flex items-center justify-center gap-4 ">
           <div className="flex -space-x-2">
             <Avatar className="w-10 h-10 border-2 border-white/20">
               <AvatarFallback className="bg-purple-500 text-white font-semibold">
@@ -122,7 +133,7 @@ export function NewsletterSection() {
         </div>
 
         {/* Social media icons */}
-        <div className="flex items-center justify-center gap-6 pt-8">
+        <div className="flex items-center justify-center gap-6">
           <a
             href="#"
             className="text-blue-200 hover:text-white transition-colors"
@@ -324,6 +335,77 @@ export function NewsletterSection() {
           }
         }
 
+        @keyframes particle-5 {
+          0% {
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+            opacity: 0;
+          }
+          30% {
+            opacity: 1;
+          }
+          70% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(60px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes particle-6 {
+          0% {
+            transform: translateY(0px) translateX(0px) scale(1);
+            opacity: 0;
+          }
+          20% {
+            opacity: 1;
+          }
+          50% {
+            transform: translateY(-50vh) translateX(-25px) scale(1.5);
+          }
+          80% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(-50px) scale(0.5);
+            opacity: 0;
+          }
+        }
+
+        @keyframes particle-7 {
+          0% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0;
+          }
+          15% {
+            opacity: 1;
+          }
+          85% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(80px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes particle-8 {
+          0% {
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+            opacity: 0;
+          }
+          35% {
+            opacity: 1;
+          }
+          65% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(-60px) rotate(-360deg);
+            opacity: 0;
+          }
+        }
+
         @keyframes light-sweep {
           0% {
             transform: translateX(-100%) skewX(-12deg);
@@ -438,6 +520,18 @@ export function NewsletterSection() {
         }
         .animate-particle-4 {
           animation: particle-4 9s linear infinite 6s;
+        }
+        .animate-particle-5 {
+          animation: particle-5 11s linear infinite 1s;
+        }
+        .animate-particle-6 {
+          animation: particle-6 13s linear infinite 3s;
+        }
+        .animate-particle-7 {
+          animation: particle-7 7s linear infinite 5s;
+        }
+        .animate-particle-8 {
+          animation: particle-8 14s linear infinite 7s;
         }
         .animate-light-sweep {
           animation: light-sweep 6s ease-in-out infinite;

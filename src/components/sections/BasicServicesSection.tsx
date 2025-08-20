@@ -88,14 +88,14 @@ const services = [
     title: "Wishlist",
     description: "Save your favorite items for later",
     badge: "New",
-    iconBg: "bg-rose-500",
+    iconBg: "bg-amber-500",
   },
   {
     icon: Gift,
     title: "Loyalty Rewards",
     description: "Earn points with every purchase",
     badge: "Exclusive",
-    iconBg: "bg-amber-500",
+    iconBg: "bg-rose-500",
   },
 ];
 
@@ -215,11 +215,11 @@ export function BasicServicesSection() {
               ✨ OUR SERVICES
             </ShinyButton>
             <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-4">
-              What can{" "}
+              What Can{" "}
               <AuroraText className="text-blue-800 italic">
                 ShopFinity
               </AuroraText>{" "}
-              <br /> do for you?
+              <br /> Do For You?
             </h2>
             <p className="text-center mx-auto text-muted-foreground max-w-2xl mb-8">
               We provide exceptional services to ensure the best shopping
