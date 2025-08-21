@@ -53,14 +53,14 @@ export function SpecialOfferSection() {
   }, []);
 
   return (
-    <section className="relative py-15 px-4 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <section className="relative py-15 px-4 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:bg-gradient-to-br dark:from-slate-600 dark:via-blue-500 dark:to-rose-900">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         {/* Large gradient orbs */}
         <motion.div
-          className="absolute top-10 left-10 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-3xl"
+          className="absolute top-10 left-10 w-96 h-96 bg-gradient-to-br from-gray-100/20 to-blue-400/20 rounded-full blur-lg"
           animate={{
-            scale: [1, 1.2, 1],
+            scale: [1, 1.5, 2],
             opacity: [0.3, 0.5, 0.3],
           }}
           transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
@@ -105,7 +105,7 @@ export function SpecialOfferSection() {
                     </AuroraText>
                   </h2>
                   <motion.div
-                    className="absolute -top-14 -right-20"
+                    className="absolute -top-14 -right-24"
                     animate={{
                       y: [0, -10, 0],
                       rotate: [0, 5, -5, 0],
@@ -131,7 +131,7 @@ export function SpecialOfferSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-2xl font-semibold text-gray-700"
+                className="text-2xl text-muted-foreground font-semibold"
               >
                 Create Your Free Account Today!
               </motion.h2>
@@ -142,7 +142,7 @@ export function SpecialOfferSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-lg text-gray-600 max-w-lg leading-relaxed"
+              className="text-lg max-w-lg leading-relaxed text-muted-foreground mb-4"
             >
               Join thousands of satisfied customers and unlock exclusive
               benefits. Limited time offer - don&apos;t miss out on this

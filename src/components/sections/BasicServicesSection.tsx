@@ -123,48 +123,6 @@ export function BasicServicesSection() {
   return (
     <>
       <style jsx>{`
-        // @keyframes float {
-        //   0%,
-        //   100% {
-        //     transform: translateY(0px);
-        //   }
-        //   50% {
-        //     transform: translateY(-8px);
-        //   }
-        // }
-
-        // @keyframes wave {
-        //   0%,
-        //   100% {
-        //     transform: rotate(0deg);
-        //   }
-        //   25% {
-        //     transform: rotate(5deg);
-        //   }
-        //   75% {
-        //     transform: rotate(-5deg);
-        //   }
-        // }
-
-        // @keyframes spin-slow {
-        //   0% {
-        //     transform: rotate(0deg);
-        //   }
-        //   100% {
-        //     transform: rotate(360deg);
-        //   }
-        // }
-
-        // @keyframes pulse-scale {
-        //   0%,
-        //   100% {
-        //     transform: scale(1);
-        //   }
-        //   50% {
-        //     transform: scale(1.1);
-        //   }
-        // }
-
         @keyframes wiggle {
           0%,
           100% {
@@ -180,22 +138,6 @@ export function BasicServicesSection() {
             transform: rotate(2deg) scale(1.05);
           }
         }
-
-        // .float-animation {
-        //   animation: float 1.5s ease-in-out infinite;
-        // }
-
-        // .wave-animation {
-        //   animation: wave 1s ease-in-out infinite;
-        // }
-
-        // .spin-animation {
-        //   animation: spin-slow 3s linear infinite;
-        // }
-
-        // .pulse-scale-animation {
-        //   animation: pulse-scale 2s ease-in-out infinite;
-        // }
 
         .wiggle-animation {
           animation: wiggle 2.5s ease-in-out infinite;
