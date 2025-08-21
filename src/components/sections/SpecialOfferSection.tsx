@@ -14,6 +14,10 @@ import {
   Star,
   ArrowRight,
 } from "lucide-react";
+import { ShinyButton } from "../magicui/shiny-button";
+import { AuroraText } from "../magicui/aurora-text";
+import Offer from "../../app/assets/offer.png";
+import Image from "next/image";
 
 export function SpecialOfferSection() {
   const [timeLeft, setTimeLeft] = useState({
@@ -69,31 +73,9 @@ export function SpecialOfferSection() {
           }}
           transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY }}
         />
-
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-400/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
       </div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
+      <div className="container mx-auto  relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <motion.div
@@ -103,15 +85,9 @@ export function SpecialOfferSection() {
             className="space-y-8"
           >
             {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 text-orange-600 px-4 py-2 rounded-full text-sm font-medium border border-orange-200 animate-pulse"
-            >
-              <Sparkles className="w-4 h-4" />
-              Limited Time Offer
-            </motion.div>
+            <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
+              ✨ LIMITED TIME OFFER
+            </ShinyButton>
 
             {/* Main Heading */}
             <div className="space-y-4">
@@ -121,22 +97,34 @@ export function SpecialOfferSection() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="flex items-center gap-4"
               >
-                <motion.div
-                  animate={{
-                    rotate: [0, 15, -15, 0],
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-                  className="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg"
-                >
-                  <Megaphone className="w-8 h-8 text-white" />
-                </motion.div>
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Get a{" "}
-                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                    30% Discount!
-                  </span>
-                </h1>
+                <div className="relative">
+                  <h2 className=" text-4xl lg:text-5xl text-center font-bold text-forground ">
+                    Featured{" "}
+                    <AuroraText className="text-blue-800 italic">
+                      30% Discount!{" "}
+                    </AuroraText>
+                  </h2>
+                  <motion.div
+                    className="absolute -top-14 -right-20"
+                    animate={{
+                      y: [0, -10, 0],
+                      rotate: [0, 5, -5, 0],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Image
+                      src={Offer}
+                      alt="Special-offer"
+                      width={110}
+                      height={110}
+                    />
+                  </motion.div>
+                </div>
               </motion.div>
 
               <motion.h2
@@ -191,9 +179,19 @@ export function SpecialOfferSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <Button className="bg-rose-700 hover:bg-rose-600 text-white px-8 py-4  font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group ">
                 Join Now - Save 30%
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                  }}
+                  className="inline-block ml-2"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
               </Button>
             </motion.div>
           </motion.div>
@@ -243,46 +241,11 @@ export function SpecialOfferSection() {
                     className="drop-shadow-lg"
                   />
                 </svg>
-
-                {/* Circling Numbers */}
-                {[27, 28, 25, 24, 23, 26, 29, 22].map((num, index) => {
-                  const angle = index * 45 * (Math.PI / 180); // 45 degrees apart
-                  const radius = 85;
-                  const x = 100 + radius * Math.cos(angle - Math.PI / 2);
-                  const y = 100 + radius * Math.sin(angle - Math.PI / 2);
-
-                  return (
-                    <motion.div
-                      key={`${num}-${index}`}
-                      className="absolute w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm font-bold text-blue-600 shadow-lg border-2 border-blue-200"
-                      style={{
-                        left: `${(x / 200) * 100}%`,
-                        top: `${(y / 200) * 100}%`,
-                        transform: "translate(-50%, -50%)",
-                      }}
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        boxShadow: [
-                          "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                          "0 10px 15px -3px rgba(59, 130, 246, 0.3)",
-                          "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                        ],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: index * 0.25,
-                      }}
-                    >
-                      {num}
-                    </motion.div>
-                  );
-                })}
               </motion.div>
 
               {/* Secondary Rotating Circle */}
               <motion.div
-                className="absolute inset-0 w-[400px] h-[400px] -top-8 -left-8"
+                className="absolute inset-0 w-[400px] h-[400px] -top-4 -left-2"
                 animate={{ rotate: -360 }}
                 transition={{
                   duration: 25,
@@ -347,14 +310,14 @@ export function SpecialOfferSection() {
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileHover={{ scale: 1.05 }}
                       className="relative group"
                     >
                       <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
                         <div
                           className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
                         />
-                        <CardContent className="p-6 text-center relative z-10">
+                        <CardContent className="p-4 text-center relative ">
                           <motion.div
                             key={item.value}
                             initial={{ scale: 1.2, opacity: 0 }}
@@ -378,7 +341,7 @@ export function SpecialOfferSection() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 1 }}
-                  className="text-center p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl border border-red-200"
+                  className="text-center p-4 bg-gradient-to-r from-red-100 to-orange-100 rounded-xl border border-red-200 animate-pulse"
                 >
                   <p className="text-red-600 font-semibold">
                     ⚡ Only 247 spots left at this price!

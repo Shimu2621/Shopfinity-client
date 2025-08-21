@@ -13,9 +13,9 @@ export default function HomePage() {
       <FeaturedCategory />
       <BasicServicesSection />
       <SpecialOfferSection />
-      <NewsletterSection />
       <TestimonialSection />
       <ContactUsSection />
+      <NewsletterSection />
     </div>
   );
 }
