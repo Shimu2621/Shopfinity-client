@@ -186,12 +186,12 @@ export function BasicServicesSection() {
                   }}
                 >
                   <CardHeader className="text-center">
-                    <div className="flex flex-col items-center ">
+                    <div className="flex flex-col items-center">
                       <div
                         className={`p-4 ${service.iconBg} rounded-lg w-fit mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
                       >
                         <IconComponent
-                          className="h-6 w-6 text-white font-extrabold wiggle-animation"
+                          className="h-8 w-8 text-white font-extrabold wiggle-animation"
                           style={{
                             animationDelay: `${index * 100}ms`,
                           }}
