@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { getCategories } from "@/services/category";
 import { Category } from "@/types/category/category";
 import { ShinyButton } from "../magicui/shiny-button";
 import Image from "next/image";
 import { AuroraText } from "../magicui/aurora-text";
 // import { ShoppingBag } from "lucide-react";
 
-const baseURL = "https://single-vendor-backend-zz7x.onrender.com"; // e.g., http://localhost:5000
+// const baseURL = "https://single-vendor-backend-zz7x.onrender.com"; // e.g., http://localhost:5000
 
 // Define your color palette
 const colors = [
@@ -29,21 +30,35 @@ export default function FeaturedCategory() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const res = await fetch(`${baseURL}/api/v1/categories`);
+  //       const data = await res.json();
+  //       console.log(data);
+  //       setCategories(data.data || []);
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchCategories();
+  // }, []);
+
   useEffect(() => {
-    const fetchCategories = async () => {
+    async function fetchData() {
       try {
-        const res = await fetch(`${baseURL}/api/v1/categories`);
-        const data = await res.json();
-        console.log(data);
-        setCategories(data.data || []);
+        const cats = await getCategories();
+        setCategories(cats);
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchCategories();
+    }
+    fetchData();
   }, []);
 
   if (loading) {
