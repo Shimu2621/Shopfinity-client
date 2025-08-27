@@ -333,7 +333,7 @@ export function TestimonialSection() {
         </div>
 
         {/* Statistics */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -360,7 +360,7 @@ export function TestimonialSection() {
               <div className="text-forground font-medium">{stat.label}</div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
 
       <style jsx global>{`
