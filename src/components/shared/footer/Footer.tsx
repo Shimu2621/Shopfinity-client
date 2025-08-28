@@ -109,11 +109,11 @@ export default function Footer() {
           className="absolute left-1/4 w-20 h-20 rounded-full"
           style={{ backgroundColor: "#EF3938" }}
         />
-        <motion.div
+        {/* <motion.div
           animate={verticalMovingAnimation3}
           className="absolute right-1/4 w-12 h-12 rounded-full"
           style={{ backgroundColor: "#EF3938" }}
-        />
+        /> */}
         <motion.div
           animate={{
             y: [350, -50, 350],
@@ -142,11 +142,11 @@ export default function Footer() {
         />
 
         {/* Blinking stationary circles */}
-        <motion.div
+        {/* <motion.div
           animate={blinkingAnimation}
           className="absolute top-20 left-1/3 w-10 h-10 rounded-full"
           style={{ backgroundColor: "#EF3938" }}
-        />
+        /> */}
         <motion.div
           animate={{
             opacity: [0.2, 1, 0.2],
