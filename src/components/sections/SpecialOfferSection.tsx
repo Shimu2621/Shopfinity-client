@@ -86,7 +86,7 @@ export function SpecialOfferSection() {
           >
             {/* Badge */}
             <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
-              ✨ LIMITED TIME OFFER
+              🔥 LIMITED TIME OFFER
             </ShinyButton>
 
             {/* Main Heading */}
@@ -179,7 +179,7 @@ export function SpecialOfferSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              <Button className="bg-rose-700 hover:bg-rose-600 text-white px-8 py-4  font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group ">
+              <Button className="bg-rose-700 hover:bg-rose-600 text-white px-8 py-4  font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group ">
                 Join Now - Save 30%
                 <motion.div
                   animate={{ x: [0, 5, 0] }}

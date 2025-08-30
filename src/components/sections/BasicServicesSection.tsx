@@ -154,7 +154,7 @@ export function BasicServicesSection() {
             }`}
           >
             <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden dark:font-bold">
-              ✨ OUR SERVICES
+              🚀 OUR SERVICES
             </ShinyButton>
             <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-4">
               What Can{" "}
@@ -164,8 +164,9 @@ export function BasicServicesSection() {
               <br /> Do For You?
             </h2>
             <p className="text-center mx-auto text-muted-foreground max-w-2xl mb-8">
-              We provide exceptional services to ensure the best shopping
-              experience for our customers
+              We provide reliable services to ensure a seamless shopping
+              experience — from secure payments and fast delivery to 24/7
+              customer support and hassle-free returns.
             </p>
           </div>
 

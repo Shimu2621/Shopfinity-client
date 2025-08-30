@@ -3,7 +3,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,6 +61,9 @@ export function ContactUsSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [positions, setPositions] = useState<{ left: string; top: string }[]>(
+    []
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -84,13 +87,22 @@ export function ContactUsSection() {
     setTimeout(() => setIsSubmitted(false), 3000);
   };
 
+  useEffect(() => {
+    // Run only in client
+    const generated = [...Array(8)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }));
+    setPositions(generated);
+  }, []);
+
   return (
     <section className="relative py-20 px-4 overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-rose-400 via-blue-800 to-purple-900"></div>
 
       {/* Floating circles */}
-      {[...Array(8)].map((_, i) => (
+      {positions.map((pos, i) => (
         <motion.div
           key={i}
           className="absolute w-4 h-4 bg-white/20 rounded-full"
@@ -227,7 +239,7 @@ export function ContactUsSection() {
         >
           <div className="text-center gap-2">
             <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-rose-200 text-black overflow-hidden dark:bg-rose-300 dark:font-bold">
-              ✨ CONTACT US
+              🌐 CONTACT US
             </ShinyButton>
           </div>
           <h2 className="text-4xl lg:text-5xl text-center font-bold text-white mb-4">

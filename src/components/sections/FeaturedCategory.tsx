@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { getCategories } from "@/services/category";
-import { Category } from "@/types/category/category";
+import { Category } from "@/types";
 import { ShinyButton } from "../magicui/shiny-button";
 import Image from "next/image";
 import { AuroraText } from "../magicui/aurora-text";
 // import { ShoppingBag } from "lucide-react";
 
-// const baseURL = "https://single-vendor-backend-zz7x.onrender.com"; // e.g., http://localhost:5000
+// const baseURL = "https://single-vendor-backend-zz7x.onrender.com";
 
-// Define your color palette
+// Define color palette
 const colors = [
   "bg-pink-100 text-pink-600",
   "bg-blue-100 text-blue-600",
@@ -29,23 +29,6 @@ const colors = [
 export default function FeaturedCategory() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const res = await fetch(`${baseURL}/api/v1/categories`);
-  //       const data = await res.json();
-  //       console.log(data);
-  //       setCategories(data.data || []);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCategories();
-  // }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -69,7 +52,7 @@ export default function FeaturedCategory() {
     <section className="py-12 bg-secondary">
       <div className="container  mx-auto px-4 flex flex-col items-center">
         <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
-          ✨ Shop By Category
+          🛍️ Shop By Category
         </ShinyButton>
         <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-6">
           Featured{" "}

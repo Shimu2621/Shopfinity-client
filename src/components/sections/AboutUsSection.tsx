@@ -142,7 +142,7 @@ export function AboutUsSection() {
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden dark:font-bold">
-            ✨ WHO WE ARE
+            🌍 WHO WE ARE
           </ShinyButton>
           <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-4">
             Your Trusted{" "}

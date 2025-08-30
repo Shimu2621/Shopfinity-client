@@ -70,7 +70,7 @@ export function NewsletterSection() {
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto text-center space-y-8">
         <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-rose-200 text-black overflow-hidden dark:bg-rose-300 dark:font-bold">
-          ✨ OUR NEWSLETTER
+          🎁 OUR NEWSLETTER
         </ShinyButton>
         <h2 className="text-4xl lg:text-5xl text-center font-bold text-white mb-4">
           Exclusive Deals & Fresh{" "}
