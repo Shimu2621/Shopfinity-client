@@ -90,7 +90,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden min-h-[600px]"
+      className="relative overflow-hidden min-h-[500px]"
       style={{ backgroundColor: "#212C65", position: "relative", zIndex: 1 }}
     >
       {/* Animated Background Circles */}

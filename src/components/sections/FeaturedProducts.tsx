@@ -111,14 +111,15 @@ export default function FeaturedProducts() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <Card className="overflow-hidden rounded-lg border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="relative aspect-square overflow-hidden bg-muted">
+              <Card className="overflow-hidden  border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="relative aspect-square overflow-hidden rounded-lg">
                   {product.images && product.images.length > 0 ? (
                     <Image
                       src={product.images[0] || "/placeholder.svg"}
                       alt={product.name}
                       fill
-                      className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                      sizes="100vw"
+                      className="object-cover inset-0 w-full h-64 transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20 flex items-center justify-center">
