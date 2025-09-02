@@ -1,3 +1,4 @@
+import ProductDetailsPage from "@/components/pages/ProductDetailsPage";
 import { AboutUsSection } from "@/components/sections/AboutUsSection";
 import { BasicServicesSection } from "@/components/sections/BasicServicesSection";
 import { ContactUsSection } from "@/components/sections/ContactUsSection";
@@ -19,6 +20,7 @@ export default function HomePage() {
       <AboutUsSection />
       <NewsletterSection />
       <TestimonialSection />
+      <ProductDetailsPage />
       <ContactUsSection />
     </div>
   );
