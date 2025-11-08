@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { SignInForm } from "@/components/sign-in-form"
-import { SignInIllustration } from "@/components/sign-in-illustration"
+import { motion } from "framer-motion";
+import { SignInForm } from "@/components/sign-in-form";
+import { SignInIllustration } from "@/components/sign-in-illustration";
 
 export default function SignInPage() {
   return (
@@ -34,7 +34,12 @@ export default function SignInPage() {
             className="flex items-center space-x-4"
           >
             <button className="p-2 rounded-lg hover:bg-muted transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -44,7 +49,12 @@ export default function SignInPage() {
               </svg>
             </button>
             <button className="p-2 rounded-lg hover:bg-muted transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -75,7 +85,8 @@ export default function SignInPage() {
                 Welcome <span className="text-primary">Back!</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-md">
-                Sign in to your account and continue your amazing shopping journey with us.
+                Sign in to your account and continue your amazing shopping
+                journey with us.
               </p>
 
               <motion.div
@@ -105,5 +116,5 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
