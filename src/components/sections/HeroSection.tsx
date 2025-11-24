@@ -8,11 +8,15 @@ import {
   Laptop,
   Headphones,
   Gift,
+  TabletSmartphone,
   Users,
   Watch,
   Camera,
+  Tv,
+  Gamepad2,
   LayoutGrid,
-  Gamepad2Icon as GameController2,
+  Handbag,
+  BookOpenText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -29,25 +33,35 @@ import macbookImg from "@/app/assets/macbook.png";
 
 const categories = [
   {
-    name: "Electronics",
-    icon: Smartphone,
+    name: "Laptop",
+    icon: Laptop,
     count: 1234,
     iconColor: "text-blue-500",
   },
-  { name: "Laptops", icon: Laptop, count: 856, iconColor: "text-purple-500" },
-  { name: "Audio", icon: Headphones, count: 432, iconColor: "text-green-500" },
-  { name: "Wearables", icon: Watch, count: 298, iconColor: "text-orange-500" },
-  { name: "Cameras", icon: Camera, count: 167, iconColor: "text-red-500" },
   {
-    name: "Gaming",
-    icon: GameController2,
+    name: "Headphone",
+    icon: Headphones,
+    count: 856,
+    iconColor: "text-purple-500",
+  },
+  { name: "TV", icon: Tv, count: 432, iconColor: "text-green-500" },
+  { name: "Cameras", icon: Camera, count: 298, iconColor: "text-orange-500" },
+  { name: "Mobile", icon: Smartphone, count: 167, iconColor: "text-red-500" },
+  {
+    name: "Action Camera",
+    icon: Camera,
     count: 543,
     iconColor: "text-indigo-500",
   },
-  { name: "Tablets", icon: Smartphone, count: 324, iconColor: "text-cyan-500" },
   {
-    name: "Smart Home",
-    icon: Smartphone,
+    name: "Tablets",
+    icon: TabletSmartphone,
+    count: 324,
+    iconColor: "text-cyan-500",
+  },
+  {
+    name: "Gaming Console",
+    icon: Gamepad2,
     count: 189,
     iconColor: "text-emerald-500",
   },
@@ -57,39 +71,19 @@ const categories = [
     count: 756,
     iconColor: "text-pink-500",
   },
-  { name: "Software", icon: Laptop, count: 234, iconColor: "text-violet-500" },
-  { name: "Books", icon: Smartphone, count: 892, iconColor: "text-amber-500" },
-  { name: "Sports", icon: Watch, count: 445, iconColor: "text-lime-500" },
+  { name: "Watch", icon: Watch, count: 234, iconColor: "text-violet-500" },
+  {
+    name: "Books",
+    icon: BookOpenText,
+    count: 892,
+    iconColor: "text-amber-500",
+  },
+  // { name: "Sports", icon: Watch, count: 445, iconColor: "text-lime-500" },
   {
     name: "Fashion",
-    icon: Smartphone,
+    icon: Handbag,
     count: 1123,
     iconColor: "text-rose-500",
-  },
-  {
-    name: "Beauty",
-    icon: Smartphone,
-    count: 667,
-    iconColor: "text-fuchsia-500",
-  },
-  {
-    name: "Home & Garden",
-    icon: Smartphone,
-    count: 389,
-    iconColor: "text-teal-500",
-  },
-  {
-    name: "Automotive",
-    icon: Smartphone,
-    count: 234,
-    iconColor: "text-slate-500",
-  },
-  { name: "Health", icon: Watch, count: 456, iconColor: "text-sky-500" },
-  {
-    name: "Toys",
-    icon: GameController2,
-    count: 678,
-    iconColor: "text-yellow-500",
   },
 ];
 
@@ -129,7 +123,7 @@ export default function HeroSection() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className=" px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Categories Sidebar */}
         <motion.div
