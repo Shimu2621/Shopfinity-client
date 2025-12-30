@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ChevronRight,
@@ -8,15 +8,17 @@ import {
   Laptop,
   Headphones,
   Gift,
-  TabletSmartphone,
+  Video,
+  Tablet,
+  Package,
   Users,
   Watch,
   Camera,
   Tv,
+  Shirt,
+  Book,
   Gamepad2,
   LayoutGrid,
-  Handbag,
-  BookOpenText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -29,63 +31,39 @@ import Image from "next/image";
 import airpodImg from "@/app/assets/airpod.png";
 import iphoneImg from "@/app/assets/iphone.png";
 import macbookImg from "@/app/assets/macbook.png";
+import { ICategory } from "@/types";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
+import { useState } from "react";
 // import { RainbowButton } from "@/components/magicui/rainbow-button";
 
-const categories = [
-  {
-    name: "Laptop",
-    icon: Laptop,
-    count: 1234,
-    iconColor: "text-blue-500",
-  },
-  {
-    name: "Headphone",
-    icon: Headphones,
-    count: 856,
-    iconColor: "text-purple-500",
-  },
-  { name: "TV", icon: Tv, count: 432, iconColor: "text-green-500" },
-  { name: "Cameras", icon: Camera, count: 298, iconColor: "text-orange-500" },
-  { name: "Mobile", icon: Smartphone, count: 167, iconColor: "text-red-500" },
-  {
-    name: "Action Camera",
-    icon: Camera,
-    count: 543,
-    iconColor: "text-indigo-500",
-  },
-  {
-    name: "Tablets",
-    icon: TabletSmartphone,
-    count: 324,
-    iconColor: "text-cyan-500",
-  },
-  {
-    name: "Gaming Console",
-    icon: Gamepad2,
-    count: 189,
-    iconColor: "text-emerald-500",
-  },
-  {
-    name: "Accessories",
-    icon: Headphones,
-    count: 756,
-    iconColor: "text-pink-500",
-  },
-  { name: "Watch", icon: Watch, count: 234, iconColor: "text-violet-500" },
-  {
-    name: "Books",
-    icon: BookOpenText,
-    count: 892,
-    iconColor: "text-amber-500",
-  },
-  // { name: "Sports", icon: Watch, count: 445, iconColor: "text-lime-500" },
-  {
-    name: "Fashion",
-    icon: Handbag,
-    count: 1123,
-    iconColor: "text-rose-500",
-  },
+// Define color palette
+const colors = [
+  "bg-pink-100 text-pink-600",
+  "bg-blue-100 text-blue-600",
+  "bg-green-100 text-green-600",
+  "bg-yellow-100 text-yellow-600",
+  "bg-purple-100 text-purple-600",
+  "bg-orange-100 text-orange-600",
+  "bg-red-100 text-red-600",
+  "bg-teal-100 text-teal-600",
+  "bg-orange-100 text-orange-600",
+  "bg-teal-100 text-teal-600",
 ];
+
+const categoryIconMap: Record<string, React.ElementType> = {
+  Headphone: Headphones,
+  TV: Tv,
+  Cameras: Camera,
+  Mobile: Smartphone,
+  "Action Camera": Video,
+  "Gaming Console": Gamepad2,
+  Accessories: Package,
+  Watch: Watch,
+  Books: Book,
+  Laptop: Laptop,
+  Fashion: Shirt,
+  Tablet: Tablet,
+};
 
 const heroSlides = [
   {
@@ -120,7 +98,23 @@ const heroSlides = [
 ];
 
 export default function HeroSection() {
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
+
+  const { data, isLoading, isError } = useGetAllCategoriesQuery();
+
+  const categories: ICategory[] = data?.data ?? [];
+
+  if (isLoading) {
+    return <p className="text-center text-gray-500">Loading categories...</p>;
+  }
+
+  if (isError) {
+    return (
+      <section className="py-16 text-center text-red-500">
+        Failed to load categories
+      </section>
+    );
+  }
 
   return (
     <section className=" px-4 py-8">
@@ -132,7 +126,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-1"
         >
-          <Card className="p-4 h-[675px] flex flex-col">
+          <Card className="p-4 h-[670px] flex flex-col">
             <Button className="font-semibold text-white text-lg flex-shrink-0 gap-3  bg-rose-700 hover:shadow-sm">
               <LayoutGrid className="w-5 h-5" />
               All Categories
@@ -141,7 +135,7 @@ export default function HeroSection() {
               <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800 pr-2">
                 <div className="space-y-2">
                   {categories.map((category, index) => {
-                    const IconComponent = category.icon;
+                    const Icon = categoryIconMap[category.name] || Package;
                     return (
                       <motion.div
                         key={category.name}
@@ -151,7 +145,7 @@ export default function HeroSection() {
                         whileHover={{ scale: 1.02, x: 5 }}
                         className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${
                           activeCategory === index
-                            ? "bg-primary text-primary-foreground shadow-md"
+                            ? "bg-primary text-primary-foreground shadow-md dark:text-white"
                             : "hover:bg-muted hover:shadow-sm"
                         }`}
                         onClick={() => setActiveCategory(index)}
@@ -160,22 +154,29 @@ export default function HeroSection() {
                           <motion.div
                             whileHover={{ rotate: 5, scale: 1.1 }}
                             transition={{ duration: 0.2 }}
-                            className={`${category.iconColor} ${
+                            className={`${category.icon} ${
                               activeCategory === index
                                 ? "text-primary-foreground"
                                 : ""
                             }`}
                           >
-                            <IconComponent className="h-5 w-5" />
+                            <div
+                              className={`mb-1 flex items-center justify-center w-10 h-10 rounded-full ${
+                                colors[index % colors.length]
+                              }`}
+                            >
+                              {/* ✅ ICON FROM MAP */}
+                              <Icon className="w-6 h-6" />
+                            </div>
                           </motion.div>
-                          <span className="font-medium text-sm">
+                          <span className="font-medium text-md">
                             {category.name}
                           </span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <span className="text-xs text-muted-foreground">
+                          {/* <span className="text-xs text-muted-foreground">
                             {category.count}
-                          </span>
+                          </span> */}
                           <motion.div
                             whileHover={{ x: 3 }}
                             transition={{ duration: 0.2 }}

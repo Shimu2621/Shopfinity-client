@@ -1,16 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { getCategories } from "@/services/category";
-import { Category } from "@/types";
+import {
+  Headphones,
+  Tv,
+  Camera,
+  Smartphone,
+  Video,
+  Gamepad2,
+  Watch,
+  Book,
+  Tablet,
+  Shirt,
+  Laptop,
+  Package,
+} from "lucide-react";
+import { ICategory } from "@/types";
 import { ShinyButton } from "../magicui/shiny-button";
-import Image from "next/image";
 import { AuroraText } from "../magicui/aurora-text";
-// import { ShoppingBag } from "lucide-react";
-
-// const baseURL = "https://single-vendor-backend-zz7x.onrender.com";
+import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
+import { useEffect, useState } from "react";
 
 // Define color palette
 const colors = [
@@ -26,26 +37,42 @@ const colors = [
   "bg-teal-100 text-teal-600",
 ];
 
+const categoryIconMap: Record<string, React.ElementType> = {
+  Headphone: Headphones,
+  TV: Tv,
+  Cameras: Camera,
+  Mobile: Smartphone,
+  "Action Camera": Video,
+  "Gaming Console": Gamepad2,
+  Accessories: Package,
+  Watch: Watch,
+  Books: Book,
+  Laptop: Laptop,
+  Fashion: Shirt,
+  Tablets: Tablet,
+};
+
 export default function FeaturedCategory() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, isError } = useGetAllCategoriesQuery();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const categories: ICategory[] = data?.data ?? [];
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const cats = await getCategories();
-        setCategories(cats);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
+    // Trigger animation on mount
+    setIsVisible(true);
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <p className="text-center text-gray-500">Loading categories...</p>;
+  }
+
+  if (isError) {
+    return (
+      <section className="py-16 text-center text-red-500">
+        Failed to load categories
+      </section>
+    );
   }
 
   return (
@@ -64,39 +91,49 @@ export default function FeaturedCategory() {
           Discover our most popular product categories, carefully curated to
           make your shopping experience faster and easier.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8  gap-6">
-          {categories.map((category, index) => (
-            <motion.div
-              key={category.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="hover:shadow-lg transition-shadow duration-300 cursor-pointer">
-                <CardContent className="flex flex-col items-center text-center">
-                  <div
-                    className={`mb-4 flex items-center justify-center w-16 h-16 rounded-full ${
-                      colors[index % colors.length] // cycle through colors
-                    }`}
-                  >
-                    <Image
-                      src={category.icon!}
-                      alt={category.name}
-                      width={32}
-                      height={32}
-                      className="inline-flex items-center justify-center w-6 h-6"
-                    />
-                  </div>
-                  <CardTitle className="text-md font-semibold">
-                    {category.name}
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[150px]">
-                    {category.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-6">
+          {categories.map((category, index) => {
+            const Icon = categoryIconMap[category.name] || Package;
+
+            return (
+              <motion.div
+                key={category._id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              >
+                <Card
+                  className={`relative group hover:shadow-xl hover:-translate-y-2 transition-all duration-500 border-0  shadow-sm bg-background dark:border dark:border-gray-400 cursor-pointer ${
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-12"
+                  }`}
+                  style={{
+                    transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+                  }}
+                >
+                  <CardContent className="flex flex-col items-center text-center">
+                    <div
+                      className={`mb-4 flex items-center justify-center w-16 h-16 rounded-full ${
+                        colors[index % colors.length]
+                      }`}
+                    >
+                      {/* ✅ ICON FROM MAP */}
+                      <Icon className="w-7 h-7" />
+                    </div>
+
+                    <CardTitle className="text-md font-semibold">
+                      {category.name}
+                    </CardTitle>
+
+                    <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[150px]">
+                      {category.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
