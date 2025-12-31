@@ -118,3 +118,12 @@ export type IAnswer = {
   questionId: string;
   adminId: string;
 };
+
+export interface IProductQuery {
+  page?: string;
+  limit?: string;
+  categoryId?: string;
+  brandId?: string;
+  featured?: "true" | "false";
+  isDiscountActive?: "true" | "false";
+}

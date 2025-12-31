@@ -3,6 +3,7 @@ import { AboutUsSection } from "@/components/sections/AboutUsSection";
 import { BasicServicesSection } from "@/components/sections/BasicServicesSection";
 import { ContactUsSection } from "@/components/sections/ContactUsSection";
 import FeaturedCategory from "@/components/sections/FeaturedCategory";
+import FeaturedProducts from "@/components/sections/FeaturedProducts";
 // import FeaturedProducts from "@/components/sections/FeaturedProducts";
 import HeroSection from "@/components/sections/HeroSection";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
@@ -15,7 +16,7 @@ export default function HomePage() {
       <HeroSection />
       <FeaturedCategory />
       <BasicServicesSection />
-      {/* <FeaturedProducts /> */}
+      <FeaturedProducts />
       <SpecialOfferSection />
       <AboutUsSection />
       <NewsletterSection />

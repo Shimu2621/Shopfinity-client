@@ -105,7 +105,39 @@ export default function HeroSection() {
   const categories: ICategory[] = data?.data ?? [];
 
   if (isLoading) {
-    return <p className="text-center text-gray-500">Loading categories...</p>;
+    return (
+      <motion.div
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="lg:col-span-1"
+      >
+        <Card className="p-4 h-[670px] flex flex-col">
+          <Button className="font-semibold text-white text-lg flex-shrink-0 gap-3 bg-rose-700 hover:shadow-sm">
+            <LayoutGrid className="w-5 h-5" />
+            All Categories
+          </Button>
+          <div className="flex-1 overflow-hidden">
+            <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800 pr-2">
+              <div className="space-y-2">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 rounded-lg animate-pulse bg-gray-200 dark:bg-gray-700"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600" />
+                      <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded" />
+                    </div>
+                    <div className="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Card>
+      </motion.div>
+    );
   }
 
   if (isError) {
@@ -117,7 +149,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className=" px-4 py-8">
+    <section className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Categories Sidebar */}
         <motion.div

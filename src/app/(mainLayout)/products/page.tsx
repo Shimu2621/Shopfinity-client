@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
-import { getFeaturedProducts } from "@/services/product";
+
 // import { ShinyButton } from "../magicui/shiny-button";
 // import { AuroraText } from "../magicui/aurora-text";
 

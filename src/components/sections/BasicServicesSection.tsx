@@ -145,7 +145,7 @@ export function BasicServicesSection() {
       `}</style>
 
       <section ref={sectionRef} className="py-16 px-4 bg-background">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-[1480px]">
           <div
             className={`text-center mb-12 transition-all duration-1000 ${
               isVisible

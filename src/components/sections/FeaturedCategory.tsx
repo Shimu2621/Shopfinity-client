@@ -64,7 +64,37 @@ export default function FeaturedCategory() {
   }, []);
 
   if (isLoading) {
-    return <p className="text-center text-gray-500">Loading categories...</p>;
+    return (
+      <section className="py-12 bg-secondary">
+        <div className="px-4 flex flex-col items-center">
+          {/* Header Skeleton */}
+          <div className="h-10 w-48 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse mb-6" />
+          <div className="h-12 w-[420px] max-w-full rounded bg-gray-300 dark:bg-gray-700 animate-pulse mb-4" />
+          <div className="h-4 w-[520px] max-w-full rounded bg-gray-200 dark:bg-gray-600 animate-pulse mb-10" />
+
+          {/* Cards Grid Skeleton */}
+          <div className="container mx-auto max-w-[1480px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <Card
+                key={index}
+                className="border-0 shadow-sm bg-background dark:border dark:border-gray-400"
+              >
+                <CardContent className="flex flex-col items-center text-center py-6 animate-pulse">
+                  {/* Icon Circle Skeleton */}
+                  <div className="mb-4 w-16 h-16 rounded-full bg-gray-300 dark:bg-gray-600" />
+
+                  {/* Title Skeleton */}
+                  <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded mb-2" />
+
+                  {/* Description Skeleton */}
+                  <div className="h-3 w-32 bg-gray-200 dark:bg-gray-500 rounded" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (isError) {
@@ -77,7 +107,7 @@ export default function FeaturedCategory() {
 
   return (
     <section className="py-12 bg-secondary">
-      <div className="container  mx-auto px-4 flex flex-col items-center">
+      <div className=" px-4 flex flex-col items-center">
         <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
           🛍️ Shop By Category
         </ShinyButton>
@@ -91,7 +121,7 @@ export default function FeaturedCategory() {
           Discover our most popular product categories, carefully curated to
           make your shopping experience faster and easier.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-6">
+        <div className="container mx-auto max-w-[1480px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-6">
           {categories.map((category, index) => {
             const Icon = categoryIconMap[category.name] || Package;
 
@@ -122,11 +152,11 @@ export default function FeaturedCategory() {
                       <Icon className="w-7 h-7" />
                     </div>
 
-                    <CardTitle className="text-md font-semibold">
+                    <CardTitle className="text-lg font-bold">
                       {category.name}
                     </CardTitle>
 
-                    <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[150px]">
+                    <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[190px]">
                       {category.description}
                     </p>
                   </CardContent>
