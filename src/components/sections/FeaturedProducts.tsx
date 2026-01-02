@@ -11,10 +11,14 @@ import Image from "next/image";
 import { ShinyButton } from "../magicui/shiny-button";
 import { AuroraText } from "../magicui/aurora-text";
 import Link from "next/link";
-import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
+import { useGetFeaturedCategoryProductsQuery } from "@/redux/api/product/productApi";
 
 export default function FeaturedProducts() {
-  const { data: products = [], isLoading, isError } = useGetAllProductsQuery();
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+  } = useGetFeaturedCategoryProductsQuery();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -39,7 +43,7 @@ export default function FeaturedProducts() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i} className="overflow-hidden">
+            <Card key={i} className="p-0 overflow-hidden">
               <div className="aspect-square animate-pulse" />
               <CardContent className="p-4">
                 <div className="h-4 bg-muted animate-pulse rounded mb-2" />
@@ -94,15 +98,15 @@ export default function FeaturedProducts() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <Card className="h-full flex flex-col overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="relative aspect-square overflow-hidden rounded-lg">
+              <Card className="h-full flex flex-col p-0 overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="relative aspect-square overflow-hidden ">
                   {product.images && product.images.length > 0 ? (
                     <Image
                       src={product.images[0] || "/placeholder.svg"}
                       alt={product.name}
                       fill
                       sizes="100vw"
-                      className="object-cover inset-0 w-full h-64 transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20 flex items-center justify-center">
@@ -113,14 +117,14 @@ export default function FeaturedProducts() {
                   <div className="flex flex-col">
                     {/* Featured Badge */}
                     {product.featured && (
-                      <Badge className="absolute top-2 left-3 font-bold text-sm bg-blue-600 text-white">
+                      <Badge className="absolute top-2 left-3 font-bold text-xsm bg-blue-600 text-white">
                         Featured
                       </Badge>
                     )}
                     {/* Discount Badge */}
                     {product.isDiscountActive && product.discountPercentage && (
-                      <Badge className="absolute top-10 left-3 font-bold text-sm bg-destructive text-white">
-                        -{product.discountPercentage}% OFF
+                      <Badge className="absolute top-10 left-3 font-bold text-xsm bg-rose-600 text-white">
+                        -{product.discountPercentage}% Off
                       </Badge>
                     )}
                   </div>
@@ -172,24 +176,23 @@ export default function FeaturedProducts() {
 
                 <CardContent className="p-4 flex flex-col flex-1">
                   <div className="flex justify-between">
-                    {product.brand && (
-                      <Badge variant="secondary" className="text-md mb-2">
-                        {product.brand.name}
-                      </Badge>
+                    {product.brandId && (
+                      <Badge variant="secondary">{product.brandId.name}</Badge>
                     )}
-                    {product.category && (
-                      <Badge variant="secondary" className="text-md mb-2">
-                        {product.category.name}
+
+                    {product.categoryId && (
+                      <Badge variant="secondary">
+                        {product.categoryId.name}
                       </Badge>
                     )}
                   </div>
-                  <h3 className="font-bold text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-semibold pt-3 text-rose-600 text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">
                     {product.name}
                   </h3>
 
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                  {/* <p className="text-sm text-muted-foreground line-clamp-1 mb-3">
                     {product.description}
-                  </p>
+                  </p> */}
 
                   {/* Star */}
                   <div className="flex items-center gap-1 mb-3">
@@ -211,7 +214,7 @@ export default function FeaturedProducts() {
                   <div className="flex items-center gap-2">
                     {product.isDiscountActive && product.discountPercentage ? (
                       <>
-                        <span className="text-lg font-bold text-muted-foreground">
+                        <span className="text-lg font-bold ">
                           {formatPrice(
                             calculateDiscountedPrice(
                               product.price,
@@ -224,7 +227,7 @@ export default function FeaturedProducts() {
                         </span>
                       </>
                     ) : (
-                      <span className="text-lg font-bold text-primary">
+                      <span className="text-lg font-bold ">
                         {formatPrice(product.price)}
                       </span>
                     )}

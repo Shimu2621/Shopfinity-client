@@ -11,11 +11,9 @@ export interface IProduct {
   discountPercentage?: number;
   discountedPrice?: number;
   discountValidUntil?: Date | string;
-  categoryId?: string;
-  brandId?: string;
   createdAt: Date | string;
   updatedAt: Date | string;
-  category?: {
+  categoryId?: {
     id: string;
     name: string;
     slug: string;
@@ -23,7 +21,8 @@ export interface IProduct {
     description: string;
     parentId: string | null;
   };
-  brand?: {
+
+  brandId?: {
     id: string;
     name: string;
   };
@@ -126,4 +125,27 @@ export interface IProductQuery {
   brandId?: string;
   featured?: "true" | "false";
   isDiscountActive?: "true" | "false";
+}
+export interface IProductForm {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  images: string[];
+  featured?: boolean;
+
+  categoryId: string;
+  brandId: string;
+
+  isDiscountActive?: boolean;
+  discountPercentage?: number;
+  discountValidUntil?: string;
+}
+
+// Pagination type for products page
+export interface IPaginatedProducts {
+  products: IProduct[];
+  total: number;
+  page: number;
+  limit: number;
 }

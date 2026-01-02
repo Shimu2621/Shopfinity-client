@@ -24,36 +24,19 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 
-// import { ShinyButton } from "../magicui/shiny-button";
-// import { AuroraText } from "../magicui/aurora-text";
-
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
-import { Pagination } from "@/components/sections/Pagination";
+import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-  const [totalProducts, setTotalProducts] = useState(0);
+  // const [totalProducts, setTotalProducts] = useState(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const prods = await getFeaturedProducts();
-        setProducts(prods);
-        setTotalProducts(prods.length);
-      } catch (error) {
-        console.error("Error fetching all products:", error);
-        setError("Failed to load products.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
+  const { data, isLoading, isError } = useGetAllProductsQuery({
+    page: currentPage.toString(),
+    limit: itemsPerPage.toString(),
+  });
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -70,12 +53,29 @@ export default function ProductsPage() {
   };
 
   // Pagination logic
-  const totalPages = Math.ceil(totalProducts / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  // const products = data?.products ?? [];
+  // const totalPages = Math.ceil((data?.total ?? 0) / (data?.limit ?? 1));
+
+  const products = data?.products ?? [];
+  const total = data?.total ?? 0;
+  const limit = data?.limit ?? itemsPerPage;
+  const totalPages = Math.ceil(total / limit);
+
+  const currentProducts: IProduct[] = products;
+
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+
+  // const currentProducts = products.slice(startIndex, endIndex);
+
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
 
   const handlePageChange = (page: number) => {
+    if (page < 1) return;
+    if (page > totalPages) return;
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -85,7 +85,7 @@ export default function ProductsPage() {
     setCurrentPage(1);
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <section className="py-16 px-4 container mx-auto">
         <div className="text-center mb-12">
@@ -108,12 +108,12 @@ export default function ProductsPage() {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <section className="py-16 px-4 max-w-7xl mx-auto text-center">
         <div className="text-destructive">
           <h2 className="text-2xl font-bold mb-4">Error Loading Products</h2>
-          <p>{error}</p>
+          <p>{isError}</p>
         </div>
       </section>
     );
@@ -149,14 +149,14 @@ export default function ProductsPage() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <Card className="overflow-hidden rounded-lg border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="relative aspect-square overflow-hidden bg-muted">
+              <Card className="p-0 overflow-hidden rounded-lg border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="relative aspect-square overflow-hidden ">
                   {product.images && product.images.length > 0 ? (
                     <Image
                       src={product.images[0] || "/placeholder.svg"}
                       alt={product.name}
                       fill
-                      className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20 flex items-center justify-center">
@@ -167,14 +167,14 @@ export default function ProductsPage() {
                   <div className="flex flex-col">
                     {/* Featured Badge */}
                     {product.featured && (
-                      <Badge className="absolute top-2 left-3 font-bold text-sm bg-blue-600 text-white">
+                      <Badge className="absolute top-2 left-3 font-bold text-xsm bg-blue-600 text-white">
                         Featured
                       </Badge>
                     )}
                     {/* Discount Badge */}
                     {product.isDiscountActive && product.discountPercentage && (
-                      <Badge className="absolute top-10 left-3 font-bold text-sm bg-destructive text-white">
-                        -{product.discountPercentage}% OFF
+                      <Badge className="absolute top-10 left-3 font-bold text-xsm bg-rose-600 text-white">
+                        -{product.discountPercentage}% Off
                       </Badge>
                     )}
                   </div>
@@ -226,22 +226,22 @@ export default function ProductsPage() {
 
                 <CardContent className="p-4">
                   <div className="flex justify-between">
-                    {product.brand && (
+                    {product.brandId && (
                       <Badge variant="secondary" className="text-md mb-2">
-                        {product.brand.name}
+                        {product.brandId.name}
                       </Badge>
                     )}
-                    {product.category && (
+                    {product.categoryId && (
                       <Badge variant="secondary" className="text-md mb-2">
-                        {product.category.name}
+                        {product.categoryId.name}
                       </Badge>
                     )}
                   </div>
-                  <h3 className="font-bold text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">
                     {product.name}
                   </h3>
 
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                  <p className="text-sm text-muted-foreground line-clamp-1 mb-3">
                     {product.description}
                   </p>
 
@@ -265,7 +265,7 @@ export default function ProductsPage() {
                   <div className="flex items-center gap-2">
                     {product.isDiscountActive && product.discountPercentage ? (
                       <>
-                        <span className="text-lg font-bold text-primary">
+                        <span className="text-lg font-bold text-rose-600">
                           {formatPrice(
                             calculateDiscountedPrice(
                               product.price,
@@ -278,7 +278,7 @@ export default function ProductsPage() {
                         </span>
                       </>
                     ) : (
-                      <span className="text-lg font-bold text-primary">
+                      <span className="text-lg font-bold text-rose-600">
                         {formatPrice(product.price)}
                       </span>
                     )}
@@ -289,7 +289,7 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        {products.length === 0 && !loading && (
+        {products.length === 0 && !isLoading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -318,6 +318,7 @@ export default function ProductsPage() {
                 <SelectItem value="8">8</SelectItem>
                 <SelectItem value="16">16</SelectItem>
                 <SelectItem value="24">24</SelectItem>
+                <SelectItem value="48">48</SelectItem>
               </SelectContent>
             </Select>
             <span className="text-sm text-muted-foreground">per page</span>
@@ -325,8 +326,8 @@ export default function ProductsPage() {
 
           {/* Results info */}
           <div className="text-sm text-muted-foreground">
-            Showing {startIndex + 1} to {Math.min(endIndex, totalProducts)} of{" "}
-            {totalProducts} results
+            Showing {(currentPage - 1) * limit + 1} to{" "}
+            {Math.min(currentPage * limit, total)} of {total} results
           </div>
 
           {/* Pagination buttons */}
@@ -364,7 +365,7 @@ export default function ProductsPage() {
               variant="outline"
               size="sm"
               onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              disabled={currentPage >= totalPages}
               className="flex items-center gap-1"
             >
               Next

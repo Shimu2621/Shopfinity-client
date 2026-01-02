@@ -1,7 +1,7 @@
 // src/redux/features/product/productApi.ts
 import { baseApi } from "@/redux/api/baseApi";
 import { tagTypes } from "@/redux/tagTypes/tagTypes";
-import { IProduct, IProductQuery } from "@/types";
+import { IPaginatedProducts, IProduct, IProductQuery } from "@/types";
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,16 +19,30 @@ export const productApi = baseApi.injectEndpoints({
     }),
 
     // ✅ Get All Products (with filters & pagination)
-    getAllProducts: builder.query<IProduct[], IProductQuery | void>({
+    getAllProducts: builder.query<IPaginatedProducts, IProductQuery | void>({
       query: (params) => ({
         url: "/products",
         params: params ?? undefined,
       }),
+      // transformResponse: (response: {
+      //   success: boolean;
+      //   products: IProduct[];
+      // }) =>
+      //   response.products.map((product) => ({
+      //     ...product,
+      //     category: product.categoryId,
+      //     brand: product.brandId,
+      //   })),
+      providesTags: [tagTypes.PRODUCT],
+    }),
+
+    // ✅ Get All Featured Products
+    getFeaturedCategoryProducts: builder.query<IProduct[], void>({
+      query: () => "/products/featured-categories",
       transformResponse: (response: {
         success: boolean;
         products: IProduct[];
       }) => response.products,
-      providesTags: [tagTypes.PRODUCT],
     }),
 
     // ✅ Get Single Product
@@ -72,6 +86,7 @@ export const productApi = baseApi.injectEndpoints({
 export const {
   useCreateProductMutation,
   useGetAllProductsQuery,
+  useGetFeaturedCategoryProductsQuery,
   useGetSingleProductQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
