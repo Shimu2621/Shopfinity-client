@@ -91,7 +91,7 @@ export default function FeaturedProducts() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {products.slice(0, 10).map((product: IProduct, index: number) => (
             <motion.div
-              key={product.id || index}
+              key={product._id || index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -145,13 +145,15 @@ export default function FeaturedProducts() {
                     >
                       <Heart className="w-6 h-6" />
                     </Button>
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      className="h-10 w-10"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </Button>
+                    <Link href={`/products/${product._id}`}>
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className="h-10 w-10"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                    </Link>
                   </div>
 
                   {/* Stock Status */}
@@ -176,14 +178,12 @@ export default function FeaturedProducts() {
 
                 <CardContent className="p-4 flex flex-col flex-1">
                   <div className="flex justify-between">
-                    {product.brandId && (
-                      <Badge variant="secondary">{product.brandId.name}</Badge>
+                    {product.brand && (
+                      <Badge variant="secondary">{product.brand.name}</Badge>
                     )}
 
-                    {product.categoryId && (
-                      <Badge variant="secondary">
-                        {product.categoryId.name}
-                      </Badge>
+                    {product.category && (
+                      <Badge variant="secondary">{product.category.name}</Badge>
                     )}
                   </div>
                   <h3 className="font-semibold pt-3 text-rose-600 text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">

@@ -1,19 +1,25 @@
+//src> types> product> product.ts
+
+import { IReview } from "../review/review";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IProduct {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
   stock: number;
   images: string[];
   featured?: boolean;
+  categoryId?: string;
+  brandId?: string;
   isDiscountActive?: boolean;
   discountPercentage?: number;
   discountedPrice?: number;
   discountValidUntil?: Date | string;
   createdAt: Date | string;
   updatedAt: Date | string;
-  categoryId?: {
+  category?: {
     id: string;
     name: string;
     slug: string;
@@ -22,7 +28,7 @@ export interface IProduct {
     parentId: string | null;
   };
 
-  brandId?: {
+  brand?: {
     id: string;
     name: string;
   };
@@ -43,8 +49,19 @@ export type ISingleProduct = {
   discountPercentage?: number;
   discountedPrice?: number;
   discountValidUntil?: string;
-  categoryId?: string;
-  brandId?: string;
+  categoryId?: {
+    _id: string;
+    name: string;
+    slug: string;
+    icon: string;
+    description: string;
+    parentId: string | null;
+  };
+
+  brandId?: {
+    _id: string;
+    name: string;
+  };
 
   category?: ICategory;
   brand?: IBrand;
@@ -54,7 +71,7 @@ export type ISingleProduct = {
 };
 
 type ICategory = {
-  id: string;
+  _id: string;
   name: string;
   slug: string;
   icon: string;
@@ -63,7 +80,7 @@ type ICategory = {
 };
 
 export interface IBrand {
-  id: string;
+  _id: string;
   name: string;
   categories: {
     id: string;
@@ -85,21 +102,6 @@ export type IProductSpecification = {
     price: number;
   };
 };
-
-export interface IReview {
-  id: string;
-  rating: number;
-  comment: string;
-  createdAt: string;
-  userId: string;
-  productId: string;
-  user: {
-    name: string;
-  };
-  product: {
-    name: string;
-  };
-}
 
 export type IQuestion = {
   id: string;

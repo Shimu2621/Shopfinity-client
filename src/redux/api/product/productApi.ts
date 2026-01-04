@@ -1,7 +1,12 @@
 // src/redux/features/product/productApi.ts
 import { baseApi } from "@/redux/api/baseApi";
 import { tagTypes } from "@/redux/tagTypes/tagTypes";
-import { IPaginatedProducts, IProduct, IProductQuery } from "@/types";
+import {
+  IPaginatedProducts,
+  IProduct,
+  IProductQuery,
+  ISingleProduct,
+} from "@/types";
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -46,10 +51,12 @@ export const productApi = baseApi.injectEndpoints({
     }),
 
     // ✅ Get Single Product
-    getSingleProduct: builder.query<IProduct, string>({
+    getSingleProduct: builder.query<ISingleProduct, string>({
       query: (id) => `/products/${id}`,
-      transformResponse: (response: { success: boolean; product: IProduct }) =>
-        response.product,
+      transformResponse: (response: {
+        success: boolean;
+        product: ISingleProduct;
+      }) => response.product,
       providesTags: (_result, _error, id) => [{ type: tagTypes.PRODUCT, id }],
     }),
 
