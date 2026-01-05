@@ -16,7 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -24,12 +24,24 @@ import { useGetSingleProductQuery } from "@/redux/api/product/productApi";
 import ReviewForm from "@/components/pages/productDetailsPage/ReviewForm";
 import QuestionForm from "@/components/pages/productDetailsPage/QuestionForm";
 import { useState } from "react";
+import { useGetProductSpecificationsByProductIdQuery } from "@/redux/api/productSpecification/productSpecificationApi";
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
 
+  // Fetch product first
   const { data: product, isLoading, isError } = useGetSingleProductQuery(id);
+
+  // Extract productId AFTER product exists
+  const productId = product?._id;
+
+  const { data: specifications, isLoading: specsLoading } =
+    useGetProductSpecificationsByProductIdQuery(productId!, {
+      skip: !productId,
+    });
+
+  console.log("Product ID:", productId);
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-US", {
@@ -232,7 +244,7 @@ export default function ProductDetailsPage() {
 
       {/* 🔽 Product Tabs Section */}
       <div className="mt-20">
-        <Tabs defaultValue="overview" className="w-full">
+        <Tabs defaultValue="reviews" className="w-full">
           {/* Tabs Header */}
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -245,13 +257,37 @@ export default function ProductDetailsPage() {
           </TabsList>
 
           {/* 📌 Overview */}
-          <TabsContent value="overview" className="mt-8">
+          <TabsContent value="overview" className="mt-4">
             <Card>
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-xl font-bold">Product Overview</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {product.description}
-                </p>
+              <CardHeader className="p-4 m-4 space-y-4">
+                <CardTitle className="text-lg">
+                  Product Specifications
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                {specsLoading ? (
+                  <p className="text-sm text-muted-foreground">
+                    Loading specifications...
+                  </p>
+                ) : specifications?.length ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-0">
+                    {specifications.map((spec) => (
+                      <div
+                        key={spec.id}
+                        className="flex justify-between border-b pb-4 text-sm"
+                      >
+                        <span className="font-medium">{spec.key}</span>
+                        <span className="text-muted-foreground">
+                          {spec.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    No specifications available.
+                  </p>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -260,7 +296,7 @@ export default function ProductDetailsPage() {
           <TabsContent value="reviews" className="mt-8">
             <Card>
               <CardContent className="p-6 space-y-6">
-                <ReviewForm productId={product.id} />
+                <ReviewForm productId={product._id} />
 
                 {/* Reviews List (future) */}
                 {product.reviews && product.reviews.length > 0 ? (
@@ -304,7 +340,7 @@ export default function ProductDetailsPage() {
           <TabsContent value="qa" className="mt-8">
             <Card>
               <CardContent className="p-6 space-y-6">
-                <QuestionForm productId={product.id} />
+                <QuestionForm productId={product._id} />
 
                 {/* Questions List */}
                 {product.questions && product.questions.length > 0 ? (
