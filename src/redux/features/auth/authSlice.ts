@@ -1,16 +1,6 @@
 // src/redux/features/auth/authSlice.ts
+import { IUser } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  role?: "user" | "admin";
-  avatarUrl?: string;
-  address?: string;
-  phone?: string;
-  createdAt?: string;
-}
 
 export interface AuthState {
   user: IUser | null;

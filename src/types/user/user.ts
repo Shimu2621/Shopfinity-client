@@ -1,6 +1,6 @@
 // src/types/user.ts
 
-export type UserRole = "USER" | "ADMIN";
+export type UserRole = "user" | "admin";
 
 export interface IUser {
   id: string;

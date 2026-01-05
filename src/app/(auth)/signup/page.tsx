@@ -7,16 +7,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSignupMutation } from "@/redux/api/user/userApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks/hooks";
 import { login } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { getErrorMessage } from "@/lib/getErrorMessage";
 
-const signupSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Minimum 6 characters"),
-});
+const signupSchema = z
+  .object({
+    name: z
+      .string()
+      .nonempty("Full name is required")
+      .min(2, "Name must be at least 2 characters")
+      .max(50, "Name must be less than 50 characters"),
+
+    email: z
+      .string()
+      .nonempty("Email is required")
+      .email("Please enter a valid email address"),
+
+    password: z
+      .string()
+      .nonempty("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+
+    confirmPassword: z.string().nonempty("Please confirm your password"),
+
+    acceptTerms: z.boolean().refine((val) => val === true, {
+      message: "You must accept the terms and conditions",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
 
@@ -38,8 +64,16 @@ export default function SignupPage() {
 
       toast.success("Account created successfully");
       router.push("/");
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Signup failed");
+    } catch (err) {
+      const error = err as FetchBaseQueryError | SerializedError;
+
+      if ("data" in error) {
+        toast.error(
+          (error.data as { message?: string })?.message || "Signup failed"
+        );
+      } else {
+        toast.error(getErrorMessage(err, "Signup failed"));
+      }
     }
   };
 
