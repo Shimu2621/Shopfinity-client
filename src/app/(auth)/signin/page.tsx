@@ -22,6 +22,7 @@ import {
   ArrowRight,
   User,
   Shield,
+  Sun,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -31,6 +32,14 @@ import * as z from "zod";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import signupAnimation from "@/app/assets/lottie/signupanimation.json";
+import { useTheme } from "next-themes";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { useSigninMutation } from "@/redux/api/user/userApi";
+import { toast } from "sonner";
+import { login } from "@/redux/features/auth/authSlice";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -48,8 +57,25 @@ const signinSchema = z.object({
 
 type SigninFormData = z.infer<typeof signinSchema>;
 
+const QUICK_LOGIN_CREDENTIALS = {
+  user: {
+    email: "user@user.com",
+    password: "securePassword",
+  },
+  admin: {
+    email: "admin@admin.com",
+    password: "securePassword",
+  },
+} as const;
+
+type QuickLoginRole = keyof typeof QUICK_LOGIN_CREDENTIALS;
+
 export default function SigninPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [loginUser, { isLoading }] = useSigninMutation();
 
   const form = useForm<SigninFormData>({
     resolver: zodResolver(signinSchema),
@@ -60,9 +86,43 @@ export default function SigninPage() {
     },
   });
 
-  const onSubmit = (data: SigninFormData) => {
-    console.log("Form submitted:", data);
-    // Handle form submission here
+  const onSubmit = async (data: SigninFormData) => {
+    try {
+      const res = await loginUser({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+        dispatch(login({ user: res.user, token: res.token }));
+        toast.success("Login successful!");
+        router.push("/");
+      } else {
+        toast.error(res.message || "Login failed.");
+      }
+    } catch (error: unknown) {
+      const err = error as FetchBaseQueryError;
+      toast.error(
+        "status" in err
+          ? (err.data as { message: string })?.message ||
+              "Invalid email or password"
+          : "Invalid email or password"
+      );
+    }
+  };
+
+  const handleQuickLogin = (role: QuickLoginRole) => {
+    const credentials = QUICK_LOGIN_CREDENTIALS[role];
+
+    // Set form values
+    form.setValue("email", credentials.email, { shouldValidate: true });
+    form.setValue("password", credentials.password, { shouldValidate: true });
+    form.setValue("rememberMe", true);
+
+    // Submit the form
+    form.handleSubmit(onSubmit)();
+    toast.success(`${role === "admin" ? "Admin" : "User"} credentials filled!`);
   };
 
   const containerVariants = {
@@ -94,22 +154,39 @@ export default function SigninPage() {
       <div className="absolute top-32 right-32 w-20 h-20 bg-cyan-200/20 rounded-full blur-2xl" />
       <div className="absolute bottom-40 right-20 w-28 h-28 bg-orange-300/20 rounded-full blur-3xl" />
 
-      {/* Header Logo */}
-      <div className="absolute top-6 left-6 flex items-center gap-2">
-        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
-          <span className="text-white font-bold text-lg">E</span>
+      {/* Logo */}
+      <Link href="/" className="absolute top-6 left-6 flex items-center gap-2">
+        <div className="w-10 h-10 bg-gradient-to-r from-blue-800 to-rose-600 rounded-lg flex items-center justify-center">
+          <span className="text-white font-bold text-lg">S</span>
         </div>
-        <span className="text-xl font-semibold text-gray-700">EcoShop</span>
-      </div>
+        <span className="font-serif font-semibold text-xl text-rose-600">
+          ShopFinity
+        </span>
+      </Link>
 
       {/* Header Actions */}
       <div className="absolute top-6 right-6 flex items-center gap-2">
         <Button variant="ghost" size="icon" className="rounded-full">
-          <Home className="w-5 h-5" />
+          <Link href="/">
+            <Home className="w-5 h-5" />
+          </Link>
         </Button>
         <Button variant="ghost" size="icon" className="rounded-full">
           <Moon className="w-5 h-5" />
         </Button>
+
+        {/* Theme Toggle */}
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </motion.div>
       </div>
 
       <motion.div
@@ -132,10 +209,10 @@ export default function SigninPage() {
           </div>
 
           <div className="text-center space-y-3 max-w-md">
-            <h1 className="text-4xl font-bold text-balance leading-tight">
-              <span className="text-cyan-500">Welcome</span>{" "}
-              <span className="text-gray-500">Back!</span>
-            </h1>
+            <AuroraText className="text-blue-600 italic font-bold text-4xl">
+              {" "}
+              Welcome Back
+            </AuroraText>
             <p className="text-gray-600 text-pretty leading-relaxed">
               Sign in to your account and continue your amazing shopping journey
               with us.
@@ -184,7 +261,7 @@ export default function SigninPage() {
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-orange-400 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-700 to-rose-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Lock className="w-8 h-8 text-white" />
                 </div>
               </motion.div>
@@ -209,7 +286,7 @@ export default function SigninPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-gray-700 font-medium text-sm">
-                          Email Address
+                          Email
                         </FormLabel>
                         <FormControl>
                           <div className="relative">
@@ -281,7 +358,7 @@ export default function SigninPage() {
                           </div>
                           <Link
                             href="/forgot-password"
-                            className="text-sm text-cyan-500 hover:underline font-medium"
+                            className="text-sm text-rose-600 hover:underline font-medium"
                           >
                             Forgot password?
                           </Link>
@@ -297,10 +374,12 @@ export default function SigninPage() {
                   >
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-cyan-500 to-orange-400 hover:from-cyan-600 hover:to-orange-500 text-white font-semibold py-6 rounded-xl shadow-lg h-12 flex items-center justify-center gap-2"
+                      className="w-full bg-gradient-to-r from-blue-700 to-rose-600 hover:from-rose-600 hover:to-blue-700 text-white font-semibold py-6 rounded-xl shadow-lg h-12 flex items-center justify-center gap-2"
+                      disabled={isLoading} // 🔹 disable button while loading
                     >
-                      Sign In
-                      <ArrowRight className="w-5 h-5" />
+                      {isLoading ? "Signing in..." : "Sign In"}{" "}
+                      {/* 🔹 optional text change */}
+                      {!isLoading && <ArrowRight className="w-5 h-5" />}
                     </Button>
                   </motion.div>
 
@@ -312,17 +391,20 @@ export default function SigninPage() {
                       <Button
                         type="button"
                         variant="outline"
-                        className="flex items-center justify-center gap-2 h-11 rounded-lg border-gray-200 hover:bg-gray-50 bg-transparent"
+                        className="h-10 text-xs hover:bg-blue-50 hover:border-blue-200 dark:hover:bg-blue-950/20 dark:hover:border-blue-800"
+                        onClick={() => handleQuickLogin("user")}
                       >
-                        <User className="w-4 h-4" />
+                        <User className="h-3 w-3 mr-1" />
                         User Login
                       </Button>
+
                       <Button
                         type="button"
                         variant="outline"
-                        className="flex items-center justify-center gap-2 h-11 rounded-lg border-gray-200 hover:bg-gray-50 bg-transparent"
+                        className="h-10 text-xs hover:bg-orange-50 hover:border-orange-200 dark:hover:bg-orange-950/20 dark:hover:border-orange-800"
+                        onClick={() => handleQuickLogin("admin")}
                       >
-                        <Shield className="w-4 h-4" />
+                        <Shield className="h-3 w-3 mr-1" />
                         Admin Login
                       </Button>
                     </div>
@@ -333,7 +415,7 @@ export default function SigninPage() {
                       Don&rsquo;t have an account?{" "}
                       <Link
                         href="/signup"
-                        className="text-cyan-500 hover:underline font-semibold"
+                        className="text-rose-600 hover:underline font-semibold"
                       >
                         Sign up here
                       </Link>

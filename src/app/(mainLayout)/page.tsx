@@ -1,4 +1,3 @@
-import ProductDetailsPage from "@/components/pages/productDetailsPage/ProductDetailsPage";
 import { AboutUsSection } from "@/components/sections/AboutUsSection";
 import { BasicServicesSection } from "@/components/sections/BasicServicesSection";
 import { ContactUsSection } from "@/components/sections/ContactUsSection";
@@ -22,7 +21,7 @@ export default function HomePage() {
       <NewsletterSection />
       <TestimonialSection />
       <SignupPage />
-      <ProductDetailsPage />
+
       <ContactUsSection />
     </div>
   );

@@ -26,6 +26,7 @@ import {
   Lock,
   Mail,
   Moon,
+  Sun,
   User,
 } from "lucide-react";
 
@@ -44,6 +45,7 @@ import dynamic from "next/dynamic";
 
 import signupAnimation from "@/app/assets/lottie/signupanimation.json";
 import { AuroraText } from "@/components/magicui/aurora-text";
+import { useTheme } from "next-themes";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -81,6 +83,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
 export default function SignupPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const { theme, setTheme } = useTheme();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -159,22 +162,46 @@ export default function SignupPage() {
       <div className="absolute bottom-40 right-20 w-28 h-28 bg-orange-300/20 rounded-full blur-3xl" />
 
       {/* Logo */}
-      <div className="absolute top-6 left-6 flex items-center gap-2">
+      <Link href="/" className="absolute top-6 left-6 flex items-center gap-2">
         <div className="w-10 h-10 bg-gradient-to-r from-blue-800 to-rose-600 rounded-lg flex items-center justify-center">
           <span className="text-white font-bold text-lg">S</span>
         </div>
         <span className="font-serif font-semibold text-xl text-rose-600">
           ShopFinity
         </span>
-      </div>
+      </Link>
 
       <div className="absolute top-6 right-6 flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Home className="w-5 h-5" />
-        </Button>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Moon className="w-5 h-5" />
-        </Button>
+        <Link href="/">
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Home className="w-5 h-5" />
+          </Button>
+        </Link>
+        {/* Theme Toggle */}
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </motion.div>
+
+        {/* Theme Toggle */}
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </motion.div>
       </div>
 
       {/* Main Content */}
