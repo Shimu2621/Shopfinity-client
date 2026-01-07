@@ -111,6 +111,8 @@ export default function SignupPage() {
       password: values.password,
     };
 
+    console.log("Signup payload:", payload);
+
     try {
       const res = await signup(payload).unwrap();
 
