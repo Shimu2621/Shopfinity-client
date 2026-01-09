@@ -98,7 +98,11 @@ export default function QuestionForm({ productId }: QuestionFormProps) {
               )}
             />
 
-            <Button type="submit" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-rose-700 hover:bg-rose-900"
+            >
               {isLoading ? "Submitting..." : "Submit Question"}
             </Button>
           </form>

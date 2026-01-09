@@ -12,8 +12,9 @@ import {
   Truck,
   Minus,
   Plus,
+  Loader2,
+  MessageCircle,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,18 +24,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetSingleProductQuery } from "@/redux/api/product/productApi";
 import ReviewForm from "@/components/pages/productDetailsPage/ReviewForm";
 import QuestionForm from "@/components/pages/productDetailsPage/QuestionForm";
+import { useAddToCartMutation } from "@/redux/api/cart/cartApi";
+import { toast } from "sonner"; // or react-hot-toast
+import { useAppSelector } from "@/redux/hooks/hooks";
 import { useState } from "react";
 import { useGetProductSpecificationsByProductIdQuery } from "@/redux/api/productSpecification/productSpecificationApi";
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
+  const { user } = useAppSelector((state) => state.auth);
+  const userId = user?.id;
 
   // Fetch product first
   const { data: product, isLoading, isError } = useGetSingleProductQuery(id);
 
   // Extract productId AFTER product exists
   const productId = product?._id;
+
+  const [addToCart, { isLoading: adding }] = useAddToCartMutation();
 
   const { data: specifications, isLoading: specsLoading } =
     useGetProductSpecificationsByProductIdQuery(productId!, {
@@ -53,6 +61,38 @@ export default function ProductDetailsPage() {
     product?.isDiscountActive && product.discountPercentage
       ? product.price - (product.price * product.discountPercentage) / 100
       : product?.price;
+
+  const isOutOfStock = product?.stock === 0;
+
+  const handleAddToCart = async () => {
+    if (!product) {
+      toast.error("Product not loaded yet");
+      return;
+    }
+
+    if (!userId) {
+      toast.error("Please login to add items to cart");
+      return;
+    }
+
+    if (isOutOfStock) {
+      toast.error("This product is out of stock");
+      return;
+    }
+
+    try {
+      await addToCart({
+        userId,
+        productId: product._id,
+        quantity,
+      }).unwrap();
+
+      toast.success(`Added ${quantity} × ${product.name} to cart`);
+    } catch (isError) {
+      toast.error("Failed to add item to cart");
+      console.error(isError);
+    }
+  };
 
   // ✅ Loading State
   if (isLoading) {
@@ -157,7 +197,9 @@ export default function ProductDetailsPage() {
               Only {product.stock} left
             </Badge>
           ) : (
-            <Badge variant="destructive">Out of Stock</Badge>
+            <Badge variant="destructive" className="mb-3 w-fit">
+              Out of Stock
+            </Badge>
           )}
 
           <Separator />
@@ -196,9 +238,19 @@ export default function ProductDetailsPage() {
 
           {/* 🛒 Actions */}
           <div className="flex gap-3">
-            <Button className="flex-1 bg-rose-600 hover:bg-rose-800" size="lg">
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Add to Cart
+            <Button
+              onClick={handleAddToCart}
+              disabled={isOutOfStock || adding}
+              className={`w-full bg-rose-700 hover:bg-rose-900 ${
+                isOutOfStock ? "cursor-not-allowed opacity-60" : ""
+              }`}
+            >
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              ) : (
+                <ShoppingCart className="w-4 h-4 mr-2" />
+              )}
+              {isOutOfStock ? "Out of Stock" : "Add to Cart"}
             </Button>
             <Button variant="outline" size="lg">
               <Heart className="h-4 w-4 text-rose-700 hover:bg-blue-700" />
@@ -297,6 +349,7 @@ export default function ProductDetailsPage() {
             <Card>
               <CardContent className="p-6 space-y-6">
                 <ReviewForm productId={product._id} />
+                <Separator />
 
                 {/* Reviews List (future) */}
                 {product.reviews && product.reviews.length > 0 ? (
@@ -328,9 +381,17 @@ export default function ProductDetailsPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-center">
-                    No reviews yet
-                  </p>
+                  <Card>
+                    <CardContent className="text-center py-12">
+                      <MessageCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">
+                        No Reviews Yet
+                      </h3>
+                      <p className="text-muted-foreground">
+                        Be the first to review this product!
+                      </p>
+                    </CardContent>
+                  </Card>
                 )}
               </CardContent>
             </Card>
@@ -341,6 +402,8 @@ export default function ProductDetailsPage() {
             <Card>
               <CardContent className="p-6 space-y-6">
                 <QuestionForm productId={product._id} />
+
+                <Separator />
 
                 {/* Questions List */}
                 {product.questions && product.questions.length > 0 ? (
@@ -366,9 +429,17 @@ export default function ProductDetailsPage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <p className="text-lg font-medium">No Questions Yet</p>
-                  </div>
+                  <Card>
+                    <CardContent className="text-center py-12">
+                      <MessageCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">
+                        No Questions Yet
+                      </h3>
+                      <p className="text-muted-foreground">
+                        Be the first to ask a question about this product!
+                      </p>
+                    </CardContent>
+                  </Card>
                 )}
               </CardContent>
             </Card>

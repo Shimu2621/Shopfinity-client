@@ -4,7 +4,14 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingCart, Heart, Eye, ArrowRight } from "lucide-react";
+import {
+  Star,
+  ShoppingCart,
+  Heart,
+  Eye,
+  ArrowRight,
+  Loader2,
+} from "lucide-react";
 import type { IProduct } from "@/types";
 import Image from "next/image";
 
@@ -12,6 +19,10 @@ import { ShinyButton } from "../magicui/shiny-button";
 import { AuroraText } from "../magicui/aurora-text";
 import Link from "next/link";
 import { useGetFeaturedCategoryProductsQuery } from "@/redux/api/product/productApi";
+import { useAddToCartMutation } from "@/redux/api/cart/cartApi";
+import { toast } from "sonner";
+import { useAppSelector } from "@/redux/hooks/hooks";
+import { useState } from "react";
 
 export default function FeaturedProducts() {
   const {
@@ -19,6 +30,11 @@ export default function FeaturedProducts() {
     isLoading,
     isError,
   } = useGetFeaturedCategoryProductsQuery();
+
+  const { user } = useAppSelector((state) => state.auth);
+  const userId = user?.id;
+  const [addToCart] = useAddToCartMutation();
+  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -135,9 +151,41 @@ export default function FeaturedProducts() {
                       size="icon"
                       variant="secondary"
                       className="h-10 w-10"
+                      disabled={
+                        product.stock === 0 ||
+                        (isLoading && loadingProductId === product._id)
+                      }
+                      onClick={async () => {
+                        if (!userId) {
+                          toast.error("Please login first");
+                          return;
+                        }
+
+                        try {
+                          setLoadingProductId(product._id);
+
+                          await addToCart({
+                            userId,
+                            productId: product._id,
+                            quantity: 1,
+                          }).unwrap();
+
+                          toast.success(`${product.name} added to cart`);
+                        } catch (isError) {
+                          toast.error("Failed to add to cart");
+                          console.error(isError);
+                        } finally {
+                          setLoadingProductId(null);
+                        }
+                      }}
                     >
-                      <ShoppingCart className="w-4 h-4" />
+                      {isLoading && loadingProductId === product._id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <ShoppingCart className="w-4 h-4" />
+                      )}
                     </Button>
+
                     <Button
                       size="icon"
                       variant="secondary"

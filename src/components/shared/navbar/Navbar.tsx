@@ -23,10 +23,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks/hooks";
+import { logout } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
+import { useGetUserCartQuery } from "@/redux/api/cart/cartApi";
+import CartSidebar from "@/components/shared/cartSidebar/CartSidebar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  // 🔐 Auth state
+  const { user, token } = useAppSelector((state) => state.auth);
+  const userId = user?.id; // FIX: use _id (MongoDB)
+
+  // 🛒 Cart query (safe)
+  const { data: cartItems } = useGetUserCartQuery(userId!, {
+    skip: !userId,
+  });
+
+  const isAuthenticated = !!token;
+  const isAdmin = user?.role === "admin";
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -35,6 +55,15 @@ export default function Navbar() {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const cartCount =
+    cartItems?.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    router.push("/signin");
+  };
 
   return (
     <motion.nav
@@ -114,16 +143,23 @@ export default function Navbar() {
 
             {/* Cart */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="icon" className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative"
+                onClick={() => setIsCartOpen(true)}
+              >
                 <ShoppingCart className="h-5 w-5" />
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-rose-700">
-                  0
-                </Badge>
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-rose-700 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    {cartCount}
+                  </span>
+                )}
               </Button>
             </motion.div>
 
             {/* User Account */}
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -140,6 +176,51 @@ export default function Navbar() {
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Dashboard</DropdownMenuItem>
                 <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu> */}
+
+            {/* User Account */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </motion.div>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end" className="w-48">
+                {!isAuthenticated ? (
+                  <DropdownMenuItem asChild>
+                    <Link href="/signin">Sign In</Link>
+                  </DropdownMenuItem>
+                ) : (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link href="/profile">Manage Profile</Link>
+                    </DropdownMenuItem>
+
+                    {isAdmin ? (
+                      <DropdownMenuItem asChild>
+                        <Link href="/dashboard">Dashboard</Link>
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem asChild>
+                        <Link href="/orders">My Orders</Link>
+                      </DropdownMenuItem>
+                    )}
+
+                    <DropdownMenuItem
+                      className="text-red-600 focus:text-red-600"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -182,6 +263,13 @@ export default function Navbar() {
           </motion.div>
         )}
       </div>
+      {userId && (
+        <CartSidebar
+          open={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          userId={userId}
+        />
+      )}
     </motion.nav>
   );
 }

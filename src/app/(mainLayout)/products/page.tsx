@@ -28,17 +28,23 @@ import Image from "next/image";
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
+import { useAddToCartMutation } from "@/redux/api/cart/cartApi";
+import { toast } from "sonner";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/hooks/hooks";
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-  // const [totalProducts, setTotalProducts] = useState(0);
 
   const { data, isLoading, isError } = useGetAllProductsQuery({
     page: currentPage.toString(),
     limit: itemsPerPage.toString(),
   });
+
+  const { user } = useAppSelector((state) => state.auth);
+  const userId = user?.id;
+  const [addToCart] = useAddToCartMutation();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -181,9 +187,24 @@ export default function ProductsPage() {
                         size="icon"
                         variant="secondary"
                         className="h-10 w-10"
+                        onClick={async () => {
+                          if (!userId) {
+                            toast.error("Please login first");
+                            return;
+                          }
+
+                          await addToCart({
+                            userId,
+                            productId: product._id,
+                            quantity: 1,
+                          });
+
+                          toast.success(`${product.name} added to cart`);
+                        }}
                       >
                         <ShoppingCart className="w-4 h-4" />
                       </Button>
+
                       <Button
                         size="icon"
                         variant="secondary"

@@ -134,7 +134,11 @@ export default function ReviewForm({ productId }: ReviewFormProps) {
               )}
             />
 
-            <Button type="submit" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-rose-700 hover:bg-rose-900"
+            >
               {isLoading ? "Submitting..." : "Submit Review"}
             </Button>
           </form>
