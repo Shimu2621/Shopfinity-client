@@ -21,24 +21,28 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
+
+// import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { useGetUserCartQuery } from "@/redux/api/cart/cartApi";
 import CartSidebar from "@/components/shared/cartSidebar/CartSidebar";
+import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi";
+import WishlistSidebar from "@/components/shared/wishlistSidebar/WishlistSidebar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   // 🔐 Auth state
   const { user, token } = useAppSelector((state) => state.auth);
-  const userId = user?.id; // FIX: use _id (MongoDB)
+  const userId = user?._id; // FIX: use _id (MongoDB)
 
   // 🛒 Cart query (safe)
   const { data: cartItems } = useGetUserCartQuery(userId!, {
@@ -47,6 +51,13 @@ export default function Navbar() {
 
   const isAuthenticated = !!token;
   const isAdmin = user?.role === "admin";
+
+  const { data: wishlistData } = useGetWishlistQuery(
+    { userId },
+    { skip: !userId }
+  );
+
+  const wishlistCount = wishlistData?.data?.length ?? 0;
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -133,12 +144,18 @@ export default function Navbar() {
 
             {/* Wishlist */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="icon" className="relative">
-                <Heart className="h-5 w-5" />
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-rose-700">
-                  0
-                </Badge>
-              </Button>
+              <button
+                onClick={() => setIsWishlistOpen(true)}
+                className="relative"
+              >
+                <Heart />
+
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
             </motion.div>
 
             {/* Cart */}
@@ -263,6 +280,14 @@ export default function Navbar() {
           </motion.div>
         )}
       </div>
+      {user && (
+        <WishlistSidebar
+          isOpen={isWishlistOpen}
+          onClose={() => setIsWishlistOpen(false)}
+          userId={user._id}
+        />
+      )}
+
       {userId && (
         <CartSidebar
           open={isCartOpen}

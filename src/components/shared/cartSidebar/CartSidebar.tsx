@@ -75,7 +75,11 @@ const CartSidebar = ({ open, onClose, userId }: CartSidebarProps) => {
                   Add some products to get started!
                 </p>
 
-                <Button onClick={onClose} asChild>
+                <Button
+                  onClick={onClose}
+                  asChild
+                  className="bg-rose-700 hover:bg-rose-900"
+                >
                   <Link href="/products">Continue Shopping</Link>
                 </Button>
               </div>

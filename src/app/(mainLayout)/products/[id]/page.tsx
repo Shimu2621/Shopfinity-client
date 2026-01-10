@@ -29,12 +29,18 @@ import { toast } from "sonner"; // or react-hot-toast
 import { useAppSelector } from "@/redux/hooks/hooks";
 import { useState } from "react";
 import { useGetProductSpecificationsByProductIdQuery } from "@/redux/api/productSpecification/productSpecificationApi";
+import {
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
+  useGetWishlistQuery,
+} from "@/redux/api/wishlist/wishlistApi";
+import { IProduct } from "@/types";
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?.id;
+  const userId = user?._id;
 
   // Fetch product first
   const { data: product, isLoading, isError } = useGetSingleProductQuery(id);
@@ -50,6 +56,23 @@ export default function ProductDetailsPage() {
     });
 
   console.log("Product ID:", productId);
+
+  const { data: wishlistData } = useGetWishlistQuery(
+    { userId },
+    { skip: !userId }
+  );
+
+  const [addToWishlist] = useAddToWishlistMutation();
+  const [removeFromWishlist] = useRemoveFromWishlistMutation();
+
+  const getProductId = (productId: string | IProduct) =>
+    typeof productId === "string" ? productId : productId._id;
+
+  const isWishlisted =
+    !!product &&
+    wishlistData?.data?.some(
+      (item) => getProductId(item.productId) === product._id
+    );
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-US", {
@@ -252,8 +275,47 @@ export default function ProductDetailsPage() {
               )}
               {isOutOfStock ? "Out of Stock" : "Add to Cart"}
             </Button>
-            <Button variant="outline" size="lg">
-              <Heart className="h-4 w-4 text-rose-700 hover:bg-blue-700" />
+
+            {/* Heart Button */}
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={async () => {
+                if (!userId) {
+                  toast.error("Please login first");
+                  return;
+                }
+
+                try {
+                  if (isWishlisted) {
+                    await removeFromWishlist({
+                      userId,
+                      productId: product._id,
+                    }).unwrap();
+
+                    toast.success("Removed from wishlist");
+                  } else {
+                    await addToWishlist({
+                      userId,
+                      productId: product._id,
+                    }).unwrap();
+
+                    toast.success(
+                      product.stock === 0
+                        ? "Saved for later (out of stock)"
+                        : "Added to wishlist"
+                    );
+                  }
+                } catch {
+                  toast.error("Wishlist action failed");
+                }
+              }}
+            >
+              <Heart
+                className={`h-5 w-5 ${
+                  isWishlisted ? "fill-rose-600 text-rose-600" : "text-rose-600"
+                }`}
+              />
             </Button>
           </div>
 

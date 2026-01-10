@@ -23,6 +23,11 @@ import { useAddToCartMutation } from "@/redux/api/cart/cartApi";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks/hooks";
 import { useState } from "react";
+import {
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
+  useGetWishlistQuery,
+} from "@/redux/api/wishlist/wishlistApi";
 
 export default function FeaturedProducts() {
   const {
@@ -32,9 +37,22 @@ export default function FeaturedProducts() {
   } = useGetFeaturedCategoryProductsQuery();
 
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?.id;
+  const userId = user?._id;
   const [addToCart] = useAddToCartMutation();
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
+  const { data: wishlistData } = useGetWishlistQuery(
+    { userId },
+    { skip: !userId }
+  );
+
+  const [addToWishlist] = useAddToWishlistMutation();
+  const [removeFromWishlist] = useRemoveFromWishlistMutation();
+
+  const getProductId = (productId: string | IProduct) =>
+    typeof productId === "string" ? productId : productId._id;
+
+  const isWishlisted = (id: string) =>
+    wishlistData?.data?.some((item) => getProductId(item.productId) === id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -190,9 +208,42 @@ export default function FeaturedProducts() {
                       size="icon"
                       variant="secondary"
                       className="h-10 w-10"
+                      onClick={async () => {
+                        if (!userId) {
+                          toast.error("Please login first");
+                          return;
+                        }
+
+                        try {
+                          if (isWishlisted(product._id)) {
+                            await removeFromWishlist({
+                              userId,
+                              productId: product._id,
+                            }).unwrap();
+
+                            toast.success("Removed from wishlist");
+                          } else {
+                            await addToWishlist({
+                              userId,
+                              productId: product._id,
+                            }).unwrap();
+
+                            toast.success("Added to wishlist");
+                          }
+                        } catch {
+                          toast.error("Wishlist action failed");
+                        }
+                      }}
                     >
-                      <Heart className="w-6 h-6" />
+                      <Heart
+                        className={`w-6 h-6 ${
+                          isWishlisted(product._id)
+                            ? "fill-rose-600 text-rose-600"
+                            : "text-muted-foreground"
+                        }`}
+                      />
                     </Button>
+
                     <Link href={`/products/${product._id}`}>
                       <Button
                         size="icon"
