@@ -40,7 +40,7 @@ export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?._id;
+  const userId = user?.id;
 
   // Fetch product first
   const { data: product, isLoading, isError } = useGetSingleProductQuery(id);

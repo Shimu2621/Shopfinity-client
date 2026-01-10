@@ -245,12 +245,12 @@ export default function ProductsPage() {
 
                   <CardContent className="p-4">
                     <div className="flex justify-between">
-                      {product.brandId && (
+                      {product.brand && (
                         <Badge variant="secondary" className="text-md mb-2">
                           {product.brand?.name}
                         </Badge>
                       )}
-                      {product.categoryId && (
+                      {product.category && (
                         <Badge variant="secondary" className="text-md mb-2">
                           {product.category?.name}
                         </Badge>

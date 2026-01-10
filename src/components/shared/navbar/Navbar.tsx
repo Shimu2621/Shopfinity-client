@@ -42,7 +42,7 @@ export default function Navbar() {
 
   // 🔐 Auth state
   const { user, token } = useAppSelector((state) => state.auth);
-  const userId = user?._id; // FIX: use _id (MongoDB)
+  const userId = user?.id; // FIX: use _id (MongoDB)
 
   // 🛒 Cart query (safe)
   const { data: cartItems } = useGetUserCartQuery(userId!, {
@@ -148,10 +148,10 @@ export default function Navbar() {
                 onClick={() => setIsWishlistOpen(true)}
                 className="relative"
               >
-                <Heart />
+                <Heart className="h-4 w-4" />
 
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                  <span className="absolute -top-4 -right-4 bg-rose-700 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                     {wishlistCount}
                   </span>
                 )}
@@ -174,27 +174,6 @@ export default function Navbar() {
                 )}
               </Button>
             </motion.div>
-
-            {/* User Account */}
-            {/* <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Link href="/signup">
-                    <Button variant="ghost" size="icon">
-                      <User className="h-5 w-5" />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu> */}
 
             {/* User Account */}
             <DropdownMenu>
@@ -282,9 +261,9 @@ export default function Navbar() {
       </div>
       {user && (
         <WishlistSidebar
-          isOpen={isWishlistOpen}
+          open={isWishlistOpen}
           onClose={() => setIsWishlistOpen(false)}
-          userId={user._id}
+          userId={user.id}
         />
       )}
 
