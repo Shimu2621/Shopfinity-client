@@ -37,7 +37,7 @@ export default function FeaturedProducts() {
   } = useGetFeaturedCategoryProductsQuery();
 
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?.id;
+  const userId = user?._id;
   const [addToCart] = useAddToCartMutation();
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
   const { data: wishlistData } = useGetWishlistQuery(

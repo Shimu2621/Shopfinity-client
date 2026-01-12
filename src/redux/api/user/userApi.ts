@@ -32,6 +32,10 @@ export const userApi = baseApi.injectEndpoints({
     }),
 
     /* -------------------- USER -------------------- */
+    getMe: builder.query<{ user: IUser }, void>({
+      query: () => "/users/me",
+      providesTags: ["USER"],
+    }),
 
     getProfile: builder.query<{ user: IUser }, string>({
       query: (id) => `/users/profile/${id}`,
@@ -74,6 +78,7 @@ export const {
   useSignupMutation,
   useSigninMutation,
   useGetProfileQuery,
+  useGetMeQuery,
   useGetAllUsersQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,

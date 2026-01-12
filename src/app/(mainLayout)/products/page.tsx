@@ -43,7 +43,7 @@ export default function ProductsPage() {
   });
 
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?.id;
+  const userId = user?._id;
   const [addToCart] = useAddToCartMutation();
 
   const formatPrice = (price: number) => {

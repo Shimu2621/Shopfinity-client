@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import ScrollToTop from "@/components/common/ScrollToTop";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { easeInOut } from "framer-motion";
 import {
   Facebook,
   Twitter,
@@ -19,7 +19,9 @@ import Link from "next/link";
 export default function Footer() {
   // Animation variants for moving circles up and down with blinking
   // Use a valid framer-motion easing function
-  const easeInOutCubic = "easeInOut";
+  const EASE_IN_OUT: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+  // const easeInOutCubic = "easeInOut";
 
   const verticalMovingAnimation1 = {
     y: [-50, 400, -50],
@@ -27,7 +29,7 @@ export default function Footer() {
     transition: {
       duration: 8,
       repeat: Number.POSITIVE_INFINITY,
-      ease: easeInOutCubic,
+      ease: EASE_IN_OUT,
     },
   };
 
@@ -37,7 +39,7 @@ export default function Footer() {
     transition: {
       duration: 10,
       repeat: Number.POSITIVE_INFINITY,
-      ease: easeInOutCubic,
+      ease: EASE_IN_OUT,
     },
   };
 
@@ -47,7 +49,7 @@ export default function Footer() {
     transition: {
       duration: 6,
       repeat: Number.POSITIVE_INFINITY,
-      ease: easeInOutCubic,
+      ease: EASE_IN_OUT,
     },
   };
 
@@ -57,7 +59,7 @@ export default function Footer() {
     transition: {
       duration: 3,
       repeat: Number.POSITIVE_INFINITY,
-      ease: easeInOutCubic,
+      ease: EASE_IN_OUT,
     },
   };
 
@@ -121,7 +123,7 @@ export default function Footer() {
             transition: {
               duration: 12,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: EASE_IN_OUT,
             },
           }}
           className="absolute right-10 w-18 h-18 rounded-full"
@@ -134,7 +136,7 @@ export default function Footer() {
             transition: {
               duration: 9,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: EASE_IN_OUT,
             },
           }}
           className="absolute left-1/2 w-14 h-14 rounded-full"
@@ -154,7 +156,7 @@ export default function Footer() {
             transition: {
               duration: 4,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: EASE_IN_OUT,
             },
           }}
           className="absolute bottom-32 right-1/3 w-8 h-8 rounded-full"
@@ -167,7 +169,7 @@ export default function Footer() {
             transition: {
               duration: 5,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: EASE_IN_OUT,
             },
           }}
           className="absolute top-1/2 right-20 w-12 h-12 rounded-full"
@@ -464,7 +466,7 @@ export default function Footer() {
             transition: {
               duration: 1.5,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: [0.4, 0, 0.2, 1],
             },
           }}
           className="absolute top-40 left-1/5 w-4 h-4 rounded-full"
@@ -476,7 +478,7 @@ export default function Footer() {
             transition: {
               duration: 2,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
+              ease: [0.4, 0, 0.2, 1],
             },
           }}
           className="absolute bottom-20 left-2/3 w-5 h-5 rounded-full"
@@ -684,6 +686,7 @@ export default function Footer() {
           </div>
         </div>
       </div> */}
+      <ScrollToTop />
     </footer>
   );
 }

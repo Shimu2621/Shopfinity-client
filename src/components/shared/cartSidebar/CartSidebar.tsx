@@ -111,7 +111,13 @@ const CartSidebar = ({ open, onClose, userId }: CartSidebarProps) => {
                       </button>
                     </div>
 
-                    <p className="text-sm">${item.productId.price}</p>
+                    {/* Product item price */}
+                    <div className="text-sm text-muted-foreground flex justify-between">
+                      <span>${item.productId.price} each</span>
+                      <span className="font-semibold text-foreground">
+                        ${(item.productId.price * item.quantity).toFixed(2)}
+                      </span>
+                    </div>
 
                     <div className="flex items-center px-2 w-fit border rounded gap-2 mt-2 font-semibold">
                       <button
@@ -153,9 +159,11 @@ const CartSidebar = ({ open, onClose, userId }: CartSidebarProps) => {
               <span>${total.toFixed(2)}</span>
             </div>
 
-            <button className="w-full bg-rose-600 hover:bg-rose-800 text-white py-2 rounded">
-              Proceed to Checkout
-            </button>
+            <Button asChild className="w-full bg-rose-600 hover:bg-rose-800">
+              <Link href="/checkout" onClick={onClose}>
+                Proceed to Checkout
+              </Link>
+            </Button>
 
             <button
               onClick={onClose}

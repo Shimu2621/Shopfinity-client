@@ -97,7 +97,10 @@ export function ContactUsSection() {
   }, []);
 
   return (
-    <section className="relative py-20 px-4 overflow-hidden">
+    <section
+      id="contact"
+      className="relative py-20 px-4 overflow-hidden scroll-mt-20"
+    >
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-rose-400 via-blue-800 to-purple-900"></div>
 

@@ -25,7 +25,8 @@ import { useGetSingleProductQuery } from "@/redux/api/product/productApi";
 import ReviewForm from "@/components/pages/productDetailsPage/ReviewForm";
 import QuestionForm from "@/components/pages/productDetailsPage/QuestionForm";
 import { useAddToCartMutation } from "@/redux/api/cart/cartApi";
-import { toast } from "sonner"; // or react-hot-toast
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks/hooks";
 import { useState } from "react";
 import { useGetProductSpecificationsByProductIdQuery } from "@/redux/api/productSpecification/productSpecificationApi";
@@ -41,6 +42,7 @@ export default function ProductDetailsPage() {
   const [quantity, setQuantity] = useState(1);
   const { user } = useAppSelector((state) => state.auth);
   const userId = user?.id;
+  const router = useRouter();
 
   // Fetch product first
   const { data: product, isLoading, isError } = useGetSingleProductQuery(id);
@@ -95,6 +97,7 @@ export default function ProductDetailsPage() {
 
     if (!userId) {
       toast.error("Please login to add items to cart");
+      router.push("/signin");
       return;
     }
 

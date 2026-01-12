@@ -138,7 +138,7 @@ export function AboutUsSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 px-4">
+    <section id="about" ref={sectionRef} className="py-16 px-4 scroll-mt-20">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden dark:font-bold">
