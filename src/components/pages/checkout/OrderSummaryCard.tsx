@@ -14,6 +14,8 @@ const OrderSummary = ({ userId }: OrderSummaryProps) => {
     skip: !userId,
   });
 
+  if (!userId) return null;
+
   const subtotal =
     cartItems?.reduce(
       (sum, item) => sum + item.productId.price * item.quantity,

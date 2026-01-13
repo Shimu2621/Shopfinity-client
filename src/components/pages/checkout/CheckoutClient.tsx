@@ -8,22 +8,20 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const CheckoutPage = () => {
+const CheckoutClient = () => {
   const router = useRouter();
   const { user } = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/signin");
-    }
-  }, [user, router]);
+  if (!user) {
+    router.replace("/signin");
+    return null;
+  }
 
-  if (!user) return null; // prevents flicker
+  // if (!user) return null; // prevents flicker
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="max-w-7xl mx-auto px-4 py-10">
       <div className="flex items-center gap-4 mb-6">
         <Button variant="ghost" size="icon" asChild>
           <Link href="/">
@@ -37,16 +35,20 @@ const CheckoutPage = () => {
       </div>
       {/* LEFT */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <AccountInfoCard />
-        <ShippingAddressForm userId={user.id} />
-        {/* Delivery Method */}
-        {/* Payment Method */}
-      </div>
+        <div className="xl:col-span-2 space-y-6">
+          <AccountInfoCard />
+          <ShippingAddressForm userId={user.id} />
+          {/* Delivery Method */}
+          {/* Payment Method */}
+        </div>
 
-      {/* RIGHT */}
-      <OrderSummary userId={user.id} />
+        {/* RIGHT */}
+        <div>
+          <OrderSummary userId={user.id} />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default CheckoutPage;
+export default CheckoutClient;
