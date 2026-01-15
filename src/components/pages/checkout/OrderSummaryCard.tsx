@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   Truck,
 } from "lucide-react";
+import { useState } from "react";
 
 interface OrderSummaryProps {
   userId: string;
@@ -17,6 +18,7 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
+  const [isProcessing, setIsProcessing] = useState(false);
   const { data: cartItems, isLoading } = useGetUserCartQuery(userId, {
     skip: !userId,
   });
@@ -32,6 +34,15 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
   const shipping = subtotal > 0 ? 10 : 0; // flat demo shipping
   const tax = subtotal * 0.05; // 5% demo tax
   const total = subtotal + shipping + tax;
+
+  const handlePlaceOrder = async () => {
+    setIsProcessing(true);
+
+    // simulate API call
+    await new Promise((res) => setTimeout(res, 2000));
+
+    setIsProcessing(false);
+  };
 
   return (
     <>
@@ -105,18 +116,46 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
 
       <div className="pt-4">
         {paymentMethod === "pay_now" ? (
-          <button className="w-full rounded-lg bg-rose-700 text-white py-3 font-medium hover:bg-rose-900 transition">
-            <div className="flex items-center justify-center gap-2">
-              <CreditCard className="h-4 w-4" />
-              <span>Pay Now - ${total.toFixed(2)}</span>
-            </div>
+          <button
+            disabled={isProcessing}
+            onClick={handlePlaceOrder}
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-rose-600 text-white py-3 font-medium
+                 hover:bg-rose-900 transition disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isProcessing ? (
+              <>
+                {/* Spinner */}
+                <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Processing Payment...</span>
+              </>
+            ) : (
+              <>
+                {/* Animated Icon */}
+                <CreditCard className="h-4 w-4 animate-pulse" />
+                <span>Pay Now - ${total.toFixed(2)}</span>
+              </>
+            )}
           </button>
         ) : (
-          <button className="w-full rounded-xl bg-orange-700 text-white py-3 font-medium hover:bg-orange-700 transition">
-            <div className="flex items-center justify-center gap-2">
-              <Truck className="h-4 w-4" />
-              <span> Place your order - ${total.toFixed(2)}</span>
-            </div>
+          <button
+            disabled={isProcessing}
+            onClick={handlePlaceOrder}
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-orange-600 text-white py-3 font-medium
+                 hover:bg-orange-700 transition disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isProcessing ? (
+              <>
+                {/* Spinner */}
+                <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Placing Order...</span>
+              </>
+            ) : (
+              <>
+                {/* Animated Icon */}
+                <Truck className="h-4 w-4 animate-bounce" />
+                <span>Place your order - ${total.toFixed(2)}</span>
+              </>
+            )}
           </button>
         )}
       </div>
