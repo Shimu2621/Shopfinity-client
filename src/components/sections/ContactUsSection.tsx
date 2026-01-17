@@ -446,10 +446,10 @@ export function ContactUsSection() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
+                    className="w-full  bg-rose-700 hover:bg-rose-900 text-white py-3 font-semibold disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center  gap-3">
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                         Sending...
                       </div>
