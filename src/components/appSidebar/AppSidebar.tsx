@@ -203,9 +203,9 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <Link
                         href={item.url!}
-                        className="flex items-center gap-2"
+                        className="flex items-center font-semibold mb-3 gap-2"
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4 text-red-600" />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -218,10 +218,10 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     onClick={() => toggleMenu(item.title)}
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between mb-3"
                   >
                     <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-4 w-4 text-red-600" />
                       <span>{item.title}</span>
                     </div>
 
@@ -247,7 +247,7 @@ export function AppSidebar() {
                                 href={child.url!}
                                 className="flex items-center gap-2"
                               >
-                                <ChildIcon className="h-4 w-4" />
+                                <ChildIcon className="h-4 w-4 text-red-600" />
                                 <span>{child.title}</span>
                               </Link>
                             </SidebarMenuSubButton>

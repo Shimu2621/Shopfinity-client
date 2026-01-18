@@ -7,6 +7,7 @@ import {
   TopSellingProduct,
   UserRegistrationTrend,
   PaymentMethodDistribution,
+  TopCategoryBySales,
 } from "@/types/dashboard/dashboard";
 
 export const dashboardApi = baseApi.injectEndpoints({
@@ -32,6 +33,10 @@ export const dashboardApi = baseApi.injectEndpoints({
       query: () => "/admin/dashboard/user-trend",
     }),
 
+    getTopCategories: builder.query<TopCategoryBySales[], void>({
+      query: () => "/admin/dashboard/top-categories",
+    }),
+
     getPaymentMethods: builder.query<PaymentMethodDistribution[], void>({
       query: () => "/admin/dashboard/payment-methods",
     }),
@@ -44,5 +49,6 @@ export const {
   useGetOrderStatusQuery,
   useGetTopProductsQuery,
   useGetUserTrendQuery,
+  useGetTopCategoriesQuery,
   useGetPaymentMethodsQuery,
 } = dashboardApi;

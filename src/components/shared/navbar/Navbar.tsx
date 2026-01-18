@@ -54,7 +54,7 @@ export default function Navbar() {
 
   const { data: wishlistData } = useGetWishlistQuery(
     { userId },
-    { skip: !userId }
+    { skip: !userId },
   );
 
   const wishlistCount = wishlistData?.data?.length ?? 0;
@@ -201,7 +201,7 @@ export default function Navbar() {
 
                     {isAdmin ? (
                       <DropdownMenuItem asChild>
-                        <Link href="/dashboard">Dashboard</Link>
+                        <Link href="/admin">Dashboard</Link>
                       </DropdownMenuItem>
                     ) : (
                       <DropdownMenuItem asChild>
