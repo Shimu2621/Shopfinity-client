@@ -11,13 +11,3 @@ export interface ICategory {
   parent: ICategory | null;
   brands: IBrand[];
 }
-
-export interface IFilterOption {
-  id: string;
-  categoryId: string;
-  name: string;
-  type: "DROPDOWN" | "RANGE" | "TEXT";
-  options: string[] | null;
-  unit: string | null;
-  category: ICategory;
-}

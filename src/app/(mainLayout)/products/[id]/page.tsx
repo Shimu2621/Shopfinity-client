@@ -61,7 +61,7 @@ export default function ProductDetailsPage() {
 
   const { data: wishlistData } = useGetWishlistQuery(
     { userId },
-    { skip: !userId }
+    { skip: !userId },
   );
 
   const [addToWishlist] = useAddToWishlistMutation();
@@ -73,7 +73,7 @@ export default function ProductDetailsPage() {
   const isWishlisted =
     !!product &&
     wishlistData?.data?.some(
-      (item) => getProductId(item.productId) === product._id
+      (item) => getProductId(item.productId) === product._id,
     );
 
   const formatPrice = (price: number) =>
@@ -148,7 +148,7 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className="container mx-auto px-10 py-16 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* 🖼 Product Image */}
         <motion.div
@@ -267,7 +267,7 @@ export default function ProductDetailsPage() {
             <Button
               onClick={handleAddToCart}
               disabled={isOutOfStock || adding}
-              className={`w-full bg-rose-700 hover:bg-rose-900 ${
+              className={`w-155 text-white bg-rose-700 hover:bg-rose-900 ${
                 isOutOfStock ? "cursor-not-allowed opacity-60" : ""
               }`}
             >
@@ -306,7 +306,7 @@ export default function ProductDetailsPage() {
                     toast.success(
                       product.stock === 0
                         ? "Saved for later (out of stock)"
-                        : "Added to wishlist"
+                        : "Added to wishlist",
                     );
                   }
                 } catch {
@@ -435,7 +435,7 @@ export default function ProductDetailsPage() {
                                   key={i}
                                   className="w-4 h-4 fill-yellow-400 text-yellow-400"
                                 />
-                              )
+                              ),
                             )}
                           </div>
                         </div>

@@ -27,8 +27,20 @@ export const paymentApi = createApi({
       {
         query: () => "/payments",
         providesTags: ["Payment"],
-      }
+      },
     ),
+
+    // ➕ Stripe session
+    createStripeSession: builder.mutation<
+      { url: string },
+      { paymentId: string }
+    >({
+      query: (body) => ({
+        url: "/payments/create-stripe-session",
+        method: "POST",
+        body,
+      }),
+    }),
 
     // ✅ Payment success
     paymentSuccess: builder.mutation<
@@ -59,6 +71,7 @@ export const paymentApi = createApi({
 export const {
   useCreatePaymentMutation,
   useGetAllPaymentsQuery,
+  useCreateStripeSessionMutation,
   usePaymentSuccessMutation,
   usePaymentCancelMutation,
 } = paymentApi;
