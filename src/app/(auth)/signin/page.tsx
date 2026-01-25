@@ -107,7 +107,7 @@ export default function SigninPage() {
         "status" in err
           ? (err.data as { message: string })?.message ||
               "Invalid email or password"
-          : "Invalid email or password"
+          : "Invalid email or password",
       );
     }
   };
@@ -170,9 +170,6 @@ export default function SigninPage() {
           <Link href="/">
             <Home className="w-5 h-5" />
           </Link>
-        </Button>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Moon className="w-5 h-5" />
         </Button>
 
         {/* Theme Toggle */}

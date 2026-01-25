@@ -37,12 +37,12 @@ export default function FeaturedProducts() {
   } = useGetFeaturedCategoryProductsQuery();
 
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user?._id;
+  const userId = user?.id;
   const [addToCart] = useAddToCartMutation();
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
   const { data: wishlistData } = useGetWishlistQuery(
     { userId },
-    { skip: !userId }
+    { skip: !userId },
   );
 
   const [addToWishlist] = useAddToWishlistMutation();
@@ -63,7 +63,7 @@ export default function FeaturedProducts() {
 
   const calculateDiscountedPrice = (
     price: number,
-    discountPercentage: number
+    discountPercentage: number,
   ) => {
     return price - (price * discountPercentage) / 100;
   };
@@ -317,8 +317,8 @@ export default function FeaturedProducts() {
                           {formatPrice(
                             calculateDiscountedPrice(
                               product.price,
-                              product.discountPercentage
-                            )
+                              product.discountPercentage,
+                            ),
                           )}
                         </span>
                         <span className="text-lg text-muted-foreground line-through">

@@ -127,7 +127,7 @@ export default function HeroSection() {
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600" />
-                      <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded" />
+                      <div className="h-4 w-10 bg-gray-300 dark:bg-gray-600 rounded" />
                     </div>
                     <div className="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded" />
                   </div>
@@ -159,7 +159,7 @@ export default function HeroSection() {
           className="lg:col-span-1"
         >
           <Card className="p-4 h-[670px] flex flex-col">
-            <Button className="font-semibold text-white text-lg flex-shrink-0 gap-3  bg-rose-700 hover:shadow-sm">
+            <Button className="font-semibold text-white text-lg flex-shrink-0 gap-3 bg-rose-700 hover:shadow-sm">
               <LayoutGrid className="w-5 h-5" />
               All Categories
             </Button>
@@ -175,9 +175,9 @@ export default function HeroSection() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: index * 0.05 }}
                         whileHover={{ scale: 1.02, x: 5 }}
-                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${
+                        className={`flex items-center justify-between p-1 rounded-lg cursor-pointer transition-all duration-200 ${
                           activeCategory === index
-                            ? "bg-primary text-primary-foreground shadow-md dark:text-white"
+                            ? "bg-primary text-primary-foreground shadow-md dark:text-white dark:bg-muted"
                             : "hover:bg-muted hover:shadow-sm"
                         }`}
                         onClick={() => setActiveCategory(index)}

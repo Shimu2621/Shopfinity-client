@@ -13,21 +13,16 @@ export interface FilterOptionPayload {
 
 export const filterOptionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // GET ALL
-    getAllFilterOptions: builder.query<ApiResponse<IFilterOption[]>, void>({
-      query: () => "/filter-options",
-      providesTags: [{ type: tagTypes.FILTER_OPTION, id: "LIST" }],
-    }),
-
-    // GET BY CATEGORY
-    getFilterOptionsByCategory: builder.query<
+    // ✅ GET ALL or BY CATEGORY
+    getFilterOptions: builder.query<
       ApiResponse<IFilterOption[]>,
-      string
+      { categoryId?: string } | void
     >({
-      query: (categoryId) => `/filter-options?categoryId=${categoryId}`,
-      providesTags: (result, error, categoryId) => [
-        { type: tagTypes.FILTER_OPTION, id: categoryId },
-      ],
+      query: (params) => ({
+        url: "/filter-options",
+        params: params ?? undefined,
+      }),
+      providesTags: [{ type: tagTypes.FILTER_OPTION, id: "LIST" }],
     }),
 
     // CREATE
@@ -73,8 +68,7 @@ export const filterOptionApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllFilterOptionsQuery,
-  useGetFilterOptionsByCategoryQuery,
+  useGetFilterOptionsQuery,
   useCreateFilterOptionMutation,
   useUpdateFilterOptionMutation,
   useDeleteFilterOptionMutation,
