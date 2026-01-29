@@ -22,6 +22,7 @@ import { ShinyButton } from "../magicui/shiny-button";
 import { AuroraText } from "../magicui/aurora-text";
 import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 // Define color palette
 const colors = [
@@ -132,35 +133,41 @@ export default function FeaturedCategory() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                <Card
-                  className={`relative group hover:shadow-xl hover:-translate-y-2 transition-all duration-500 border-0  shadow-sm bg-background dark:border dark:border-gray-400 cursor-pointer ${
-                    isVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-12"
-                  }`}
-                  style={{
-                    transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
-                  }}
+                <Link
+                  href={`/categories/${category.slug}~${category._id}`}
+                  key={category._id}
                 >
-                  <CardContent className="flex flex-col items-center text-center">
-                    <div
-                      className={`mb-4 flex items-center justify-center w-16 h-16 rounded-full ${
-                        colors[index % colors.length]
-                      }`}
-                    >
-                      {/* ✅ ICON FROM MAP */}
-                      <Icon className="w-7 h-7" />
-                    </div>
+                  <Card
+                    key={category._id}
+                    className={`relative group hover:shadow-xl hover:-translate-y-2 transition-all duration-500 border-0  shadow-sm bg-background dark:border dark:border-gray-400 cursor-pointer ${
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-12"
+                    }`}
+                    style={{
+                      transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+                    }}
+                  >
+                    <CardContent className="flex flex-col items-center text-center">
+                      <div
+                        className={`mb-4 flex items-center justify-center w-16 h-16 rounded-full ${
+                          colors[index % colors.length]
+                        }`}
+                      >
+                        {/* ✅ ICON FROM MAP */}
+                        <Icon className="w-7 h-7" />
+                      </div>
 
-                    <CardTitle className="text-lg font-bold">
-                      {category.name}
-                    </CardTitle>
+                      <CardTitle className="text-lg font-bold">
+                        {category.name}
+                      </CardTitle>
 
-                    <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[190px]">
-                      {category.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                      <p className="text-xs text-muted-foreground line-clamp-1 truncate max-w-[190px]">
+                        {category.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
               </motion.div>
             );
           })}

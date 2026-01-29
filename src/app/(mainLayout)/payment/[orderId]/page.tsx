@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import { useState } from "react";
@@ -22,7 +21,7 @@ export default function PaymentPage() {
     setIsProcessing(true);
 
     try {
-      // 1️⃣ Create payment in DB
+      // 1️⃣ Create payment record
       const payload = {
         userId: order.userId,
         orderId: order._id,

@@ -103,7 +103,7 @@ export default function FeaturedProducts() {
   }
 
   return (
-    <section className="py-16 px-4 container mx-auto bg-background">
+    <section className="py-16 px-4  bg-background">
       <div className="container mx-auto px-4 flex flex-col items-center">
         {/* Section Heading */}
         <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">

@@ -10,22 +10,26 @@ import ProductCard from "./ProductCard";
 export default function ProductsByCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
 
+  const [, categoryId] = slug.split("~");
+
   // Categories
   const { data: categoryData } = useGetAllCategoriesQuery();
-  const category = categoryData?.data.find((c) => c.slug === slug);
+  const category = categoryData?.data.find((c) => c._id === categoryId);
 
   // Brands
-  const { data: brands } = useGetAllBrandsQuery();
+  const { data: brands } = useGetAllBrandsQuery(
+    categoryId ? { categoryId } : undefined,
+  );
 
   // Filters (wait for category)
   const { data: filters } = useGetFilterOptionsQuery(
-    category?._id ? { categoryId: category._id } : undefined,
+    categoryId ? { categoryId } : undefined,
   );
 
   // Products
-  const { data: productData, isLoading } = useGetAllProductsQuery({
-    categoryId: category?._id,
-  });
+  const { data: productData, isLoading } = useGetAllProductsQuery(
+    categoryId ? { categoryId } : undefined,
+  );
 
   if (!category) return null;
 

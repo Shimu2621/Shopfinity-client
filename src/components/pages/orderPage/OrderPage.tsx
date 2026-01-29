@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ChevronRight, Home } from "lucide-react";
 import { CreditCard, Truck, Inbox, CheckCircle, Star } from "lucide-react";
+import { useRouter } from "next/navigation";
+// import { stripePromise } from "@/lib/stripe";
+// import type { Stripe } from "@stripe/stripe-js";
 
 const tabs = [
   "All",
@@ -48,6 +51,7 @@ export default function OrderPage() {
   const { data: orders, isLoading, isError } = useGetAllOrdersQuery();
   console.log("orders:", orders);
   const [activeTab, setActiveTab] = useState("All");
+  const router = useRouter();
 
   if (isLoading) return <div className="p-6">Loading orders...</div>;
   if (isError || !orders) return <div className="p-6">No orders found</div>;
@@ -56,8 +60,40 @@ export default function OrderPage() {
     activeTab === "All"
       ? orders
       : orders.filter(
-          (order) => order.status.toLowerCase() === activeTab.toLowerCase()
+          (order) => order.status.toLowerCase() === activeTab.toLowerCase(),
         );
+
+  // const handlePayNow = async (orderId: string) => {
+  //   try {
+  //     const res = await fetch(
+  //       "http://localhost:5000/api/payment/create-stripe-session",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ paymentId: orderId }),
+  //       },
+  //     );
+
+  //     const data = await res.json();
+
+  //     if (!data.id) throw new Error("Stripe session not created");
+
+  //     type StripeInstance = Awaited<typeof stripePromise>;
+
+  //     // const stripe = (await stripePromise) as Stripe;
+  //     const stripe = (await stripePromise) as StripeInstance;
+
+  //     if (!stripe) {
+  //       throw new Error("Stripe failed to load");
+  //     }
+
+  //     await (stripe as any).redirectToCheckout({
+  //       sessionId: data.id,
+  //     });
+  //   } catch (error) {
+  //     console.error("Payment error:", error);
+  //   }
+  // };
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
@@ -107,7 +143,7 @@ export default function OrderPage() {
                 <Badge variant="secondary" className="capitalize">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${statusColor(
-                      order.status
+                      order.status,
                     )}`}
                   >
                     {order.status}
@@ -178,7 +214,10 @@ export default function OrderPage() {
               </p>
 
               {order.status === "pending" && (
-                <Button className="bg-rose-700 hover:bg-rose-900">
+                <Button
+                  className="bg-rose-700 hover:bg-rose-900"
+                  onClick={() => router.push(`/payment/${order._id}`)}
+                >
                   Pay Now
                 </Button>
               )}

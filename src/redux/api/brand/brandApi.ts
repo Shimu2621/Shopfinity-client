@@ -11,8 +11,14 @@ export interface BrandPayload {
 export const brandApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // GET ALL
-    getAllBrands: builder.query<ApiResponse<IBrand[]>, void>({
-      query: () => "/brands",
+    getAllBrands: builder.query<
+      ApiResponse<IBrand[]>,
+      { categoryId?: string } | undefined
+    >({
+      query: (params) => ({
+        url: "/brands",
+        ...(params ? { params } : {}),
+      }),
       providesTags: [{ type: tagTypes.BRAND, id: "LIST" }],
     }),
 
