@@ -55,7 +55,7 @@ export default function ProductsPage() {
 
   const calculateDiscountedPrice = (
     price: number,
-    discountPercentage: number
+    discountPercentage: number,
   ) => {
     return price - (price * discountPercentage) / 100;
   };
@@ -289,8 +289,8 @@ export default function ProductsPage() {
                             {formatPrice(
                               calculateDiscountedPrice(
                                 product.price,
-                                product.discountPercentage
-                              )
+                                product.discountPercentage,
+                              ),
                             )}
                           </span>
                           <span className="text-sm text-muted-foreground line-through">
