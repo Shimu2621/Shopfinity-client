@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/pages/admin/AllProductsPage.tsx
 "use client";
@@ -16,12 +15,12 @@ import {
   useDeleteProductMutation,
   useUpdateProductMutation,
 } from "@/redux/api/product/productApi";
-import { IProduct } from "@/types";
+import { IProduct, UpdateProductPayload } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 // import { toast } from "react-hot-toast";
-import { Eye, Edit, Trash2, Copy, Search } from "lucide-react";
+import { Eye, Edit, Trash2, Copy, Search, Package } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,8 +38,7 @@ const AllProductsPage = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
   const [isEditOpen, setIsEditOpen] = useState(false);
-const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
-
+  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 
   // Fetch products with pagination
   const { data, isLoading } = useGetAllProductsQuery({
@@ -93,19 +91,26 @@ const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
     },
   };
 
-const handleUpdateProduct = async (id: string, data: any) => {
-  try {
-    await updateProduct({
-      id,
-      data,
-    }).unwrap();
+  const handleUpdateProduct = async (
+    id: string,
+    data: UpdateProductPayload,
+  ) => {
+    console.log("UPDATE ID:", id);
+    console.log("UPDATE DATA:", data);
 
-    toast.success("Product Updated!");
-  } catch (error) {
-    toast.error("Failed to update product");
-  }
-};
+    try {
+      await updateProduct({
+        id,
+        data,
+      }).unwrap();
 
+      toast.success("Product Updated!");
+      setIsEditOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update product");
+    }
+  };
 
   const getStockBadge = (stock: number) => {
     if (stock === 0) {
@@ -127,7 +132,7 @@ const handleUpdateProduct = async (id: string, data: any) => {
     if (stock <= 30) {
       return (
         <span className="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700 border border-yellow-200">
-          {stock} 
+          {stock} in stock
         </span>
       );
     }
@@ -142,21 +147,15 @@ const handleUpdateProduct = async (id: string, data: any) => {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center bg-blue-50 p-6 rounded-lg shadow">
+      <div className="flex justify-between items-center bg-blue-50 dark:bg-gray-950 dark:border dark:border-gray-800 p-6 rounded-lg shadow">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <svg
-              className="w-6 h-6 text-blue-500"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M3 3h18v18H3V3z" />
-            </svg>
+            <Package className="h-8 w-8 text-rose-700" />
             Product Management
           </h1>
           <p className="text-gray-600">Manage your product catalog with ease</p>
         </div>
-        <Button className="bg-rose-600 hover:bg-rose-700 text-white">
+        <Button className="bg-rose-700 hover:bg-rose-800 text-white">
           + Add Product
         </Button>
       </div>
@@ -181,9 +180,9 @@ const handleUpdateProduct = async (id: string, data: any) => {
       </motion.div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border dark:border-gray-800 ">
         <table className="w-full table-auto">
-          <thead className="bg-gray-100">
+          <thead>
             <tr>
               <th className="px-4 py-2 text-left">ID</th>
               <th className="px-4 py-2 text-left">Product</th>
@@ -210,7 +209,7 @@ const handleUpdateProduct = async (id: string, data: any) => {
               </tr>
             ) : (
               filteredProducts.map((product) => (
-                <tr key={product._id} className="border-t hover:bg-gray-50">
+                <tr key={product._id} className="border-t">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-gray-700">
@@ -272,18 +271,18 @@ const handleUpdateProduct = async (id: string, data: any) => {
 
                   <td className="px-4 py-2 flex gap-2">
                     <Link href={`/products/${product._id}`}>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-10 w-10"
-                      >
+                      <Button size="icon" variant="ghost" className="h-10 w-10">
                         <Eye className="w-4 h-4" />
                       </Button>
                     </Link>
-                    <Button variant="ghost" size="icon" onClick={() => {
-    setSelectedProduct(product);
-    setIsEditOpen(true);
-  }}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setIsEditOpen(true);
+                      }}
+                    >
                       <Edit size={16} />
                     </Button>
                     <Button
@@ -302,14 +301,14 @@ const handleUpdateProduct = async (id: string, data: any) => {
       </div>
 
       {selectedProduct && (
-  <EditProductDialog
-    product={selectedProduct}
-    onUpdate={handleUpdateProduct}
-    open={isEditOpen}
-    onOpenChange={setIsEditOpen}
-  />
-)}
-
+        <EditProductDialog
+          key={selectedProduct._id}
+          product={selectedProduct}
+          open={isEditOpen}
+          onOpenChange={setIsEditOpen}
+          onUpdate={handleUpdateProduct}
+        />
+      )}
 
       {/* Pagination */}
       <div className="flex justify-between items-center mt-4">

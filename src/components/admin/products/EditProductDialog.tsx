@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -8,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,22 +16,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { IProduct, UpdateProductPayload } from "@/types";
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
-import { IProduct } from "@/types";
-
-// interface Product {
-//   _id: string;
-//   name: string;
-//   price: number;
-//   stock: number;
-//   status: string;
-//   category: string;
-// }
+type EditProductForm = {
+  name: string;
+  price: number;
+  stock: number;
+  categoryId: string;
+};
 
 interface Props {
   product: IProduct;
-  onUpdate: (id: string, data: Partial<IProduct>) => Promise<void>;
+  onUpdate: (id: string, data: UpdateProductPayload) => Promise<void>;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -46,20 +41,39 @@ export default function EditProductDialog({
 }: Props) {
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, setValue } = useForm({
+  const form = useForm<EditProductForm>({
     defaultValues: {
       name: product.name,
       price: product.price,
       stock: product.stock,
-      status: product.status ?? "active",
-      category: product.category,
+      categoryId: product.category?.id ?? "",
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const { register, handleSubmit, setValue, reset } = form;
+
+  useEffect(() => {
+    if (product) {
+      reset({
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        categoryId: product.category?.id ?? "",
+      });
+    }
+  }, [product, reset]);
+
+  const onSubmit = async (data: EditProductForm) => {
     try {
       setLoading(true);
-      await onUpdate(product._id, data);
+
+      await onUpdate(product._id, {
+        name: data.name,
+        price: Number(data.price),
+        stock: Number(data.stock),
+        categoryId: data.categoryId,
+      });
+
       onOpenChange(false);
     } finally {
       setLoading(false);
@@ -74,64 +88,30 @@ export default function EditProductDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          
-          {/* Name */}
           <div>
             <label className="text-sm font-medium">Product Name</label>
-            <Input
-              {...register("name", { required: "Name is required" })}
-            />
+            <Input {...register("name", { required: true })} />
           </div>
 
-          {/* Price */}
           <div>
             <label className="text-sm font-medium">Price</label>
-            <Input
-              type="number"
-              {...register("price", { required: true })}
-            />
+            <Input type="number" {...register("price", { required: true })} />
           </div>
 
-          {/* Stock */}
           <div>
             <label className="text-sm font-medium">Stock</label>
-            <Input
-              type="number"
-              {...register("stock", { required: true })}
-            />
+            <Input type="number" {...register("stock", { required: true })} />
           </div>
 
-          {/* Status */}
-          <div>
-            <label className="text-sm font-medium">Status</label>
-
-            <Select
-              defaultValue={product.status}
-              onValueChange={(value) => setValue("status", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Category */}
           <div>
             <label className="text-sm font-medium">Category</label>
-
             <Select
-              defaultValue={product.category}
-              onValueChange={(value) => setValue("category", value)}
+              defaultValue={product.category?.id}
+              onValueChange={(value) => setValue("categoryId", value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
-
               <SelectContent>
                 <SelectItem value="laptop">Laptop</SelectItem>
                 <SelectItem value="phone">Phone</SelectItem>
@@ -140,7 +120,6 @@ export default function EditProductDialog({
             </Select>
           </div>
 
-          {/* Submit */}
           <Button className="w-full" disabled={loading}>
             {loading ? "Updating..." : "Update Product"}
           </Button>

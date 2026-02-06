@@ -15,7 +15,7 @@ export const paymentApi = createApi({
       ICreatePaymentPayload
     >({
       query: (body) => ({
-        url: "/payments",
+        url: "/payment",
         method: "POST",
         body,
       }),
@@ -36,7 +36,7 @@ export const paymentApi = createApi({
       { paymentId: string }
     >({
       query: (body) => ({
-        url: "/payments/create-stripe-session",
+        url: "/payment/create-stripe-session",
         method: "POST",
         body,
       }),
@@ -48,7 +48,7 @@ export const paymentApi = createApi({
       string
     >({
       query: (id) => ({
-        url: `/payments/${id}/success`,
+        url: `/payment/${id}/success`,
         method: "PATCH",
       }),
       invalidatesTags: ["Payment"],
@@ -60,7 +60,7 @@ export const paymentApi = createApi({
       string
     >({
       query: (id) => ({
-        url: `/payments/${id}/cancel`,
+        url: `/payment/${id}/cancel`,
         method: "PATCH",
       }),
       invalidatesTags: ["Payment"],

@@ -151,3 +151,15 @@ export interface IPaginatedProducts {
   page: number;
   limit: number;
 }
+
+export type UpdateProductPayload = {
+  name?: string;
+  price?: number;
+  stock?: number;
+  categoryId?: string;
+  brandId?: string;
+  featured?: boolean;
+  isDiscountActive?: boolean;
+  discountPercentage?: number;
+  discountValidUntil?: string;
+};
