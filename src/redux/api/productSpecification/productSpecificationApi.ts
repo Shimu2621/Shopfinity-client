@@ -14,6 +14,14 @@ export const productSpecificationApi = baseApi.injectEndpoints({
         url: "/product-specifications",
         params: productId ? { productId } : undefined,
       }),
+
+      // ✅ THIS IS THE KEY PART
+      transformResponse: (response: any[]) =>
+        response.map((item) => ({
+          ...item,
+          id: item._id, // map MongoDB _id → frontend id
+        })),
+
       providesTags: (result) =>
         result
           ? [
@@ -34,6 +42,13 @@ export const productSpecificationApi = baseApi.injectEndpoints({
       string
     >({
       query: (productId) => `/product-specifications/product/${productId}`,
+
+      transformResponse: (response: any[]) =>
+        response.map((item) => ({
+          ...item,
+          id: item._id,
+        })),
+
       providesTags: ["PRODUCT_SPECIFICATION"],
     }),
 
@@ -42,6 +57,12 @@ export const productSpecificationApi = baseApi.injectEndpoints({
        ========================= */
     getProductSpecification: builder.query<IProductSpecification, string>({
       query: (id) => `/product-specifications/${id}`,
+
+      transformResponse: (item: any) => ({
+        ...item,
+        id: item._id,
+      }),
+
       providesTags: (_result, _error, id) => [
         { type: "PRODUCT_SPECIFICATION", id },
       ],

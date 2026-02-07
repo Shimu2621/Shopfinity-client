@@ -4,6 +4,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+
 import {
   useGetProductSpecificationsQuery,
   useDeleteProductSpecificationMutation,
@@ -12,7 +14,12 @@ import { IProductSpecification } from "@/types/product/product";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Trash2,
   Edit,
@@ -22,6 +29,7 @@ import {
   Eye,
   Search,
   Plus,
+  Copy,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AuroraText } from "@/components/magicui/aurora-text";
@@ -30,6 +38,7 @@ const SpecificationPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const router = useRouter();
 
   // Fetch all product specifications
   const {
@@ -38,6 +47,8 @@ const SpecificationPage = () => {
     isError,
   } = useGetProductSpecificationsQuery();
 
+  const [editSpec, setEditSpec] = useState<IProductSpecification | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteSpec] = useDeleteProductSpecificationMutation();
 
   // Filter by search term
@@ -71,6 +82,39 @@ const SpecificationPage = () => {
     },
   };
 
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Copied to clipboard");
+    } catch {
+      toast.error("Failed to copy");
+    }
+  };
+
+  // const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, filteredSpecs.length);
+
+  const getPaginationPages = () => {
+    const pages = [];
+    const maxVisible = 5;
+
+    let start = Math.max(1, currentPage - 2);
+    let end = Math.min(totalPages, start + maxVisible - 1);
+
+    if (end - start < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
+  const pages = getPaginationPages();
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -91,7 +135,7 @@ const SpecificationPage = () => {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="flex items-center justify-between p-8 rounded-lg shadow  bg-blue-100">
+        <div className="flex items-center justify-between p-8 rounded-lg shadow  bg-blue-100 dark:bg-black dark:border dark:border-gray-700">
           <div className="flex flex-col">
             <span className="text-gray-600">Total Specifications</span>
             <span className="text-2xl font-bold text-blue-600">
@@ -100,7 +144,7 @@ const SpecificationPage = () => {
           </div>
           <Package className="h-8 w-8 text-blue-600 dark:text-blue-400" />
         </div>
-        <div className="flex items-center justify-between bg-green-100 p-8 rounded-lg shadow">
+        <div className="flex items-center justify-between bg-green-100 p-8 rounded-lg shadow dark:bg-black dark:border dark:border-gray-700">
           <div className=" flex flex-col">
             <span className="text-gray-600">Current Page</span>
             <span className="text-2xl font-bold text-green-600">
@@ -109,7 +153,7 @@ const SpecificationPage = () => {
           </div>
           <Eye className="h-8 w-8 text-green-600 dark:text-green-400" />
         </div>
-        <div className="flex items-center justify-between bg-purple-100 p-8 rounded-lg shadow">
+        <div className="flex items-center justify-between bg-purple-100 p-8 rounded-lg shadow dark:bg-black dark:border dark:border-gray-700">
           <div className="flex flex-col">
             <span className="text-gray-600">Per Page</span>
             <span className="text-2xl font-bold text-purple-600">
@@ -125,7 +169,7 @@ const SpecificationPage = () => {
         <Card className="shadow-lg border-0 py-0">
           <CardContent className="p-4">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div className="relative flex-1 max-w-sm">
+              <div className="relative flex-1 max-w-lg">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Search by Product ID..."
@@ -134,8 +178,8 @@ const SpecificationPage = () => {
                   className="pl-10 border-0 bg-muted/50 focus:bg-background transition-colors w-full"
                 />
               </div>
-              <Button className="shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
-                <Plus className="h-4 w-4 mr-2" />
+              <Button className="text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-rose-700 hover:bg-rose-900 ">
+                <Plus className="h-4 w-4 mr-2 text-white" />
                 Add Specification
               </Button>
             </div>
@@ -145,8 +189,8 @@ const SpecificationPage = () => {
 
       {/* Specifications Table */}
       <div className="overflow-x-auto mt-4">
-        <table className="min-w-full bg-white rounded-lg shadow">
-          <thead className="bg-gray-100">
+        <table className="min-w-full  rounded-lg shadow">
+          <thead className="bg-yellow-50 dark:bg-black rounded-lg">
             <tr>
               <th className="text-left px-4 py-2">ID</th>
               <th className="text-left px-4 py-2">Product ID</th>
@@ -176,28 +220,62 @@ const SpecificationPage = () => {
               </tr>
             ) : (
               paginatedSpecs.map((spec: IProductSpecification) => (
-                <tr key={spec.id} className="border-t hover:bg-gray-50">
-                  <td className="px-4 py-2">{spec._id}</td>
-                  <td className="px-4 py-2">{spec.productId}</td>
+                <tr key={spec.id} className="border-t ">
+                  <td className="px-4 py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-sm">
+                        {spec.id.slice(0, 14)}
+                      </span>
+
+                      <button
+                        onClick={() => handleCopy(spec.id)}
+                        className="text-gray-700 hover:text-primary transition"
+                        title="Copy ID"
+                      >
+                        <Copy className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+
+                  <td className="px-4 py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-sm">
+                        {spec.productId.slice(0, 14)}
+                      </span>
+
+                      <button
+                        onClick={() => handleCopy(spec.productId)}
+                        className="text-gray-700 hover:text-primary transition"
+                        title="Copy Product ID"
+                      >
+                        <Copy className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+
                   <td className="px-4 py-2 font-semibold">{spec.key}</td>
                   <td className="px-4 py-2">{spec.value}</td>
                   <td className="px-4 py-2 flex justify-center gap-2">
                     <button
                       className="p-2 text-blue-500 hover:bg-gray-100 rounded"
-                      title="View"
+                      title="View Product"
+                      onClick={() => router.push(`/products/${spec.productId}`)}
                     >
                       <ExternalLink size={18} />
                     </button>
+
                     <button
                       className="p-2 text-yellow-500 hover:bg-gray-100 rounded"
-                      title="Edit"
+                      title="Edit Specification"
+                      onClick={() => setEditSpec(spec)}
                     >
                       <Edit size={18} />
                     </button>
+
                     <button
                       className="p-2 text-red-500 hover:bg-gray-100 rounded"
                       title="Delete"
-                      onClick={() => handleDelete(spec.id)}
+                      onClick={() => setDeleteId(spec.id)}
                     >
                       <Trash2 size={18} />
                     </button>
@@ -209,22 +287,121 @@ const SpecificationPage = () => {
         </table>
       </div>
 
+      <Dialog open={!!editSpec} onOpenChange={() => setEditSpec(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Specification</DialogTitle>
+          </DialogHeader>
+
+          {editSpec && (
+            <div className="space-y-4">
+              <Input defaultValue={editSpec.key} />
+              <Input defaultValue={editSpec.value} />
+
+              <Button className="w-full">Update Specification</Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Delete Specification</DialogTitle>
+          </DialogHeader>
+
+          <p className="text-sm text-muted-foreground">
+            Are you sure you want to delete this specification? This action
+            cannot be undone.
+          </p>
+
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setDeleteId(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={async () => {
+                if (!deleteId) return;
+                await handleDelete(deleteId);
+                setDeleteId(null);
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Pagination */}
-      <div className="flex justify-end space-x-2 mt-4">
-        <button
-          disabled={currentPage <= 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Prev
-        </button>
-        <button
-          disabled={currentPage >= totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Next
-        </button>
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-6">
+        {/* Left */}
+        <span className="text-sm text-muted-foreground">
+          Show {itemsPerPage} per page
+        </span>
+
+        {/* Center */}
+        <span className="text-sm text-muted-foreground">
+          Showing {startItem} to {endItem} of {filteredSpecs.length} results
+        </span>
+
+        {/* Right */}
+        <div className="flex items-center gap-1">
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => p - 1)}
+          >
+            Previous
+          </Button>
+
+          {pages[0] > 1 && (
+            <>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCurrentPage(1)}
+              >
+                1
+              </Button>
+              <span className="px-1">…</span>
+            </>
+          )}
+
+          {pages.map((page) => (
+            <Button
+              key={page}
+              size="sm"
+              variant={page === currentPage ? "default" : "outline"}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </Button>
+          ))}
+
+          {pages[pages.length - 1] < totalPages && (
+            <>
+              <span className="px-1">…</span>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCurrentPage(totalPages)}
+              >
+                {totalPages}
+              </Button>
+            </>
+          )}
+
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((p) => p + 1)}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

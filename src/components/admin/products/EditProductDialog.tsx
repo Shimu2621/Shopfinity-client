@@ -21,9 +21,11 @@ import { useEffect, useState } from "react";
 
 type EditProductForm = {
   name: string;
+  description: string;
   price: number;
   stock: number;
-  categoryId: string;
+  categoryId?: string;
+  brandId?: string;
 };
 
 interface Props {
@@ -44,9 +46,11 @@ export default function EditProductDialog({
   const form = useForm<EditProductForm>({
     defaultValues: {
       name: product.name,
+      description: product.description,
       price: product.price,
       stock: product.stock,
       categoryId: product.category?.id ?? "",
+      brandId: product.brand?.id ?? "",
     },
   });
 
@@ -94,6 +98,15 @@ export default function EditProductDialog({
           </div>
 
           <div>
+            <label className="text-sm font-medium">Description</label>
+            <textarea
+              {...register("description")}
+              rows={4}
+              className="w-full rounded-md border px-3 py-2 text-sm"
+            />
+          </div>
+
+          <div>
             <label className="text-sm font-medium">Price</label>
             <Input type="number" {...register("price", { required: true })} />
           </div>
@@ -116,6 +129,26 @@ export default function EditProductDialog({
                 <SelectItem value="laptop">Laptop</SelectItem>
                 <SelectItem value="phone">Phone</SelectItem>
                 <SelectItem value="accessories">Accessories</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Brand</label>
+
+            <Select
+              value={form.watch("brandId")}
+              onValueChange={(value) => setValue("brandId", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select brand" />
+              </SelectTrigger>
+
+              <SelectContent>
+                {/* Replace with API data later */}
+                <SelectItem value="brand_id_1">Apple</SelectItem>
+                <SelectItem value="brand_id_2">Samsung</SelectItem>
+                <SelectItem value="brand_id_3">Sony</SelectItem>
               </SelectContent>
             </Select>
           </div>
