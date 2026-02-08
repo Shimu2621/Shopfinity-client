@@ -34,6 +34,7 @@ import macbookImg from "@/app/assets/macbook.png";
 import { ICategory } from "@/types";
 import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
 import { useState } from "react";
+import Link from "next/link";
 // import { RainbowButton } from "@/components/magicui/rainbow-button";
 
 // Define color palette
@@ -168,55 +169,52 @@ export default function HeroSection() {
                 <div className="space-y-2">
                   {categories.map((category, index) => {
                     const Icon = categoryIconMap[category.name] || Package;
+
                     return (
-                      <motion.div
-                        key={category.name}
-                        initial={{ x: -50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: index * 0.05 }}
-                        whileHover={{ scale: 1.02, x: 5 }}
-                        className={`flex items-center justify-between p-1 rounded-lg cursor-pointer transition-all duration-200 ${
-                          activeCategory === index
-                            ? "bg-primary text-primary-foreground shadow-md dark:text-white dark:bg-muted"
-                            : "hover:bg-muted hover:shadow-sm"
-                        }`}
-                        onClick={() => setActiveCategory(index)}
+                      <Link
+                        href={`/categories/${category.slug}~${category._id}`}
+                        key={category._id}
+                        className="block"
                       >
-                        <div className="flex items-center space-x-3">
-                          <motion.div
-                            whileHover={{ rotate: 5, scale: 1.1 }}
-                            transition={{ duration: 0.2 }}
-                            className={`${category.icon} ${
-                              activeCategory === index
-                                ? "text-primary-foreground"
-                                : ""
-                            }`}
-                          >
-                            <div
-                              className={`mb-1 flex items-center justify-center w-10 h-10 rounded-full ${
-                                colors[index % colors.length]
-                              }`}
+                        <motion.div
+                          initial={{ x: -50, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: index * 0.05 }}
+                          whileHover={{ scale: 1.02, x: 5 }}
+                          className={`flex items-center justify-between p-1 rounded-lg cursor-pointer transition-all duration-200 ${
+                            activeCategory === index
+                              ? "bg-primary text-primary-foreground shadow-md dark:text-white dark:bg-muted"
+                              : "hover:bg-muted hover:shadow-sm"
+                          }`}
+                          onClick={() => setActiveCategory(index)}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <motion.div
+                              whileHover={{ rotate: 5, scale: 1.1 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              {/* ✅ ICON FROM MAP */}
-                              <Icon className="w-6 h-6" />
-                            </div>
-                          </motion.div>
-                          <span className="font-medium text-md">
-                            {category.name}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          {/* <span className="text-xs text-muted-foreground">
-                            {category.count}
-                          </span> */}
+                              <div
+                                className={`mb-1 flex items-center justify-center w-10 h-10 rounded-full ${
+                                  colors[index % colors.length]
+                                }`}
+                              >
+                                <Icon className="w-6 h-6" />
+                              </div>
+                            </motion.div>
+
+                            <span className="font-medium text-md">
+                              {category.name}
+                            </span>
+                          </div>
+
                           <motion.div
                             whileHover={{ x: 3 }}
                             transition={{ duration: 0.2 }}
                           >
                             <ChevronRight className="h-4 w-4" />
                           </motion.div>
-                        </div>
-                      </motion.div>
+                        </motion.div>
+                      </Link>
                     );
                   })}
                 </div>
