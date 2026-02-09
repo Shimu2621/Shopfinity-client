@@ -27,17 +27,22 @@ export const productApi = baseApi.injectEndpoints({
     getAllProducts: builder.query<IPaginatedProducts, IProductQuery | void>({
       query: (params) => ({
         url: "/products",
-        params: params ?? undefined,
+        params: {
+          ...params,
+          featured:
+            params?.featured === undefined
+              ? undefined
+              : params.featured
+                ? "true"
+                : "false",
+          isDiscountActive:
+            params?.isDiscountActive === undefined
+              ? undefined
+              : params.isDiscountActive
+                ? "true"
+                : "false",
+        },
       }),
-      // transformResponse: (response: {
-      //   success: boolean;
-      //   products: IProduct[];
-      // }) =>
-      //   response.products.map((product) => ({
-      //     ...product,
-      //     category: product.categoryId,
-      //     brand: product.brandId,
-      //   })),
       providesTags: [tagTypes.PRODUCT],
     }),
 

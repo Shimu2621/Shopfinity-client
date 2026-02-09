@@ -103,6 +103,14 @@ export type IProductSpecification = {
   };
 };
 
+export type IProductSpecificationApiResponse = {
+  _id: string;
+  productId: string;
+  key: string;
+  value: string;
+  product: { name: string; price: number };
+};
+
 export type IQuestion = {
   id: string;
   question: string;
@@ -121,13 +129,16 @@ export type IAnswer = {
 };
 
 export interface IProductQuery {
-  page?: string;
-  limit?: string;
+  page?: number;
+  limit?: number;
+
   categoryId?: string;
   brandId?: string;
-  featured?: "true" | "false";
-  isDiscountActive?: "true" | "false";
+
+  featured?: boolean;
+  isDiscountActive?: boolean;
 }
+
 export interface IProductForm {
   name: string;
   description: string;

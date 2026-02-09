@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -33,12 +34,16 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { AuroraText } from "@/components/magicui/aurora-text";
+import { Label } from "@/components/ui/label";
 
 const SpecificationPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const router = useRouter();
+  const [editSpec, setEditSpec] = useState<IProductSpecification | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteSpec] = useDeleteProductSpecificationMutation();
 
   // Fetch all product specifications
   const {
@@ -46,10 +51,6 @@ const SpecificationPage = () => {
     isLoading,
     isError,
   } = useGetProductSpecificationsQuery();
-
-  const [editSpec, setEditSpec] = useState<IProductSpecification | null>(null);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [deleteSpec] = useDeleteProductSpecificationMutation();
 
   // Filter by search term
   const filteredSpecs = specs.filter((spec) =>
@@ -99,8 +100,8 @@ const SpecificationPage = () => {
     const pages = [];
     const maxVisible = 5;
 
-    let start = Math.max(1, currentPage - 2);
-    let end = Math.min(totalPages, start + maxVisible - 1);
+    const start = Math.max(1, currentPage - 2);
+    const end = Math.min(totalPages, start + maxVisible - 1);
 
     if (end - start < maxVisible) {
       start = Math.max(1, end - maxVisible + 1);
@@ -289,18 +290,56 @@ const SpecificationPage = () => {
 
       <Dialog open={!!editSpec} onOpenChange={() => setEditSpec(null)}>
         <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Edit Specification</DialogTitle>
+          <DialogHeader className="border-b pb-4">
+            <DialogTitle className="flex items-center space-x-2 text-xl">
+              <Settings className="h-6 w-6 text-primary" />
+              <span>
+                {editSpec ? "Edit Specification" : "Add New Specification"}
+              </span>
+            </DialogTitle>
           </DialogHeader>
 
           {editSpec && (
-            <div className="space-y-4">
-              <Input defaultValue={editSpec.key} />
-              <Input defaultValue={editSpec.value} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Product ID *</Label>
+                <Input
+                  value={editSpec.productId}
+                  placeholder="Enter Product ID"
+                  className="font-mono"
+                />
+              </div>
 
-              <Button className="w-full">Update Specification</Button>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  Specification Key *
+                </Label>
+                <Input
+                  value={editSpec.key}
+                  placeholder="e.g., Color, Material, Size"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  Specification Value *
+                </Label>
+                <Input
+                  value={editSpec.value}
+                  placeholder="e.g., Red, Cotton, Large"
+                />
+              </div>
             </div>
           )}
+
+          <DialogFooter className="border-t pt-4">
+            <Button variant="outline">Cancel</Button>
+            <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+              {editSpec
+                ? "Update Specification"
+                : `Add Specification${editSpec.length > 1 ? "s" : ""}`}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 

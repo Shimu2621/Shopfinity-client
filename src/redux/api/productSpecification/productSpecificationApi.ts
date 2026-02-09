@@ -1,5 +1,8 @@
 import { baseApi } from "../baseApi";
-import type { IProductSpecification } from "@/types/product/product";
+import type {
+  IProductSpecification,
+  IProductSpecificationApiResponse,
+} from "@/types/product/product";
 
 export const productSpecificationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,10 +19,13 @@ export const productSpecificationApi = baseApi.injectEndpoints({
       }),
 
       // ✅ THIS IS THE KEY PART
-      transformResponse: (response: any[]) =>
+      transformResponse: (response: IProductSpecificationApiResponse[]) =>
         response.map((item) => ({
-          ...item,
-          id: item._id, // map MongoDB _id → frontend id
+          id: item._id,
+          productId: item.productId,
+          key: item.key,
+          value: item.value,
+          product: item.product,
         })),
 
       providesTags: (result) =>
@@ -43,10 +49,13 @@ export const productSpecificationApi = baseApi.injectEndpoints({
     >({
       query: (productId) => `/product-specifications/product/${productId}`,
 
-      transformResponse: (response: any[]) =>
+      transformResponse: (response: IProductSpecificationApiResponse[]) =>
         response.map((item) => ({
-          ...item,
           id: item._id,
+          productId: item.productId,
+          key: item.key,
+          value: item.value,
+          product: item.product,
         })),
 
       providesTags: ["PRODUCT_SPECIFICATION"],
@@ -58,10 +67,14 @@ export const productSpecificationApi = baseApi.injectEndpoints({
     getProductSpecification: builder.query<IProductSpecification, string>({
       query: (id) => `/product-specifications/${id}`,
 
-      transformResponse: (item: any) => ({
-        ...item,
-        id: item._id,
-      }),
+      transformResponse: (response: IProductSpecificationApiResponse[]) =>
+        response.map((item) => ({
+          id: item._id,
+          productId: item.productId,
+          key: item.key,
+          value: item.value,
+          product: item.product,
+        })),
 
       providesTags: (_result, _error, id) => [
         { type: "PRODUCT_SPECIFICATION", id },
