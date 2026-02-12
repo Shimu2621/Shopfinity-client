@@ -1,182 +1,113 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { motion } from "framer-motion";
 import { useGetAllProductQuestionsQuery } from "@/redux/api/productQuestion/productQuestionApi";
-import {
-  useCreateProductAnswerMutation,
-  useDeleteProductAnswerMutation,
-} from "@/redux/api/productAnswer/productAnswerApi";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { MessageSquare, CheckCircle, Clock } from "lucide-react";
+import QnaTable from "@/components/admin/qna/QnaTable";
+import QnaStats from "@/components/admin/qna/QnaStats";
+import { HelpCircle } from "lucide-react";
 import { IQuestion } from "@/types";
+
+const ITEMS_PER_PAGE = 6;
 
 export default function QnAPage() {
   const { data: questions = [], isLoading } = useGetAllProductQuestionsQuery();
 
-  const [createAnswer] = useCreateProductAnswerMutation();
-  const [deleteAnswer] = useDeleteProductAnswerMutation();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-  const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
-    null,
-  );
-  const [answerText, setAnswerText] = useState("");
-
-  const total = questions.length;
-  const answered = questions.filter((q: IQuestion) => q.answer).length;
-  const pending = total - answered;
-
-  const handleSubmit = async (questionId: string) => {
-    if (!answerText) return;
-
-    await createAnswer({
-      questionId,
-      answer: answerText,
-      adminId: "ADMIN_ID_HERE", // replace with logged-in admin id
-    });
-
-    setAnswerText("");
-    setSelectedQuestionId(null);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  /* ================================
+     🔎 Filter Questions
+  ================================== */
+  const filteredQuestions = useMemo(() => {
+    return questions.filter((q: IQuestion) =>
+      q.question.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [questions, search]);
+
+  /* ================================
+     📄 Pagination
+  ================================== */
+  const totalPages = Math.ceil(filteredQuestions.length / ITEMS_PER_PAGE);
+
+  const paginatedQuestions = filteredQuestions.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  );
+
+  if (isLoading) return <p className="p-6">Loading...</p>;
 
   return (
-    <div className="p-6 space-y-8">
-      {/* ================= HEADER ================= */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-blue-600">
-          Product Q&A Management
-        </h1>
-        <p className="text-gray-500">
-          Manage customer questions and provide helpful answers
+    <div className="p-6 space-y-6 overflow-x-hidden">
+      {/* Header */}
+      <motion.div
+        variants={itemVariants}
+        initial="hidden"
+        animate="visible"
+        className="text-center space-y-4"
+      >
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-3 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
+            <HelpCircle className="h-8 w-8 text-white" />
+          </div>
+
+          <AuroraText className="text-4xl md:text-5xl font-bold">
+            Product Q&A Management
+          </AuroraText>
+        </div>
+
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Manage product questions and answers efficiently
         </p>
+      </motion.div>
+
+      {/* Stats */}
+      <QnaStats questions={questions} />
+
+      {/* 🔍 Search */}
+      <div className="flex justify-end">
+        <input
+          type="text"
+          placeholder="Search questions..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1); // reset page on search
+          }}
+          className="border rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
-      {/* ================= STATS CARDS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-blue-50 shadow-md rounded-2xl">
-          <CardContent className="flex justify-between items-center p-6">
-            <div>
-              <p className="text-gray-600">Total Questions</p>
-              <h2 className="text-3xl font-bold text-blue-600">{total}</h2>
-            </div>
-            <MessageSquare className="text-blue-500 w-10 h-10" />
-          </CardContent>
-        </Card>
+      {/* Table */}
+      <QnaTable questions={paginatedQuestions} />
 
-        <Card className="bg-green-50 shadow-md rounded-2xl">
-          <CardContent className="flex justify-between items-center p-6">
-            <div>
-              <p className="text-gray-600">Answered</p>
-              <h2 className="text-3xl font-bold text-green-600">{answered}</h2>
-            </div>
-            <CheckCircle className="text-green-500 w-10 h-10" />
-          </CardContent>
-        </Card>
-
-        <Card className="bg-orange-50 shadow-md rounded-2xl">
-          <CardContent className="flex justify-between items-center p-6">
-            <div>
-              <p className="text-gray-600">Pending</p>
-              <h2 className="text-3xl font-bold text-orange-600">{pending}</h2>
-            </div>
-            <Clock className="text-orange-500 w-10 h-10" />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* ================= TABLE ================= */}
-      <Card className="rounded-2xl shadow-lg">
-        <CardContent className="p-6 overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b text-gray-600">
-                <th className="py-3">Question</th>
-                <th>Product</th>
-                <th>Status</th>
-                <th>Answer</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {questions.map((q: IQuestion) => (
-                <tr key={q._id} className="border-b hover:bg-gray-50">
-                  <td className="py-4">{q.question}</td>
-
-                  <td>{q.productId?.name}</td>
-
-                  <td>
-                    {q.answer ? (
-                      <Badge className="bg-green-100 text-green-600">
-                        Answered
-                      </Badge>
-                    ) : (
-                      <Badge className="bg-orange-100 text-orange-600">
-                        Pending
-                      </Badge>
-                    )}
-                  </td>
-
-                  <td>{q.answer?.answer || "-"}</td>
-
-                  <td className="space-x-2">
-                    {!q.answer && (
-                      <Button
-                        size="sm"
-                        onClick={() => setSelectedQuestionId(q._id)}
-                      >
-                        Answer
-                      </Button>
-                    )}
-
-                    {q.answer && (
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => deleteAnswer(q.answer._id)}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </CardContent>
-      </Card>
-
-      {/* ================= ANSWER FORM ================= */}
-      {selectedQuestionId && (
-        <Card className="rounded-2xl shadow-xl">
-          <CardContent className="p-6 space-y-4">
-            <h3 className="text-lg font-semibold">Write Answer</h3>
-
-            <Textarea
-              placeholder="Type your answer..."
-              value={answerText}
-              onChange={(e) => setAnswerText(e.target.value)}
-            />
-
-            <div className="flex gap-3">
-              <Button onClick={() => handleSubmit(selectedQuestionId)}>
-                Submit Answer
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => setSelectedQuestionId(null)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-3 mt-4">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-3 py-1 rounded-lg border transition ${
+                page === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );
