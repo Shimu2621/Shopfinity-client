@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import {
   useGetProductSpecificationsQuery,
   useDeleteProductSpecificationMutation,
+  useUpdateProductSpecificationMutation,
+  useCreateProductSpecificationMutation,
 } from "@/redux/api/productSpecification/productSpecificationApi";
 import { IProductSpecification } from "@/types/product/product";
 import { Card, CardContent } from "@/components/ui/card";
@@ -44,6 +46,24 @@ const SpecificationPage = () => {
   const [editSpec, setEditSpec] = useState<IProductSpecification | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteSpec] = useDeleteProductSpecificationMutation();
+  const [updateSpec, { isLoading: isUpdating }] =
+    useUpdateProductSpecificationMutation();
+  const [createSpec, { isLoading: isCreating }] =
+    useCreateProductSpecificationMutation();
+
+  const [addOpen, setAddOpen] = useState(false);
+
+  const [addForm, setAddForm] = useState({
+    productId: "",
+    key: "",
+    value: "",
+  });
+
+  const [editForm, setEditForm] = useState<{
+    productId: string;
+    key: string;
+    value: string;
+  } | null>(null);
 
   // Fetch all product specifications
   const {
@@ -62,6 +82,28 @@ const SpecificationPage = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
+  const handleUpdate = async () => {
+    if (!editSpec || !editForm) return;
+
+    try {
+      await updateSpec({
+        id: editSpec.id,
+        data: {
+          productId: editForm.productId,
+          key: editForm.key,
+          value: editForm.value,
+        },
+      }).unwrap();
+
+      toast.success("Specification updated successfully");
+
+      setEditSpec(null);
+      setEditForm(null);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to update specification");
+    }
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this specification?")) return;
@@ -100,7 +142,7 @@ const SpecificationPage = () => {
     const pages = [];
     const maxVisible = 5;
 
-    const start = Math.max(1, currentPage - 2);
+    let start = Math.max(1, currentPage - 2);
     const end = Math.min(totalPages, start + maxVisible - 1);
 
     if (end - start < maxVisible) {
@@ -179,7 +221,10 @@ const SpecificationPage = () => {
                   className="pl-10 border-0 bg-muted/50 focus:bg-background transition-colors w-full"
                 />
               </div>
-              <Button className="text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-rose-700 hover:bg-rose-900 ">
+              <Button
+                onClick={() => setAddOpen(true)}
+                className="text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-rose-700 hover:bg-rose-900"
+              >
                 <Plus className="h-4 w-4 mr-2 text-white" />
                 Add Specification
               </Button>
@@ -268,7 +313,14 @@ const SpecificationPage = () => {
                     <button
                       className="p-2 text-yellow-500 hover:bg-gray-100 rounded"
                       title="Edit Specification"
-                      onClick={() => setEditSpec(spec)}
+                      onClick={() => {
+                        setEditSpec(spec);
+                        setEditForm({
+                          productId: spec.productId,
+                          key: spec.key,
+                          value: spec.value,
+                        });
+                      }}
                     >
                       <Edit size={18} />
                     </button>
@@ -289,77 +341,221 @@ const SpecificationPage = () => {
       </div>
 
       <Dialog open={!!editSpec} onOpenChange={() => setEditSpec(null)}>
-        <DialogContent className="max-w-md">
-          <DialogHeader className="border-b pb-4">
-            <DialogTitle className="flex items-center space-x-2 text-xl">
-              <Settings className="h-6 w-6 text-primary" />
-              <span>
-                {editSpec ? "Edit Specification" : "Add New Specification"}
-              </span>
+        <DialogContent
+          className="
+    max-w-lg
+    backdrop-blur-xl
+    bg-white/60 dark:bg-black/50
+    border border-white/30 dark:border-white/10
+    shadow-2xl
+    rounded-2xl
+  "
+        >
+          <DialogHeader className="border-b border-white/20 pb-4">
+            <DialogTitle className="flex items-center gap-2 text-xl">
+              <Settings className="h-5 w-5 text-primary" />
+              Edit Specification
             </DialogTitle>
           </DialogHeader>
 
-          {editSpec && (
+          {editForm && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Product ID *</Label>
+                <Label>Product ID *</Label>
                 <Input
-                  value={editSpec.productId}
-                  placeholder="Enter Product ID"
+                  value={editForm.productId}
+                  onChange={(e) =>
+                    setEditForm((prev) =>
+                      prev ? { ...prev, productId: e.target.value } : prev,
+                    )
+                  }
                   className="font-mono"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium">
-                  Specification Key *
-                </Label>
+                <Label>Specification Key *</Label>
                 <Input
-                  value={editSpec.key}
-                  placeholder="e.g., Color, Material, Size"
+                  value={editForm.key}
+                  onChange={(e) =>
+                    setEditForm((prev) =>
+                      prev ? { ...prev, key: e.target.value } : prev,
+                    )
+                  }
+                  placeholder="e.g., Color"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium">
-                  Specification Value *
-                </Label>
+                <Label>Specification Value *</Label>
                 <Input
-                  value={editSpec.value}
-                  placeholder="e.g., Red, Cotton, Large"
+                  value={editForm.value}
+                  onChange={(e) =>
+                    setEditForm((prev) =>
+                      prev ? { ...prev, value: e.target.value } : prev,
+                    )
+                  }
+                  placeholder="e.g., Red"
                 />
               </div>
             </div>
           )}
 
-          <DialogFooter className="border-t pt-4">
-            <Button variant="outline">Cancel</Button>
-            <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
-              {editSpec
-                ? "Update Specification"
-                : `Add Specification${editSpec.length > 1 ? "s" : ""}`}
+          <DialogFooter className="border-t border-white/20 pt-4">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setEditSpec(null);
+                setEditForm(null);
+              }}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              onClick={handleUpdate}
+              disabled={isUpdating}
+              className="
+    bg-gradient-to-r from-primary to-primary/80
+    hover:from-primary/90 hover:to-primary/70
+    shadow-lg
+  "
+            >
+              {isUpdating ? "Updating..." : "Update Specification"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent
+          className="
+      max-w-lg
+      backdrop-blur-xl
+      bg-white/60 dark:bg-black/50
+      border border-white/30 dark:border-white/10
+      shadow-2xl
+      rounded-2xl
+    "
+        >
+          <DialogHeader className="border-b border-white/20 pb-4">
+            <DialogTitle className="flex items-center gap-2 text-xl">
+              <Plus className="h-5 w-5 text-primary" />
+              Add Specification
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label>Product ID *</Label>
+              <Input
+                value={addForm.productId}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, productId: e.target.value })
+                }
+                className="font-mono"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Specification Key *</Label>
+              <Input
+                value={addForm.key}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, key: e.target.value })
+                }
+                placeholder="e.g., Color"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Specification Value *</Label>
+              <Input
+                value={addForm.value}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, value: e.target.value })
+                }
+                placeholder="e.g., Red"
+              />
+            </div>
+          </div>
+
+          <DialogFooter className="border-t border-white/20 pt-4">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setAddOpen(false);
+                setAddForm({ productId: "", key: "", value: "" });
+              }}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              disabled={isCreating}
+              onClick={async () => {
+                if (!addForm.productId || !addForm.key || !addForm.value) {
+                  toast.error("All fields are required");
+                  return;
+                }
+
+                try {
+                  await createSpec(addForm).unwrap();
+                  toast.success("Specification added successfully");
+
+                  setAddOpen(false);
+                  setAddForm({ productId: "", key: "", value: "" });
+                } catch (error: any) {
+                  toast.error(
+                    error?.data?.message || "Failed to add specification",
+                  );
+                }
+              }}
+              className="
+          bg-gradient-to-r from-primary to-primary/80
+          hover:from-primary/90 hover:to-primary/70
+          shadow-lg
+        "
+            >
+              {isCreating ? "Adding..." : "Add Specification"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Delete Specification</DialogTitle>
+        <DialogContent
+          className="
+    max-w-sm
+    backdrop-blur-xl
+    bg-white/60 dark:bg-black/50
+    border border-white/30 dark:border-white/10
+    shadow-2xl
+    rounded-2xl
+  "
+        >
+          <DialogHeader className="border-b border-white/20 pb-4">
+            <DialogTitle className="flex items-center gap-2 text-xl text-red-600">
+              <Trash2 className="h-5 w-5" />
+              Delete Specification
+            </DialogTitle>
           </DialogHeader>
 
-          <p className="text-sm text-muted-foreground">
-            Are you sure you want to delete this specification? This action
-            cannot be undone.
-          </p>
+          <div className="mt-3 text-sm text-muted-foreground">
+            <p>Are you sure you want to delete this specification?</p>
+            <p className="mt-2 font-medium text-red-500">
+              This action cannot be undone.
+            </p>
+          </div>
 
-          <div className="flex justify-end gap-2 mt-4">
-            <Button variant="outline" onClick={() => setDeleteId(null)}>
+          <div className="flex justify-end gap-3 mt-6">
+            <Button variant="ghost" onClick={() => setDeleteId(null)}>
               Cancel
             </Button>
+
             <Button
               variant="destructive"
+              className="shadow-lg"
               onClick={async () => {
                 if (!deleteId) return;
                 await handleDelete(deleteId);

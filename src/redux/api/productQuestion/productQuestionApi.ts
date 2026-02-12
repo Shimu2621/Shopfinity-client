@@ -7,6 +7,12 @@ type CreateQuestionPayload = {
   userId: string;
 };
 
+type QuestionResponse = {
+  success: boolean;
+  count: number;
+  data: IQuestion[];
+};
+
 export const productQuestionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // ✅ Create Question
@@ -24,8 +30,18 @@ export const productQuestionApi = baseApi.injectEndpoints({
       query: (productId) => `/product-questions?productId=${productId}`,
       providesTags: ["PRODUCT_QUESTION"],
     }),
+
+    // Get All Questions by Product
+    getAllProductQuestions: builder.query<IQuestion[], void>({
+      query: () => "/product-questions",
+      providesTags: ["PRODUCT_QUESTION"],
+      transformResponse: (response: QuestionResponse) => response.data,
+    }),
   }),
 });
 
-export const { useCreateProductQuestionMutation, useGetProductQuestionsQuery } =
-  productQuestionApi;
+export const {
+  useCreateProductQuestionMutation,
+  useGetProductQuestionsQuery,
+  useGetAllProductQuestionsQuery,
+} = productQuestionApi;

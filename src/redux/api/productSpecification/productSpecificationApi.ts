@@ -67,14 +67,13 @@ export const productSpecificationApi = baseApi.injectEndpoints({
     getProductSpecification: builder.query<IProductSpecification, string>({
       query: (id) => `/product-specifications/${id}`,
 
-      transformResponse: (response: IProductSpecificationApiResponse[]) =>
-        response.map((item) => ({
-          id: item._id,
-          productId: item.productId,
-          key: item.key,
-          value: item.value,
-          product: item.product,
-        })),
+      transformResponse: (item: IProductSpecificationApiResponse) => ({
+        id: item._id,
+        productId: item.productId,
+        key: item.key,
+        value: item.value,
+        product: item.product,
+      }),
 
       providesTags: (_result, _error, id) => [
         { type: "PRODUCT_SPECIFICATION", id },

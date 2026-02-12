@@ -42,8 +42,8 @@ const AllProductsPage = () => {
 
   // Fetch products with pagination
   const { data, isLoading } = useGetAllProductsQuery({
-    page: String(page),
-    limit: String(limit),
+    page: Number(page),
+    limit: Number(limit),
   });
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct] = useUpdateProductMutation();

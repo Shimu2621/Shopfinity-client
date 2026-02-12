@@ -112,20 +112,32 @@ export type IProductSpecificationApiResponse = {
 };
 
 export type IQuestion = {
-  id: string;
+  _id: string;
   question: string;
   createdAt: string;
-  userId: string;
-  productId: string;
-  answer: IAnswer | null;
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  productId: {
+    _id: string;
+    name: string;
+    price: number;
+  };
+  answer?: IAnswer;
 };
 
 export type IAnswer = {
-  id: string;
+  _id: string;
   answer: string;
   createdAt: string;
   questionId: string;
-  adminId: string;
+  adminId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
 };
 
 export interface IProductQuery {
