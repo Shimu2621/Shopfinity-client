@@ -283,3 +283,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+.card-glass {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
