@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, Search, Trash2, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
+import { AuroraText } from "@/components/magicui/aurora-text";
 
 export default function AdminReviewsPage() {
   const [search, setSearch] = useState("");
@@ -60,9 +61,16 @@ export default function AdminReviewsPage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-2"
       >
-        <h1 className="text-4xl font-bold text-orange-500 flex items-center justify-center gap-3">
-          <Star className="text-orange-400" /> Product Reviews
-        </h1>
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-3 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
+            <Star className="h-8 w-8 text-white" />
+          </div>
+
+          <AuroraText className="text-4xl md:text-5xl font-bold">
+            Product Reviews
+          </AuroraText>
+        </div>
+
         <p className="text-muted-foreground">
           Manage customer feedback and ratings
         </p>
@@ -95,7 +103,7 @@ export default function AdminReviewsPage() {
       </div>
 
       {/* ================= SEARCH ================= */}
-      <Card className="backdrop-blur-xl bg-white/60 dark:bg-white/5 border">
+      <Card className=" bg-white/60 dark:bg-black border">
         <CardContent className="p-4">
           <div className="relative">
             <Search className="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
@@ -110,10 +118,10 @@ export default function AdminReviewsPage() {
       </Card>
 
       {/* ================= TABLE ================= */}
-      <Card className="backdrop-blur-xl bg-white/60 dark:bg-white/5 border">
+      <Card className="backdrop-blur-xl bg-white/60 dark:bg-black border">
         <CardContent className="p-0">
           <table className="w-full text-sm">
-            <thead className="border-b bg-muted/40">
+            <thead className="border-b ">
               <tr className="text-left">
                 <th className="p-4">Review ID</th>
                 <th className="p-4">Product</th>

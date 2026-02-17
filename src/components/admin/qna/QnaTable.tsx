@@ -26,16 +26,16 @@ export default function QnaTable({ questions }: Props) {
   const [deleteAnswer] = useDeleteProductAnswerMutation();
 
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 py-0">
-      <CardHeader className="border-b bg-muted/50">
-        <CardTitle className="flex items-center space-x-2 pt-2">
+    <Card className="shadow-lg dark:bg-black hover:shadow-xl transition-shadow duration-300 py-2">
+      <CardHeader className="border-b bg-muted/50 dark:bg-black">
+        <CardTitle className="flex items-center space-x-2 pt-4">
           <MessageSquare className="h-5 w-5 text-rose-700" />
           <span className="">Customer Questions & Answers</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="rounded-xl border shadow-sm w-full overflow-x-auto">
-          <Table className="min-w-full">
+        <div>
+          <Table className="">
             <TableHeader>
               <TableRow>
                 <TableHead>Question</TableHead>
