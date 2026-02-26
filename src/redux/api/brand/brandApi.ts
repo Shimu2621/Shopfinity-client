@@ -13,11 +13,11 @@ export const brandApi = baseApi.injectEndpoints({
     // GET ALL
     getAllBrands: builder.query<
       ApiResponse<IBrand[]>,
-      { categoryId?: string } | undefined
+      { page?: number; limit?: number; searchTerm?: string }
     >({
       query: (params) => ({
         url: "/brands",
-        ...(params ? { params } : {}),
+        params,
       }),
       providesTags: [{ type: tagTypes.BRAND, id: "LIST" }],
     }),

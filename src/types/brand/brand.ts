@@ -16,7 +16,7 @@ import { ICategory } from "../category/category";
 export interface IBrand {
   _id: string;
   name: string;
-  categoryIds?: ICategory[] | string[];
+  categoryIds?: ICategory[];
   createdAt?: string;
   updatedAt?: string;
 }
