@@ -83,7 +83,7 @@ export default function Footer() {
           strokeWidth="2"
           fill="none"
           opacity={0.8 - i * 0.02}
-        />
+        />,
       );
     }
 
@@ -197,7 +197,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Your premium destination for quality products and exceptional
-              shopping experience. We bring you the best deals and latest
+              shopping experiences. We bring you the best deals and latest
               trends.
             </p>
             <div className="space-y-3">
