@@ -88,7 +88,7 @@ const visionCards = [
   {
     title: "Technology Pioneer",
     description:
-      "Pioneering next-generation shopping experiences through AI and emerging technologies.",
+      "Pioneering next-generations shopping experiences through AI and emerging technologies.",
     icon: Rocket,
   },
   {
