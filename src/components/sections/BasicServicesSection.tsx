@@ -166,7 +166,7 @@ export function BasicServicesSection() {
             <p className="text-center mx-auto text-muted-foreground max-w-2xl mb-8">
               We provide reliable services to ensure a seamless shopping
               experiences — from secure payments and fast delivery to 24/7
-              customer support and hassle-free returns.
+              customer supports and hassle-free returns.
             </p>
           </div>
 
