@@ -127,7 +127,7 @@ export function AboutUsSection() {
           });
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -152,7 +152,7 @@ export function AboutUsSection() {
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             At ShopFinity, we believe shopping should be simple, secure, and
             enjoyable. Our mission is to bring you high-quality products at the
-            best prices, paired with excellent customer service.
+            best prices, paired with excellent customer services.
           </p>
         </div>
 
@@ -331,10 +331,10 @@ export function AboutUsSection() {
                       {index === 2
                         ? `${counters[index]}+`
                         : index === 3
-                        ? `${counters[index]}`
-                        : index === 1
-                        ? `${Math.floor(counters[index] / 1000)}K+`
-                        : `${Math.floor(counters[index] / 1000)}K+`}
+                          ? `${counters[index]}`
+                          : index === 1
+                            ? `${Math.floor(counters[index] / 1000)}K+`
+                            : `${Math.floor(counters[index] / 1000)}K+`}
                     </div>
                     <div className="text-lg font-semibold">{stat.label}</div>
                   </CardContent>
