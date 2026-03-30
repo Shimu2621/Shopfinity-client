@@ -333,7 +333,7 @@ export default function HeroSection() {
                     <Gift className="w-6 h-6 text-rose-600" />
                   </div>
                 </div>
-                <h4 className="text-lg font-semibold">Special Offer!</h4>
+                <h4 className="text-lg font-semibold">Special Offers!</h4>
                 <p className="text-sm mb-3">
                   Limited time only! Get 20% off + free shipping on your first
                   order.
