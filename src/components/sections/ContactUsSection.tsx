@@ -62,11 +62,11 @@ export function ContactUsSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [positions, setPositions] = useState<{ left: string; top: string }[]>(
-    []
+    [],
   );
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -257,7 +257,7 @@ export function ContactUsSection() {
             Have questions about your orders, returns, or our products? Our
             support team is ready to assist you with quick responses and
             friendly service. Fill out the form or reach us through email,
-            phone, or live chat — we’ll make sure your shopping experience is
+            phone, or live chat — we’ll make sure your shopping experiences is
             smooth and stress-free.
           </p>
         </motion.div>
