@@ -33,7 +33,7 @@ const services = [
   },
   {
     icon: Shield,
-    title: "Secure Payment",
+    title: "Secure Payments",
     description: "100% secure payment processing",
     badge: "Trusted",
     iconBg: "bg-purple-600",
@@ -110,7 +110,7 @@ export function BasicServicesSection() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -165,7 +165,7 @@ export function BasicServicesSection() {
             </h2>
             <p className="text-center mx-auto text-muted-foreground max-w-2xl mb-8">
               We provide reliable services to ensure a seamless shopping
-              experience — from secure payments and fast delivery to 24/7
+              experiences — from secure payments and fast delivery to 24/7
               customer support and hassle-free returns.
             </p>
           </div>
