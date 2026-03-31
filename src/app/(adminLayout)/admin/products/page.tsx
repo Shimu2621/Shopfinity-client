@@ -39,6 +39,7 @@ const AllProductsPage = () => {
   const limit = 10;
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+  const [isAddOpen, setIsAddOpen] = useState(false);
 
   // Fetch products with pagination
   const { data, isLoading } = useGetAllProductsQuery({
@@ -155,7 +156,10 @@ const AllProductsPage = () => {
           </h1>
           <p className="text-gray-600">Manage your product catalog with ease</p>
         </div>
-        <Button className="bg-rose-700 hover:bg-rose-800 text-white">
+        <Button
+          onClick={() => setIsAddOpen(true)}
+          className="bg-rose-700 hover:bg-rose-800 text-white"
+        >
           + Add Product
         </Button>
       </div>
