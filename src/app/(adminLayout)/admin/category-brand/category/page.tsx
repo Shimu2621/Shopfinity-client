@@ -190,7 +190,8 @@ export default function CategoryPage() {
           </AuroraText>
         </div>
         <p className="text-muted-foreground">
-          Organize products with categories & subcategories
+          Structure your product catalog with categories and subcategories to
+          improve organization, navigation, and overall shopping experience.
         </p>
       </motion.div>
 
