@@ -178,7 +178,10 @@ export default function BrandPage() {
                         <div className="flex gap-2 flex-wrap">
                           {brand.categoryIds?.map(
                             (cat: { _id: string; name: string }) => (
-                              <Badge key={cat._id}>
+                              <Badge
+                                key={cat._id}
+                                className="border border-gray-200 bg-white text-black"
+                              >
                                 {cat.name || "Category"}
                               </Badge>
                             ),
