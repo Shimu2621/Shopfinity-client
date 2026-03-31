@@ -72,7 +72,8 @@ export default function AdminReviewsPage() {
         </div>
 
         <p className="text-muted-foreground">
-          Manage customer feedback and ratings
+          Centralize customer reviews to track performance, identify trends, and
+          enhance user experience
         </p>
       </motion.div>
 
