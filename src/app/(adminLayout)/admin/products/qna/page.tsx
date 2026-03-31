@@ -67,7 +67,7 @@ export default function QnAPage() {
         </div>
 
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Manage product questions and answers efficiently
+          Answer faster. Engage better. Build trust with your customers
         </p>
       </motion.div>
 
