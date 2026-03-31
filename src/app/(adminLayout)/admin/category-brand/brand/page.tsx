@@ -21,6 +21,7 @@ import {
   Copy,
 } from "lucide-react";
 import { toast } from "sonner";
+import { IBrand } from "@/types/brand/brand";
 
 export default function BrandPage() {
   // ✅ Pagination State
@@ -151,7 +152,7 @@ export default function BrandPage() {
               )}
 
               {!isLoading &&
-                brands.map((brand: any, index: number) => (
+                brands.map((brand: IBrand, index: number) => (
                   <motion.tr
                     key={brand._id}
                     initial={{ opacity: 0 }}
@@ -175,11 +176,13 @@ export default function BrandPage() {
                     <td className="p-4">
                       {brand.categoryIds?.length ? (
                         <div className="flex gap-2 flex-wrap">
-                          {brand.categoryIds.map((cat: any) => (
-                            <Badge key={cat._id}>
-                              {cat.name || "Category"}
-                            </Badge>
-                          ))}
+                          {brand.categoryIds?.map(
+                            (cat: { _id: string; name: string }) => (
+                              <Badge key={cat._id}>
+                                {cat.name || "Category"}
+                              </Badge>
+                            ),
+                          )}
                         </div>
                       ) : (
                         <span className="text-muted-foreground text-xs">
