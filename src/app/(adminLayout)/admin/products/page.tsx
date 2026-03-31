@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import EditProductDialog from "@/components/admin/products/EditProductDialog";
+import AddProductDialog from "@/components/admin/products/AddProductDialog";
 
 interface Props {
   open: boolean;
