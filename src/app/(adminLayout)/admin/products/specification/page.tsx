@@ -170,9 +170,9 @@ const SpecificationPage = () => {
             Product Specifications
           </AuroraText>
         </div>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Manage detailed specifications for your products to help customers
-          make informed decisions
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Organize and manage product specifications to deliver clear, detailed
+          information that helps customers make confident purchasing decisions.
         </p>
       </motion.div>
 
