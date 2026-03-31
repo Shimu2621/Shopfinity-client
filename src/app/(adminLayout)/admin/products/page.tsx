@@ -305,6 +305,8 @@ const AllProductsPage = () => {
         </table>
       </div>
 
+      <AddProductDialog open={isAddOpen} onOpenChange={setIsAddOpen} />
+
       {selectedProduct && (
         <EditProductDialog
           key={selectedProduct._id}
