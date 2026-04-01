@@ -1,0 +1,34 @@
+import { motion } from "framer-motion";
+
+const PaymentStats = ({ payments }: any) => {
+  const total = payments.length;
+  const completed = payments.filter((p) => p.paymentStatus === "paid").length;
+  const pending = payments.filter((p) => p.paymentStatus === "pending").length;
+
+  const totalAmount = payments.reduce((acc, p) => acc + p.amount, 0);
+
+  const cards = [
+    { title: "Total Payments", value: total },
+    { title: "Completed", value: completed },
+    { title: "Pending", value: pending },
+    { title: "Total Amount", value: `$${totalAmount.toFixed(2)}` },
+  ];
+
+  return (
+    <div className="grid md:grid-cols-4 gap-4">
+      {cards.map((card, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-5 rounded-2xl shadow bg-white"
+        >
+          <p className="text-gray-500">{card.title}</p>
+          <h2 className="text-2xl font-bold">{card.value}</h2>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+export default PaymentStats;
