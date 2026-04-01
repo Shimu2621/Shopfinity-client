@@ -1,11 +1,25 @@
 import { motion } from "framer-motion";
+import { IPayment } from "@/types/payment/payment";
 
-const PaymentStats = ({ payments }: any) => {
+interface PaymentStatsProps {
+  payments: IPayment[];
+}
+
+const PaymentStats = ({ payments }: PaymentStatsProps) => {
   const total = payments.length;
-  const completed = payments.filter((p) => p.paymentStatus === "paid").length;
-  const pending = payments.filter((p) => p.paymentStatus === "pending").length;
 
-  const totalAmount = payments.reduce((acc, p) => acc + p.amount, 0);
+  const completed = payments.filter(
+    (p: IPayment) => p.paymentStatus === "paid",
+  ).length;
+
+  const pending = payments.filter(
+    (p: IPayment) => p.paymentStatus === "pending",
+  ).length;
+
+  const totalAmount = payments.reduce(
+    (acc: number, p: IPayment) => acc + p.amount,
+    0,
+  );
 
   const cards = [
     { title: "Total Payments", value: total },
