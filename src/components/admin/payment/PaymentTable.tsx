@@ -18,7 +18,7 @@ const PaymentTable = ({
   setPage,
   limit,
 }: PaymentTableProps) => {
-  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState<IPayment | null>(null);
 
   const totalPages = Math.ceil(total / limit);
 
