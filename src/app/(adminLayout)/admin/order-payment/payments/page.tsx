@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useGetAllPaymentsQuery } from "@/redux/api/payment/paymentApi";
-import PaymentStats from "@/components/dashboard/payment/PaymentStats";
-import PaymentTable from "@/components/dashboard/payment/PaymentTable";
+import PaymentStats from "@/components/admin/payment/PaymentStats";
+import PaymentTable from "@/components/admin/payment/PaymentTable";
 
 const PaymentPage = () => {
   const { data, isLoading } = useGetAllPaymentsQuery();
