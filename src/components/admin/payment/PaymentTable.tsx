@@ -1,8 +1,23 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import PaymentStatusModal from "./PaymentStatusModal";
+import PaymentStatusModal from "../payment/PaymentStatusModal";
+import { IPayment } from "@/types/payment/payment";
 
-const PaymentTable = ({ payments, total, page, setPage, limit }: any) => {
+interface PaymentTableProps {
+  payments: IPayment[];
+  total: number;
+  page: number;
+  setPage: (page: number) => void;
+  limit: number;
+}
+
+const PaymentTable = ({
+  payments,
+  total,
+  page,
+  setPage,
+  limit,
+}: PaymentTableProps) => {
   const [selectedPayment, setSelectedPayment] = useState(null);
 
   const totalPages = Math.ceil(total / limit);
@@ -21,7 +36,7 @@ const PaymentTable = ({ payments, total, page, setPage, limit }: any) => {
         </thead>
 
         <tbody>
-          {payments.map((p: any, index: number) => (
+          {payments.map((p, index) => (
             <motion.tr
               key={p._id}
               initial={{ opacity: 0 }}
