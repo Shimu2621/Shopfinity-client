@@ -191,7 +191,7 @@ export default function CategoryPage() {
         </div>
         <p className="text-muted-foreground">
           Structure your product catalog with categories and subcategories to
-          improve organization, and overall shopping experience
+          improve organizations, and overall shopping experience
         </p>
       </motion.div>
 
