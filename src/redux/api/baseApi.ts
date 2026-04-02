@@ -1,5 +1,6 @@
 // src/redux/api/baseApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IPayment, ICreatePaymentPayload } from "@/types/payment/payment";
 
 export const baseApi = createApi({
   reducerPath: "api",
@@ -29,5 +30,56 @@ export const baseApi = createApi({
     "ORDER",
     "DASHBOARD_ANALYTICS",
   ],
-  endpoints: () => ({}),
+  endpoints: (builder) => ({
+    // ➕ Create Payment
+    createPayment: builder.mutation<
+      { success: boolean; data: IPayment },
+      ICreatePaymentPayload
+    >({
+      query: (body) => ({
+        url: "/payment",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["PAYMENT"],
+    }),
+
+    // 📦 Get all payments
+    getAllPayments: builder.query<{ success: boolean; data: IPayment[] }, void>(
+      {
+        query: () => "/payments",
+        providesTags: ["PAYMENT"],
+      },
+    ),
+
+    // Stripe session
+    createStripeSession: builder.mutation<
+      { url: string },
+      { paymentId: string }
+    >({
+      query: (body) => ({
+        url: "/payment/create-stripe-session",
+        method: "POST",
+        body,
+      }),
+    }),
+
+    // success
+    paymentSuccess: builder.mutation<{ success: boolean }, string>({
+      query: (id) => ({
+        url: `/payment/${id}/success`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["PAYMENT"],
+    }),
+
+    // cancel
+    paymentCancel: builder.mutation<{ success: boolean }, string>({
+      query: (id) => ({
+        url: `/payment/${id}/cancel`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["PAYMENT"],
+    }),
+  }),
 });
