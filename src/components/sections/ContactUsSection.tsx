@@ -258,7 +258,7 @@ export function ContactUsSection() {
             support team is ready to assist you with quick responses and
             friendly service. Fill out the form or reach us through email,
             phone, or live chat — we’ll make sure your shopping experiences is
-            smooth and stress-free.
+            smooth and stress-free
           </p>
         </motion.div>
 
