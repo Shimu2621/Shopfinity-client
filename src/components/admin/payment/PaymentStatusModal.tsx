@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { useUpdatePaymentMutation } from "@/redux/api/payment/paymentApi";
+import { useUpdatePaymentMutation } from "@/redux/api/baseApi";
 
 const statuses = ["pending", "paid", "cancelled", "refund"];
 
