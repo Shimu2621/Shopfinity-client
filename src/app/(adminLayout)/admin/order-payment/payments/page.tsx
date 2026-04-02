@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGetAllPaymentsQuery } from "@/redux/api/payment/paymentApi";
+import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 import PaymentStats from "@/components/admin/payment/PaymentStats";
 import PaymentTable from "@/components/admin/payment/PaymentTable";
 

@@ -1,11 +1,10 @@
-// src/redux/api/baseApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPayment, ICreatePaymentPayload } from "@/types/payment/payment";
 
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL, // http://localhost:5000/api
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers) => {
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
@@ -83,3 +82,10 @@ export const baseApi = createApi({
     }),
   }),
 });
+export const {
+  useGetAllPaymentsQuery,
+  useCreatePaymentMutation,
+  useCreateStripeSessionMutation,
+  usePaymentSuccessMutation,
+  usePaymentCancelMutation,
+} = baseApi;
