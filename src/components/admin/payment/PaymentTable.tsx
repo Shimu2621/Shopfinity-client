@@ -9,6 +9,7 @@ interface PaymentTableProps {
   page: number;
   setPage: (page: number) => void;
   limit: number;
+  isLoading: boolean;
 }
 
 const PaymentTable = ({
