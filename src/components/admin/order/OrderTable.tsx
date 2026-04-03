@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IOrder } from "@/types/order/order";
-import OrderStatusModal from "./OrderStatusModal";
+import OrderStatusModal from "../order/OrderStatusModel";
 
 interface Props {
   orders: IOrder[];
