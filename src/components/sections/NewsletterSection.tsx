@@ -25,7 +25,7 @@ export function NewsletterSection() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     toast(
-      "Successfully subscribed! <br /> You'll receive exclusive deals and updates in your inbox."
+      "Successfully subscribed! <br /> You'll receive exclusive deals and updates in your inbox.",
     );
 
     setEmail("");
@@ -84,7 +84,7 @@ export function NewsletterSection() {
         <p className="text-blue-100 leading-relaxed max-w-2xl mx-auto animate-fade-in-up">
           Sign up today to receive exclusive promotions! Be part of our growing
           community! Subscribe and enjoy early access to sales, trending
-          products, and special discounts only for subscribers.
+          products, and special discounts only for subscribers
         </p>
 
         <form
@@ -427,12 +427,14 @@ export function NewsletterSection() {
         @keyframes neon-pulse {
           0%,
           100% {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4),
+            box-shadow:
+              0 0 20px rgba(59, 130, 246, 0.4),
               0 0 40px rgba(59, 130, 246, 0.2);
             opacity: 0.4;
           }
           50% {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.8),
+            box-shadow:
+              0 0 30px rgba(59, 130, 246, 0.8),
               0 0 60px rgba(59, 130, 246, 0.4);
             opacity: 0.8;
           }
@@ -441,12 +443,14 @@ export function NewsletterSection() {
         @keyframes neon-pulse-delayed {
           0%,
           100% {
-            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4),
+            box-shadow:
+              0 0 20px rgba(147, 51, 234, 0.4),
               0 0 40px rgba(147, 51, 234, 0.2);
             opacity: 0.4;
           }
           50% {
-            box-shadow: 0 0 30px rgba(147, 51, 234, 0.8),
+            box-shadow:
+              0 0 30px rgba(147, 51, 234, 0.8),
               0 0 60px rgba(147, 51, 234, 0.4);
             opacity: 0.8;
           }
