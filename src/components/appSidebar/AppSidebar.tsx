@@ -106,7 +106,7 @@ const items: MenuItem[] = [
       {
         title: "All Orders",
         icon: ListOrdered,
-        url: "/admin/order-payment/orders",
+        url: "/admin/order-payment/order",
       },
       {
         title: "All Payments",
