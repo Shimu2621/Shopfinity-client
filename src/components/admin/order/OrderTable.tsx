@@ -9,6 +9,7 @@ interface Props {
   page: number;
   setPage: (page: number) => void;
   limit: number;
+  isLoading: boolean;
 }
 
 const OrderTable = ({ orders, total, page, setPage, limit }: Props) => {
