@@ -152,7 +152,7 @@ export function AboutUsSection() {
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             At ShopFinity, we believe shopping should be simple, secure, and
             enjoyable. Our mission is to bring you high-quality products at the
-            best prices, paired with excellent customer services
+            best prices, paired with excellent customer service
           </p>
         </div>
 
