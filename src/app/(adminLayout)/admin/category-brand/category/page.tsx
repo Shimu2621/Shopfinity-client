@@ -234,7 +234,7 @@ export default function CategoryPage() {
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-rose-700 hover:bg-sky-700 text-white">
+            <Button className="bg-rose-700 hover:bg-black text-white">
               <Plus className="w-4 h-4 mr-2" /> Add Category
             </Button>
           </DialogTrigger>
