@@ -6,6 +6,7 @@ import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 import PaymentStats from "@/components/admin/payment/PaymentStats";
 import PaymentTable from "@/components/admin/payment/PaymentTable";
 import { DollarSign } from "lucide-react";
+import { AuroraText } from "@/components/magicui/aurora-text";
 
 const PaymentPage = () => {
   const { data, isLoading } = useGetAllPaymentsQuery();
@@ -28,6 +29,9 @@ const PaymentPage = () => {
           <div className="p-3 rounded-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500">
             <DollarSign className="h-8 w-8 text-white" />
           </div>
+          <AuroraText className="text-4xl md:text-5xl font-bold">
+            Payment Management
+          </AuroraText>
         </div>
       </motion.div>
 
