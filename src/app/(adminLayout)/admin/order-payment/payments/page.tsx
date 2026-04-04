@@ -33,6 +33,10 @@ const PaymentPage = () => {
             Payment Management
           </AuroraText>
         </div>
+        <p className="text-muted-foreground">
+          Monitor and manage all payment transactions, track statuses, and
+          ensure secure and seamless financial operations across your platform
+        </p>
       </motion.div>
 
       <PaymentStats payments={payments} />
