@@ -27,8 +27,8 @@ const OrderPage = () => {
           Order Management
         </h1>
         <p className="text-muted-foreground">
-          Manage and organize product brands while linking them to relevant
-          categories to maintain a structured and scalable catalog
+          Manage and track customer orders efficiently by updating statuses,
+          monitoring payments, and ensuring smooth order processing and delivery
         </p>
       </motion.div>
 
