@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 import PaymentStats from "@/components/admin/payment/PaymentStats";
 import PaymentTable from "@/components/admin/payment/PaymentTable";
+import { DollarSign } from "lucide-react";
 
 const PaymentPage = () => {
   const { data, isLoading } = useGetAllPaymentsQuery();
@@ -23,7 +24,11 @@ const PaymentPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-2"
       >
-        <div className="flex items-center justify-center space-x-3"></div>
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-3 rounded-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500">
+            <DollarSign className="h-8 w-8 text-white" />
+          </div>
+        </div>
       </motion.div>
 
       <PaymentStats payments={payments} />
