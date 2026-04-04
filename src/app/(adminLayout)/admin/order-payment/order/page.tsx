@@ -24,7 +24,7 @@ const OrderPage = () => {
       >
         <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
           <ListOrdered className="w-8 h-8 text-blue-500" />
-          Brand Management
+          Order Management
         </h1>
         <p className="text-muted-foreground">
           Manage and organize product brands while linking them to relevant
