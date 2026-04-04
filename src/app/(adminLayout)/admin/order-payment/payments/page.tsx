@@ -29,7 +29,7 @@ const PaymentPage = () => {
           <div className="p-3 rounded-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500">
             <DollarSign className="h-8 w-8 text-white" />
           </div>
-          <AuroraText className="text-4xl md:text-5xl font-bold">
+          <AuroraText className="text-3xl md:text-4xl font-bold">
             Payment Management
           </AuroraText>
         </div>
