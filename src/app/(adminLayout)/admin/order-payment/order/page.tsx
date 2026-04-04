@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useGetAllOrdersQuery } from "@/redux/api/order/orderApi";
 import OrderStats from "@/components/admin/order/OrderStats";
 import OrderTable from "@/components/admin/order/OrderTable";
+import { ListOrdered } from "lucide-react";
 
 const OrderPage = () => {
   const { data: orders = [], isLoading } = useGetAllOrdersQuery();
@@ -22,7 +23,7 @@ const OrderPage = () => {
         className="text-center space-y-2"
       >
         <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
-          <Package className="w-8 h-8 text-blue-500" />
+          <ListOrdered className="w-8 h-8 text-blue-500" />
           Brand Management
         </h1>
         <p className="text-muted-foreground">
