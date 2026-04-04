@@ -122,7 +122,7 @@ export default function BrandPage() {
             />
           </div>
 
-          <Button className="bg-red-700 dark:bg-white dark:text-black">
+          <Button className="bg-red-700 dark:text-white dark:hover:bg-white dark:hover:text-black">
             <Plus className="w-4 h-4 mr-2" />
             Add Brand
           </Button>
