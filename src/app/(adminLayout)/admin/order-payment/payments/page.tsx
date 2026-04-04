@@ -22,7 +22,9 @@ const PaymentPage = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-2"
-      ></motion.div>
+      >
+        <div className="flex items-center justify-center space-x-3"></div>
+      </motion.div>
 
       <PaymentStats payments={payments} />
 
