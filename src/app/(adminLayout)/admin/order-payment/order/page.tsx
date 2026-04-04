@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useGetAllOrdersQuery } from "@/redux/api/order/orderApi";
 import OrderStats from "@/components/admin/order/OrderStats";
 import OrderTable from "@/components/admin/order/OrderTable";
@@ -15,7 +16,20 @@ const OrderPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold text-blue-600">Order Management</h1>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center space-y-2"
+      >
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
+          <Package className="w-8 h-8 text-blue-500" />
+          Brand Management
+        </h1>
+        <p className="text-muted-foreground">
+          Manage and organize product brands while linking them to relevant
+          categories to maintain a structured and scalable catalog
+        </p>
+      </motion.div>
 
       <OrderStats orders={orders} />
 
