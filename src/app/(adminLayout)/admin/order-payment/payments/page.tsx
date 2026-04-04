@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 import PaymentStats from "@/components/admin/payment/PaymentStats";
 import PaymentTable from "@/components/admin/payment/PaymentTable";
@@ -17,7 +18,11 @@ const PaymentPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold text-blue-600">Payment Management</h1>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center space-y-2"
+      ></motion.div>
 
       <PaymentStats payments={payments} />
 
