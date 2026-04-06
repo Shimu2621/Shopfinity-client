@@ -84,7 +84,7 @@ export function NewsletterSection() {
         <p className="text-blue-100 leading-relaxed max-w-2xl mx-auto animate-fade-in-up">
           Sign up today to receive exclusive promotions! Be part of our growing
           community! Subscribe and enjoy early access to sales, trending
-          products, and special discounts only for subscribers
+          products, and special discounts only for subscribers.
         </p>
 
         <form
