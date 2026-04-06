@@ -256,7 +256,7 @@ export function ContactUsSection() {
           <p className="text-blue-100 leading-relaxed max-w-3xl mx-auto animate-fade-in-up">
             Have questions about your orders, returns, or our products? Our
             support team is ready to assist you with quick responses and
-            friendly service. Fill out the form or reach us through email,
+            friendly services. Fill out the form or reach us through email,
             phone, or live chat — we’ll make sure your shopping experience is
             smooth and stress-free
           </p>
