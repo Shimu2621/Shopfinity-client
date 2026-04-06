@@ -27,7 +27,7 @@ const OrderPage = () => {
           Order Management
         </h1>
         <p className="text-muted-foreground">
-          Manage and track customer orders efficiently by updating statuses, and
+          Manage and track customer orders efficiently by updating status, and
           ensuring smooth order delivery
         </p>
       </motion.div>
