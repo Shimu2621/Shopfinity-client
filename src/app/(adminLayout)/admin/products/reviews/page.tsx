@@ -73,7 +73,7 @@ export default function AdminReviewsPage() {
 
         <p className="text-muted-foreground">
           Centralize customer reviews to track performance, identify trends, and
-          enhance users experience
+          enhance users experiences
         </p>
       </motion.div>
 
