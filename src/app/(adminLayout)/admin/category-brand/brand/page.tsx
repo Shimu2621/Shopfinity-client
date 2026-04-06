@@ -69,7 +69,7 @@ export default function BrandPage() {
         </h1>
         <p className="text-muted-foreground">
           Manage and organize product brands while linking them to relevant
-          categories to maintain a structured and scalable catalog
+          categories to maintain a structured and scalable catalogs
         </p>
       </motion.div>
 
