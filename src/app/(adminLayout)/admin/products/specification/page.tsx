@@ -172,7 +172,7 @@ const SpecificationPage = () => {
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Organize and manage product specifications to deliver clear, detailed
-          information that help customers make confident purchasing decisions
+          information that help customers make confident purchasing decision
         </p>
       </motion.div>
 
