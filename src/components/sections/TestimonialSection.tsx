@@ -156,7 +156,7 @@ export function TestimonialSection() {
           </h2>
           <p className=" text-muted-foreground max-w-3xl mx-auto">
             Don&rsquo;t just take our word for it. Here&rsquo;s what real
-            customers have to say about their experience with our platform
+            customers have to say about their experiences with our platform
           </p>
 
           {/* new */}
