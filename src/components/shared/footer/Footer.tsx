@@ -198,7 +198,7 @@ export default function Footer() {
             <p className="text-gray-300 text-sm leading-relaxed">
               Your premium destination for quality products and exceptional
               shopping experiences. We bring you the best deals and latest
-              trends.
+              trends
             </p>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
