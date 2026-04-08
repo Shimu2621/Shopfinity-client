@@ -28,14 +28,6 @@ const UserPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-blue-600">User Management</h1>
-        <p className="text-gray-500">
-          Manage all users, roles, and access control
-        </p>
-      </div>
-
       {/* header */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
