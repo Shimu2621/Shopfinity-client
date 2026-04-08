@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useGetAllUsersQuery } from "@/redux/api/user/userApi";
-import UserStats from "@/components/admin/user/UserStats";
+import UserStats from "@/components/admin/users/UserStats";
 import UserTable from "@/components/admin/user/UserTable";
 
 const UserPage = () => {
