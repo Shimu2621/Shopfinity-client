@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useGetAllUsersQuery } from "@/redux/api/user/userApi";
 import UserStats from "@/components/admin/users/UserStats";
 import UserTable from "@/components/admin/users/UserTable";
-import { Star, UserStar } from "lucide-react";
+import { UserStar } from "lucide-react";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
 const UserPage = () => {
