@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IUser } from "@/types/user/user";
-import UserRoleModal from "./UserRoleModal";
+import UserRoleModal from "../users/UserRoleModal";
 import { useDeleteUserMutation } from "@/redux/api/user/userApi";
 
 interface Props {
