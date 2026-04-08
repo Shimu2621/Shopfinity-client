@@ -5,6 +5,7 @@ import { useGetAllUsersQuery } from "@/redux/api/user/userApi";
 import UserStats from "@/components/admin/users/UserStats";
 import UserTable from "@/components/admin/users/UserTable";
 import { Star } from "lucide-react";
+import { AuroraText } from "@/components/magicui/aurora-text";
 
 const UserPage = () => {
   const { data, isLoading } = useGetAllUsersQuery();
