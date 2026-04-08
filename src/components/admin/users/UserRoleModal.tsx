@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { IUser } from "@/types/user/user";
-import { useUpdateUserMutation } from "@/redux/api/userApi";
+import { useUpdateUserMutation } from "@/redux/api/user/userApi";
 
 const roles: ("user" | "admin")[] = ["user", "admin"];
 
