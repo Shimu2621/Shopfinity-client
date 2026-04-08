@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useGetAllUsersQuery } from "@/redux/api/user/userApi";
 import UserStats from "@/components/admin/users/UserStats";
 import UserTable from "@/components/admin/users/UserTable";
-import { Star } from "lucide-react";
+import { Star, UserStar } from "lucide-react";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
 const UserPage = () => {
@@ -43,7 +44,7 @@ const UserPage = () => {
       >
         <div className="flex items-center justify-center space-x-3">
           <div className="p-3 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
-            <Star className="h-8 w-8 text-white" />
+            <UserStar className="h-8 w-8 text-white" />
           </div>
 
           <AuroraText className="text-4xl md:text-5xl font-bold">
