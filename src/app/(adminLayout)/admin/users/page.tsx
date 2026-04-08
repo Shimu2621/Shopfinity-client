@@ -52,8 +52,8 @@ const UserPage = () => {
           </AuroraText>
         </div>
         <p className="text-muted-foreground">
-          Structure your product catalog with categories and subcategories to
-          improve organizations, and overall shopping experiences
+          Manage and monitor all users, control roles and permissions, and
+          ensure secure access across your platform.
         </p>
       </motion.div>
 
