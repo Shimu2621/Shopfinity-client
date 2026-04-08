@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGetAllUsersQuery } from "@/redux/api/userApi";
+import { useGetAllUsersQuery } from "@/redux/api/user/userApi";
 import UserStats from "@/components/admin/user/UserStats";
 import UserTable from "@/components/admin/user/UserTable";
 
