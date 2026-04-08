@@ -33,7 +33,7 @@ export interface SigninPayload {
 
 export interface UpdateUserPayload {
   id: string;
-  data: Partial<Omit<IUser, "id" | "role">> & {
+  data: Partial<Omit<IUser, "id">> & {
     password?: string;
   };
 }
