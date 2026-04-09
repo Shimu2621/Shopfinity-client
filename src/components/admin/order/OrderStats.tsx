@@ -51,7 +51,7 @@ const OrderStats = ({ orders }: Props) => {
       {cards.map((card, i) => (
         <motion.div key={i} whileHover={{ scale: 1.05 }}>
           <Card
-            className={`bg-gradient-to-br ${card.bg} backdrop-blur-xl border border-white/20 shadow-xl`}
+            className={`bg-gradient-to-br ${card.bg} backdrop-blur-xl border border-white/20 shadow-xl dark:border-gray-600`}
           >
             <CardContent className="p-6 flex justify-between items-center">
               <div>
