@@ -51,7 +51,7 @@ const PaymentPage = () => {
           </div>
 
           <AuroraText className="text-3xl md:text-4xl font-bold">
-            Category Management
+            Payment Management
           </AuroraText>
         </div>
         <p className="text-muted-foreground">
