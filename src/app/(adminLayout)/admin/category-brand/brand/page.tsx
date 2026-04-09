@@ -75,7 +75,7 @@ export default function BrandPage() {
 
       {/* ================= STATS ================= */}
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-to-r from-blue-500/10 to-blue-100 shadow-lg  dark:border-gray-600">
+        <Card className="bg-gradient-to-r from-blue-500/10 to-blue-100 shadow-lg dark:blue- dark:border-gray-600">
           <CardContent className="flex justify-between items-center p-6">
             <div>
               <p>Total Brands</p>
