@@ -53,20 +53,6 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
   ];
 
   return (
-    // <div className="grid md:grid-cols-4 gap-4">
-    //   {cards.map((card, i) => (
-    //     <motion.div
-    //       key={i}
-    //       initial={{ opacity: 0, y: 10 }}
-    //       animate={{ opacity: 1, y: 0 }}
-    //       className="p-5 rounded-2xl shadow bg-white"
-    //     >
-    //       <p className="text-gray-500">{card.title}</p>
-    //       <h2 className="text-2xl font-bold">{card.value}</h2>
-    //     </motion.div>
-    //   ))}
-    // </div>
-
     <div className="grid md:grid-cols-4 gap-6">
       {cards.map((card, i) => (
         <motion.div key={i} whileHover={{ scale: 1.05 }}>
