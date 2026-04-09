@@ -95,7 +95,7 @@ export default function BrandPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-purple-500/10 to-purple-100 shadow-lg">
+        <Card className="bg-gradient-to-r from-purple-500/10 to-purple-100 shadow-lg dark:border-gray-600">
           <CardContent className="flex justify-between items-center p-6">
             <div>
               <p>Items Per Page</p>
