@@ -85,7 +85,7 @@ export default function BrandPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-green-500/10 to-green-100 shadow-lg">
+        <Card className="bg-gradient-to-r from-green-500/10 to-green-100 shadow-lg dark:bg-black dark:border-white">
           <CardContent className="flex justify-between items-center p-6">
             <div>
               <p>Current Page</p>
