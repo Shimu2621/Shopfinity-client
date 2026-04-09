@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { IPayment } from "@/types/payment/payment";
 import { Card, CardContent } from "@/components/ui/card";
 import CountUp from "react-countup";
+import { CreditCard, CheckCircle, Clock, DollarSign } from "lucide-react";
 
 interface PaymentStatsProps {
   payments: IPayment[];
@@ -24,10 +25,31 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
   );
 
   const cards = [
-    { title: "Total Payments", value: total },
-    { title: "Completed", value: completed },
-    { title: "Pending", value: pending },
-    { title: "Total Amount", value: `$${totalAmount.toFixed(2)}` },
+    {
+      title: "Total Payments",
+      value: total,
+      icon: <CreditCard className="text-blue-600" />,
+      bg: "from-blue-500/20 to-blue-100",
+    },
+    {
+      title: "Completed",
+      value: completed,
+      icon: <CheckCircle className="text-green-600" />,
+      bg: "from-green-500/20 to-green-100",
+    },
+    {
+      title: "Pending",
+      value: pending,
+      icon: <Clock className="text-yellow-600" />,
+      bg: "from-yellow-500/20 to-yellow-100",
+    },
+    {
+      title: "Total Amount",
+      value: totalAmount,
+      isMoney: true,
+      icon: <DollarSign className="text-purple-600" />,
+      bg: "from-purple-500/20 to-purple-100",
+    },
   ];
 
   return (
