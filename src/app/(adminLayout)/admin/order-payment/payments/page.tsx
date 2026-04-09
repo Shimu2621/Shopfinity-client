@@ -39,6 +39,27 @@ const PaymentPage = () => {
         </p>
       </motion.div>
 
+      {/* header */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center space-y-2"
+      >
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-2 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
+            <DollarSign className="h-8 w-8 text-white" />
+          </div>
+
+          <AuroraText className="text-3xl md:text-4xl font-bold">
+            Category Management
+          </AuroraText>
+        </div>
+        <p className="text-muted-foreground">
+          Structure your product catalog with categories and subcategories to
+          improve organizations, and overall shopping experiences
+        </p>
+      </motion.div>
+
       <PaymentStats payments={payments} />
 
       <PaymentTable
