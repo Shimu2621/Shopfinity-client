@@ -18,21 +18,6 @@ const OrderPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-2"
-      >
-        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
-          <ListOrdered className="w-8 h-8 text-blue-500" />
-          Order Management
-        </h1>
-        <p className="text-muted-foreground">
-          Manage and track customer orders efficiently by updating status, and
-          ensuring smooth order delivery
-        </p>
-      </motion.div>
-
       {/* header */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
