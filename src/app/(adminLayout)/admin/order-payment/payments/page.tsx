@@ -55,8 +55,8 @@ const PaymentPage = () => {
           </AuroraText>
         </div>
         <p className="text-muted-foreground">
-          Structure your product catalog with categories and subcategories to
-          improve organizations, and overall shopping experiences
+          Monitor and manage all payment transactions, track status, and ensure
+          secure and seamless financial operations across your platform
         </p>
       </motion.div>
 
