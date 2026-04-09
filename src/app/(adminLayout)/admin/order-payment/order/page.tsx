@@ -45,12 +45,12 @@ const OrderPage = () => {
           </div>
 
           <AuroraText className="text-3xl md:text-4xl font-bold">
-            Category Management
+            Order Management
           </AuroraText>
         </div>
         <p className="text-muted-foreground">
-          Structure your product catalog with categories and subcategories to
-          improve organizations, and overall shopping experiences
+          Manage and track customer orders efficiently by updating status, and
+          ensuring smooth order delivery
         </p>
       </motion.div>
 
