@@ -285,7 +285,7 @@ const AllProductsPage = () => {
                       </Button>
                     </Link>
                     <Button
-                      className="p-2 text-blue-500 hover:bg-gray-100 rounded"
+                      className="p-2 text-yellow-500 hover:bg-gray-100 rounded"
                       variant="ghost"
                       size="icon"
                       onClick={() => {
