@@ -203,10 +203,11 @@ export default function BrandPage() {
 
                       <Button
                         size="sm"
+                        className="bg-red-500"
                         // variant="destructive"
                         onClick={() => handleDelete(brand._id)}
                       >
-                        <Trash2 className="w-4 h-4 mr-1" />
+                        <Trash2 className="w-4 h-4 mr-1 text-white" />
                         Delete
                       </Button>
                     </td>
