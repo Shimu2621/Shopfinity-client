@@ -276,7 +276,11 @@ const AllProductsPage = () => {
 
                   <td className="px-4 py-2 flex gap-2">
                     <Link href={`/products/${product._id}`}>
-                      <Button size="icon" variant="ghost" className="h-10 w-10">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-10 w-10 p-2 text-blue-500 hover:bg-gray-100 rounded"
+                      >
                         <Eye className="w-4 h-4" />
                       </Button>
                     </Link>
