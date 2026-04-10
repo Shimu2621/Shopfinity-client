@@ -296,6 +296,7 @@ const AllProductsPage = () => {
                       <Edit size={16} />
                     </Button>
                     <Button
+                      className="p-2 text-red-500 hover:bg-gray-100 rounded"
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDelete(product._id)}
