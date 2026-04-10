@@ -36,7 +36,7 @@ export default function DeleteBrandDialog({ open, setOpen, id }: Props) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
+          <Button className="bg-red-500" onClick={handleDelete}>
             Delete
           </Button>
         </div>
