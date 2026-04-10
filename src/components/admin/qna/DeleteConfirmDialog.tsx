@@ -20,7 +20,7 @@ export default function DeleteConfirmDialog({ onConfirm }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="destructive">
+        <Button size="sm" className="bg-red-500 dark:text-white">
           Delete
         </Button>
       </DialogTrigger>
