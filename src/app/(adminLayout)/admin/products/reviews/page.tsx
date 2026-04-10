@@ -162,11 +162,12 @@ export default function AdminReviewsPage() {
                     </td>
                     <td className="p-4 text-right">
                       <Button
+                        className="bg-red-500"
                         size="icon"
                         // variant="destructive"
                         onClick={() => handleDelete(review.id)}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={16} className="text-white" />
                       </Button>
                     </td>
                   </motion.tr>
