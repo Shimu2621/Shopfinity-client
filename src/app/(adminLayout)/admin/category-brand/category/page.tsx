@@ -330,11 +330,12 @@ export default function CategoryPage() {
                         <Pencil className="w-4 h-4" />
                       </Button>
                       <Button
+                        className="bg-red-500"
                         size="icon"
-                        variant="destructive"
+                        // variant="destructive"
                         onClick={() => handleDelete(cat._id)}
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4 text-white" />
                       </Button>
                     </TableCell>
                   </TableRow>
