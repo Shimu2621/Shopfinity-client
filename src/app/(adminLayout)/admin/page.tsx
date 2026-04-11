@@ -3,6 +3,7 @@
 import { useGetDashboardSummaryQuery } from "@/redux/api/dashboard/dashboardApi";
 
 import { StatsCard } from "@/components/admin/StatsCard";
+import { motion } from "framer-motion";
 import { statsConfig } from "@/components/admin/stats.config";
 import { DashboardSummary } from "@/types/dashboard/dashboard";
 import { SalesOverTimeChart } from "@/components/admin/charts/SalesOverTimeChart";
@@ -11,6 +12,8 @@ import { TopSellingProductsChart } from "@/components/admin/charts/TopProductsCh
 import { UserTrendChart } from "@/components/admin/charts/UserTrendChart";
 import { TopCategoriesChart } from "@/components/admin/charts/TopCategoriesChart";
 import { PaymentMethodChart } from "@/components/admin/charts/PaymentMethodChart";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { Settings } from "lucide-react";
 
 export default function AdminDashboardPage() {
   const { data, isLoading, isError } = useGetDashboardSummaryQuery();
@@ -38,6 +41,22 @@ export default function AdminDashboardPage() {
           Overview of store performances
         </p>
       </div>
+
+      {/* Header */}
+      <motion.div variants={itemVariants} className="text-center space-y-4">
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-3 rounded-full bg-gradient-to-r from-rose-500 via-purple to-blue-500">
+            <Settings className="h-8 w-8 text-white" />
+          </div>
+          <AuroraText className="text-4xl md:text-5xl font-bold">
+            Product Specifications
+          </AuroraText>
+        </div>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Organize and manage product specifications to deliver clear, detailed
+          information that help customers make confident purchasing decisions.
+        </p>
+      </motion.div>
 
       {/* Stats Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
