@@ -35,11 +35,11 @@ const UserPage = () => {
         className="text-center space-y-2"
       >
         <div className="flex items-center justify-center space-x-3">
-          <div className="p-3 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
+          <div className="p-2 rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500">
             <UserStar className="h-8 w-8 text-white" />
           </div>
 
-          <AuroraText className="text-4xl md:text-5xl font-bold">
+          <AuroraText className="text-3xl md:text-4xl font-bold">
             User Management
           </AuroraText>
         </div>
