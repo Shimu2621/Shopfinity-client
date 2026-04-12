@@ -8,6 +8,7 @@ import { useGetOrderByIdQuery } from "@/redux/api/order/orderApi";
 
 export default function PaymentPage() {
   const { orderId } = useParams<{ orderId: string }>();
+  const [paymentId, setPaymentId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { data: order, isLoading } = useGetOrderByIdQuery(orderId);
@@ -57,7 +58,8 @@ export default function PaymentPage() {
   //   }
   // };
 
-  const handlePayNow = async (paymentId: string) => {
+  const handlePayNow = async () => {
+    setIsProcessing(true);
     try {
       const res = await fetch(
         "http://localhost:5000/api/payment/create-stripe-session",
@@ -77,6 +79,8 @@ export default function PaymentPage() {
       }
     } catch (error) {
       alert("Payment failed");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
