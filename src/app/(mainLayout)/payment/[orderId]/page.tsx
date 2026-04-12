@@ -57,10 +57,21 @@ export default function PaymentPage() {
   //   }
   // };
 
-  const handlePayNow = async (paymentId: string) => {
+  const handlePayNow = async () => {
     setIsProcessing(true);
-    await createPayment(data);
+
     try {
+      // 1️⃣ Create payment first
+      const payload = {
+        userId: order.userId,
+        orderId: order._id,
+        amount: order.totalAmount,
+        paymentMethod: "pay_now",
+      };
+
+      const paymentResult = await createPayment(payload).unwrap();
+
+      // 2️⃣ Create Stripe session
       const res = await fetch(
         "http://localhost:5000/api/payment/create-stripe-session",
         {
@@ -68,14 +79,15 @@ export default function PaymentPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ paymentId }),
+          body: JSON.stringify({ paymentId: paymentResult.data._id }),
         },
       );
 
       const data = await res.json();
 
+      // 3️⃣ Redirect to Stripe
       if (data.url) {
-        window.location.href = data.url; // ✅ NEW WAY
+        window.location.href = data.url;
       }
     } catch (error) {
       console.error(error);
