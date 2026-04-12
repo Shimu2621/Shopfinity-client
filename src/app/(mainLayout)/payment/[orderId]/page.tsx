@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { stripePromise } from "@/lib/stripe";
+// import { stripePromise } from "@/lib/stripe";
 import { useCreatePaymentMutation } from "@/redux/api/baseApi";
 import { useGetOrderByIdQuery } from "@/redux/api/order/orderApi";
 
@@ -58,7 +57,7 @@ export default function PaymentPage() {
   //   }
   // };
 
-  const handlePayNow = async () => {
+  const handlePayNow = async (paymentId: string) => {
     try {
       const res = await fetch(
         "http://localhost:5000/api/payment/create-stripe-session",
