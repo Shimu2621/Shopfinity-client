@@ -35,7 +35,7 @@ const OrderPage = () => {
         </div>
         <p className="text-muted-foreground">
           Manage and track customer orders efficiently by updating status, and
-          ensuring smooth order delivery.
+          ensuring smooth order delivery
         </p>
       </motion.div>
 
