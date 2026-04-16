@@ -28,7 +28,7 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
   const subtotal =
     cartItems?.reduce(
       (sum, item) => sum + item.productId.price * item.quantity,
-      0
+      0,
     ) ?? 0;
 
   const shipping = subtotal > 0 ? 10 : 0; // flat demo shipping
@@ -36,12 +36,34 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
   const total = subtotal + shipping + tax;
 
   const handlePlaceOrder = async () => {
-    setIsProcessing(true);
+    try {
+      setIsProcessing(true);
 
-    // simulate API call
-    await new Promise((res) => setTimeout(res, 2000));
+      // 👉 Call your backend API to create order
+      const res = await fetch("http://localhost:5000/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          items: cartItems,
+          total,
+          paymentMethod,
+        }),
+      });
 
-    setIsProcessing(false);
+      const data = await res.json();
+
+      // 👉 Make sure backend returns order._id
+      if (data?.order?._id) {
+        router.push(`/payment/${data.order._id}`);
+      }
+    } catch (error) {
+      console.error("Order creation failed:", error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
