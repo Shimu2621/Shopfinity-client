@@ -43,18 +43,23 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
     try {
       setIsProcessing(true);
 
+      // ✅ STEP 1: Transform cartItems → orderItems
+      const orderItems = cartItems?.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.productId.price,
+      }));
+
+      // ✅ STEP 2: Call API
       const result = await createOrder({
         userId,
-        items: cartItems,
+        items: orderItems, // 👈 USE THIS (not cartItems)
         totalAmount: total,
         paymentMethod,
       }).unwrap();
 
-      const orderId = result?.order?._id; // ✅ IMPORTANT
-
-      if (!orderId) {
-        throw new Error("Order ID not found");
-      }
+      // ✅ STEP 3: Redirect
+      const orderId = result._id;
 
       if (paymentMethod === "pay_now") {
         router.push(`/payment/${orderId}`);
