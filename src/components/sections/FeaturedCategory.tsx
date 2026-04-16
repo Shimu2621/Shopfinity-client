@@ -120,7 +120,7 @@ export default function FeaturedCategory() {
         </h2>
         <p className="text-center text-muted-foreground max-w-2xl mb-8">
           Discover our most popular product categories, carefully curated to
-          make your shopping experiences faster and easier
+          make your shopping experiences faster and easier.
         </p>
         <div className="container mx-auto max-w-[1480px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-6">
           {categories.map((category, index) => {
