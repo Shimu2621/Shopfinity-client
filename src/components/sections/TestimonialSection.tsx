@@ -34,7 +34,7 @@ const testimonials = [
     image:
       "https://img.freepik.com/premium-photo/official-girl-iamges-hd-wallpaper-free-download-girl-model-with-pant-shairt-product-view-ad_88650-3235.jpg",
     rating: 5,
-    text: "This platform has completely transformed how we approach our marketing campaigns. The results have been outstanding and the support team is incredibly responsive.",
+    text: "This platform has completely transformed how we approach our marketing campaigns. The results have been outstanding and the support teams is incredibly responsive.",
     bgColor: "from-blue-50 to-cyan-50",
   },
   {
