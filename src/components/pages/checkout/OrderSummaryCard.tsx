@@ -43,22 +43,28 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
     try {
       setIsProcessing(true);
 
-      // ✅ STEP 1: Transform cartItems → orderItems
-      const orderItems = cartItems?.map((item) => ({
+      // ✅ STEP 1: Validate cart
+      if (!cartItems || cartItems.length === 0) {
+        console.error("Cart is empty");
+        return;
+      }
+
+      // ✅ STEP 2: Transform cart → order items
+      const orderItems = cartItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity,
         price: item.productId.price,
       }));
 
-      // ✅ STEP 2: Call API
+      // ✅ STEP 3: Call API
       const result = await createOrder({
         userId,
-        items: orderItems, // 👈 USE THIS (not cartItems)
+        items: orderItems,
         totalAmount: total,
         paymentMethod,
       }).unwrap();
 
-      // ✅ STEP 3: Redirect
+      // ✅ STEP 4: Redirect
       const orderId = result._id;
 
       if (paymentMethod === "pay_now") {
