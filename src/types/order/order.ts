@@ -35,4 +35,5 @@ export interface ICreateOrderPayload {
   userId: string;
   items: IOrderItem[];
   totalAmount: number;
+  paymentMethod: "pay_now" | "cod";
 }
