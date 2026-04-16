@@ -11,6 +11,7 @@ import {
   Truck,
 } from "lucide-react";
 import { useState } from "react";
+import { useCreateOrderMutation } from "@/redux/api/order/orderApi";
 import { useRouter } from "next/navigation";
 
 interface OrderSummaryProps {
@@ -19,6 +20,7 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
+  const [createOrder] = useCreateOrderMutation();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const { data: cartItems, isLoading } = useGetUserCartQuery(userId, {
@@ -41,25 +43,23 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
     try {
       setIsProcessing(true);
 
-      // 👉 Call your backend API to create order
-      const res = await fetch("http://localhost:5000/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          items: cartItems,
-          total,
-          paymentMethod,
-        }),
-      });
+      const result = await createOrder({
+        userId,
+        items: cartItems,
+        totalAmount: total,
+        paymentMethod,
+      }).unwrap();
 
-      const data = await res.json();
+      const orderId = result?.order?._id; // ✅ IMPORTANT
 
-      // 👉 Make sure backend returns order._id
-      if (data?.order?._id) {
-        router.push(`/payment/${data.order._id}`);
+      if (!orderId) {
+        throw new Error("Order ID not found");
+      }
+
+      if (paymentMethod === "pay_now") {
+        router.push(`/payment/${orderId}`);
+      } else {
+        router.push(`/order-success/${orderId}`);
       }
     } catch (error) {
       console.error("Order creation failed:", error);
