@@ -1,11 +1,11 @@
 // src/redux/api/order/orderApi.ts
 import { baseApi } from "../baseApi";
-import { IOrder } from "@/types/order/order";
+import { ICreateOrderPayload, IOrder } from "@/types/order/order";
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // ➕ Create Order
-    createOrder: builder.mutation<IOrder, Partial<IOrder>>({
+    createOrder: builder.mutation<IOrder, ICreateOrderPayload>({
       query: (body) => ({
         url: "/orders",
         method: "POST",
