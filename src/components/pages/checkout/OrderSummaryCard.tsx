@@ -18,6 +18,7 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
+  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const { data: cartItems, isLoading } = useGetUserCartQuery(userId, {
     skip: !userId,
