@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { stripePromise } from "@/lib/stripe";
-import { useCreatePaymentMutation } from "@/redux/api/payment/paymentApi";
+import { useCreatePaymentMutation } from "@/redux/api/baseApi";
 import { useGetOrderByIdQuery } from "@/redux/api/order/orderApi";
 
 export default function PaymentPage() {
