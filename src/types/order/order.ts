@@ -39,7 +39,7 @@ export interface ICreateOrderItem {
 
 export interface ICreateOrderPayload {
   userId: string;
-  items: IOrderItem[];
+  items: ICreateOrderItem[];
   totalAmount: number;
   paymentMethod: "pay_now" | "cod";
 }
