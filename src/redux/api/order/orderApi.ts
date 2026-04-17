@@ -11,6 +11,7 @@ export const orderApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+      transformResponse: (response: { order: IOrder }) => response.order, // ✅ IMPORTANT
       invalidatesTags: ["ORDER"],
     }),
 
