@@ -65,7 +65,7 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
       }).unwrap();
 
       // ✅ STEP 4: Redirect
-      const orderId = result._id;
+      const orderId = result.order._id;
 
       if (paymentMethod === "pay_now") {
         router.push(`/payment/${orderId}`);
