@@ -144,7 +144,7 @@ export function SpecialOfferSection() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-lg max-w-lg leading-relaxed text-muted-foreground mb-4"
             >
-              Join thousands of satisfied customers and unlock exclusive
+              Join thousands of satisfied customer and unlock exclusive
               benefits. Limited time offer - don&apos;t miss out on this
               incredible opportunity to save big!
             </motion.p>
