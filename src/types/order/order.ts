@@ -31,6 +31,12 @@ export interface IOrder {
   updatedAt: string;
 }
 
+export interface ICreateOrderItem {
+  productId: string;
+  quantity: number;
+  price: number;
+}
+
 export interface ICreateOrderPayload {
   userId: string;
   items: IOrderItem[];
