@@ -51,7 +51,7 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
 
       // ✅ STEP 2: Transform cart → order items
       const orderItems = cartItems.map((item) => ({
-        productId: item.productId,
+        productId: item.productId._id, // ✅ FIX HERE
         quantity: item.quantity,
         price: item.productId.price,
       }));
