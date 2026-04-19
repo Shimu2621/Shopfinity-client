@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
-import { api } from "@/redux/api/baseApi";
+import { baseApi } from "@/redux/api/baseApi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -85,7 +85,7 @@ export default function Navbar() {
     dispatch(logout());
 
     // 🔥 Clear ALL RTK Query cache
-    dispatch(api.util.resetApiState());
+    dispatch(baseApi.util.resetApiState());
 
     localStorage.removeItem("token");
 
