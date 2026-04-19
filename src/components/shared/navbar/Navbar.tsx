@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
+import { api } from "@/redux/api/baseApi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -70,9 +71,20 @@ export default function Navbar() {
   const cartCount =
     cartItems?.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
 
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   localStorage.removeItem("token");
+  //   router.push("/signin");
+  // };
+
   const handleLogout = () => {
     dispatch(logout());
+
+    // 🔥 Clear ALL RTK Query cache
+    dispatch(api.util.resetApiState());
+
     localStorage.removeItem("token");
+
     router.push("/signin");
   };
 
