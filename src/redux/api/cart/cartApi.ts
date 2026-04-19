@@ -25,6 +25,8 @@ export const cartApi = baseApi.injectEndpoints({
       query: (userId) => `/cart/user/${userId}`,
       providesTags: [tagTypes.CART],
       transformResponse: (response: ICartResponse) => response.data,
+
+      keepUnusedDataFor: 0,
     }),
 
     // ✏️ Update Cart Item Quantity
