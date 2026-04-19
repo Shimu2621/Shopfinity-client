@@ -5,10 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { CheckCircle, Download, Printer } from "lucide-react";
 import { baseApi } from "@/redux/api/baseApi";
 import { useAppDispatch } from "@/redux/hooks/hooks";
+import { useRef } from "react";
 
 export default function PaymentSuccessPage() {
   const dispatch = useAppDispatch();
   const params = useSearchParams();
+  const receiptRef = useRef<HTMLDivElement>(null);
 
   const paymentId = params.get("paymentId");
 
@@ -64,14 +66,18 @@ export default function PaymentSuccessPage() {
 
         {/* Buttons */}
         <div className="flex gap-3">
-          <button className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-            <Download size={16} />
+          <button
+            onClick={() => window.print()}
+            className="flex-1 bg-blue-600 text-white py-2 rounded-lg"
+          >
             Download Receipt
           </button>
 
-          <button className="flex-1 flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition">
-            <Printer size={16} />
-            Print
+          <button
+            onClick={() => window.print()}
+            className="flex-1 border py-2 rounded-lg"
+          >
+            Print Receipt
           </button>
         </div>
 
