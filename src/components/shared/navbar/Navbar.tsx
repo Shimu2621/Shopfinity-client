@@ -48,6 +48,7 @@ export default function Navbar() {
   // 🛒 Cart query (safe)
   const { data: cartItems } = useGetUserCartQuery(userId!, {
     skip: !userId,
+    refetchOnMountOrArgChange: true,
   });
 
   const isAuthenticated = !!token;
@@ -55,7 +56,10 @@ export default function Navbar() {
 
   const { data: wishlistData } = useGetWishlistQuery(
     { userId },
-    { skip: !userId },
+    {
+      skip: !userId,
+      refetchOnMountOrArgChange: true,
+    },
   );
 
   const wishlistCount = wishlistData?.data?.length ?? 0;
