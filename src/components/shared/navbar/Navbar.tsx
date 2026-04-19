@@ -54,10 +54,6 @@ export default function Navbar() {
   const isAuthenticated = !!token;
   const isAdmin = user?.role === "admin";
 
-  const cartCount = isAuthenticated
-    ? (cartItems?.reduce((sum, item) => sum + item.quantity, 0) ?? 0)
-    : 0;
-
   const { data: wishlistData } = useGetWishlistQuery(
     { userId },
     {
@@ -68,7 +64,13 @@ export default function Navbar() {
 
   // const wishlistCount = wishlistData?.data?.length ?? 0;
 
-  const wishlistCount = isAuthenticated ? (wishlistData?.data?.length ?? 0) : 0;
+  const cartCount = !isAuthenticated
+    ? 0
+    : (cartItems?.reduce((sum, item) => sum + item.quantity, 0) ?? 0);
+
+  const wishlistCount = !isAuthenticated
+    ? 0
+    : (wishlistData?.data?.length ?? 0);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -77,9 +79,6 @@ export default function Navbar() {
     { name: "About", href: "/#about" },
     { name: "Contact", href: "/#contact" },
   ];
-
-  // const cartCount =
-  //   cartItems?.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
 
   // const handleLogout = () => {
   //   dispatch(logout());
