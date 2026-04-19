@@ -88,9 +88,10 @@ export default function Navbar() {
   // };
 
   const handleLogout = () => {
-    dispatch(logout());
+    setIsCartOpen(false);
+    setIsWishlistOpen(false);
 
-    // 🔥 Clear ALL RTK Query cache
+    dispatch(logout());
     dispatch(baseApi.util.resetApiState());
 
     localStorage.removeItem("token");
