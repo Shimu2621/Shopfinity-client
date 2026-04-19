@@ -30,6 +30,8 @@ export const wishlistApi = baseApi.injectEndpoints({
         params,
       }),
       providesTags: ["WISHLIST"],
+
+      keepUnusedDataFor: 0,
     }),
 
     /**
