@@ -475,7 +475,7 @@ export default function ProductDetailsPage() {
                   <div className="space-y-4">
                     {product.questions.map((q) => (
                       <div
-                        key={q.id}
+                        key={q._id}
                         className="border rounded-lg p-4 space-y-2"
                       >
                         <p className="font-medium">{q.question}</p>
