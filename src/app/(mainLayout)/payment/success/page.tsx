@@ -68,21 +68,16 @@ export default function PaymentSuccessPage() {
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-3">
-          <button
-            onClick={() => window.print()}
-            className="flex-1 bg-blue-600 text-white py-2 rounded-lg"
-          >
-            Download Receipt
-          </button>
+        <button
+          onClick={handlePrint}
+          className="flex-1 bg-blue-600 text-white py-2 rounded-lg"
+        >
+          Download Receipt
+        </button>
 
-          <button
-            onClick={() => window.print()}
-            className="flex-1 border py-2 rounded-lg"
-          >
-            Print Receipt
-          </button>
-        </div>
+        <button onClick={handlePrint} className="flex-1 border py-2 rounded-lg">
+          Print Receipt
+        </button>
 
         {/* Footer */}
         <p className="text-xs text-gray-400 text-center">
