@@ -51,6 +51,13 @@ export const baseApi = createApi({
       },
     ),
 
+    // 📦 Get Single payments
+    getPaymentById: builder.query<{ success: boolean; data: IPayment }, string>(
+      {
+        query: (id) => `/payment/${id}`,
+      },
+    ),
+
     // Stripe session
     createStripeSession: builder.mutation<
       { url: string },
@@ -84,6 +91,7 @@ export const baseApi = createApi({
 });
 export const {
   useGetAllPaymentsQuery,
+  useGetPaymentByIdQuery,
   useCreatePaymentMutation,
   useCreateStripeSessionMutation,
   usePaymentSuccessMutation,

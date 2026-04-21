@@ -3,10 +3,9 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle } from "lucide-react";
-import { baseApi } from "@/redux/api/baseApi";
+import { baseApi, useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { useRef } from "react";
-import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 
 export default function PaymentSuccessPage() {
   const dispatch = useAppDispatch();
@@ -15,8 +14,11 @@ export default function PaymentSuccessPage() {
 
   const paymentId = params.get("paymentId");
 
-  const { data } = useGetAllPaymentsQuery();
-  const payment = data?.data?.find((p) => p._id === paymentId);
+  const { data, isLoading } = useGetPaymentByIdQuery(paymentId!, {
+    skip: !paymentId,
+  });
+
+  const payment = data?.data;
 
   useEffect(() => {
     // 🔥 Reset all cache (cart, wishlist etc.)
@@ -35,10 +37,8 @@ export default function PaymentSuccessPage() {
     window.location.reload();
   };
 
-  if (!data) {
-    return (
-      <div className="text-white text-center mt-20">Loading payment...</div>
-    );
+  if (isLoading) {
+    return <div className="text-white text-center mt-20">Loading...</div>;
   }
 
   if (!payment) {
