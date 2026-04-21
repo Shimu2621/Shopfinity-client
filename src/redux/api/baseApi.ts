@@ -46,7 +46,7 @@ export const baseApi = createApi({
     // 📦 Get all payments
     getAllPayments: builder.query<{ success: boolean; data: IPayment[] }, void>(
       {
-        query: () => "/payments",
+        query: () => "/payment",
         providesTags: ["PAYMENT"],
       },
     ),
