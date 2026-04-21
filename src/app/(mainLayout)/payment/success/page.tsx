@@ -6,6 +6,7 @@ import { CheckCircle, Download, Printer } from "lucide-react";
 import { baseApi } from "@/redux/api/baseApi";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { useRef } from "react";
+import { useGetAllPaymentsQuery } from "@/redux/api/baseApi";
 
 export default function PaymentSuccessPage() {
   const dispatch = useAppDispatch();
@@ -14,10 +15,24 @@ export default function PaymentSuccessPage() {
 
   const paymentId = params.get("paymentId");
 
+  const { data } = useGetAllPaymentsQuery();
+
   useEffect(() => {
     // 🔥 Reset all cache (cart, wishlist etc.)
     dispatch(baseApi.util.resetApiState());
   }, [dispatch]);
+
+  const handlePrint = () => {
+    if (!receiptRef.current) return;
+
+    const printContents = receiptRef.current.innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
