@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle, Download, Printer } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { baseApi } from "@/redux/api/baseApi";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { useRef } from "react";
@@ -34,6 +34,12 @@ export default function PaymentSuccessPage() {
     document.body.innerHTML = originalContents;
     window.location.reload();
   };
+
+  if (!payment) {
+    return (
+      <div className="text-red-500 text-center mt-20">Payment not found</div>
+    );
+  }
 
   if (!data) {
     return (
@@ -83,7 +89,7 @@ export default function PaymentSuccessPage() {
 
             <div className="flex justify-between">
               <span className="text-gray-400">Date:</span>
-              <span>{new Date(payment?.createdAt || "").toLocaleString()}</span>
+              <span>{new Date(payment.createdAt).toLocaleString()}</span>
             </div>
           </div>
 
