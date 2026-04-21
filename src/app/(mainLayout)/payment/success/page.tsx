@@ -16,6 +16,7 @@ export default function PaymentSuccessPage() {
   const paymentId = params.get("paymentId");
 
   const { data } = useGetAllPaymentsQuery();
+  const payment = data?.data?.find((p) => p._id === paymentId);
 
   useEffect(() => {
     // 🔥 Reset all cache (cart, wishlist etc.)
@@ -61,23 +62,27 @@ export default function PaymentSuccessPage() {
 
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Payment ID:</span>
-            <span className="font-medium">{paymentId}</span>
+            <span className="font-medium">{payment?._id}</span>
           </div>
 
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Status:</span>
-            <span className="text-green-600 font-semibold">PAID</span>
+            <span className="text-green-400 font-semibold">
+              {payment?.paymentStatus?.toUpperCase()}
+            </span>
           </div>
 
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Date:</span>
-            <span>{new Date().toLocaleString()}</span>
+            <span>{new Date(payment?.createdAt || "").toLocaleString()}</span>
           </div>
 
           <div className="border-t pt-3">
             <div className="flex justify-between text-lg font-semibold">
               <span>Total Amount</span>
-              <span className="text-green-600">$499.99</span>
+              <span className="text-green-500 font-bold">
+                ${payment?.amount}
+              </span>
             </div>
           </div>
         </div>
