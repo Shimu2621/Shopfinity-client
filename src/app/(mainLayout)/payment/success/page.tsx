@@ -35,15 +35,15 @@ export default function PaymentSuccessPage() {
     window.location.reload();
   };
 
-  if (!payment) {
-    return (
-      <div className="text-red-500 text-center mt-20">Payment not found</div>
-    );
-  }
-
   if (!data) {
     return (
       <div className="text-white text-center mt-20">Loading payment...</div>
+    );
+  }
+
+  if (!payment) {
+    return (
+      <div className="text-red-500 text-center mt-20">Payment not found</div>
     );
   }
 
