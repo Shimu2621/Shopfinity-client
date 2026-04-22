@@ -20,13 +20,30 @@ export default function PaymentSuccessPage() {
   const handlePrint = () => {
     if (!receiptRef.current) return;
 
-    const printContents = receiptRef.current.innerHTML;
-    const originalContents = document.body.innerHTML;
+    const printWindow = window.open("", "_blank");
 
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    window.location.reload();
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Receipt</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        ${receiptRef.current.innerHTML}
+      </body>
+    </html>
+  `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   };
 
   if (isLoading) {
