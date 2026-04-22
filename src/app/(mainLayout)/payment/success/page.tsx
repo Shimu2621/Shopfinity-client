@@ -51,16 +51,24 @@ export default function PaymentSuccessPage() {
   const handleDownload = async () => {
     if (!receiptRef.current) return;
 
-    const canvas = await html2canvas(receiptRef.current);
+    // temporarily force light theme
+    document.documentElement.classList.remove("dark");
+
+    const canvas = await html2canvas(receiptRef.current, {
+      backgroundColor: "#ffffff",
+    });
+
     const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF();
     const imgWidth = 190;
-    // const pageHeight = 290;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
     pdf.save("receipt.pdf");
+
+    // restore dark mode
+    document.documentElement.classList.add("dark");
   };
 
   if (isLoading) {
