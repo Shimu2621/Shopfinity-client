@@ -38,8 +38,8 @@ export default function ProductsPage() {
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
   const { data, isLoading, isError } = useGetAllProductsQuery({
-    page: currentPage.toString(),
-    limit: itemsPerPage.toString(),
+    page: currentPage,
+    limit: itemsPerPage,
   });
 
   const { user } = useAppSelector((state) => state.auth);
