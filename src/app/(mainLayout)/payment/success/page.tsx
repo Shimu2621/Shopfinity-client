@@ -56,7 +56,7 @@ export default function PaymentSuccessPage() {
 
     const pdf = new jsPDF();
     const imgWidth = 190;
-    const pageHeight = 290;
+    // const pageHeight = 290;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
