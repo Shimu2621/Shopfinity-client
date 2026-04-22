@@ -4,6 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function PaymentSuccessPage() {
   const params = useSearchParams();
@@ -136,10 +138,9 @@ export default function PaymentSuccessPage() {
         {/* Buttons */}
         <div className="flex gap-3">
           <button
-            onClick={handlePrint}
+            onClick={handleDownload}
             className="flex-1 py-2 rounded-lg text-white
-              bg-gradient-to-r from-blue-600 to-indigo-600
-              hover:opacity-90 transition"
+      bg-gradient-to-r from-blue-600 to-indigo-600"
           >
             Download Receipt
           </button>
@@ -147,9 +148,8 @@ export default function PaymentSuccessPage() {
           <button
             onClick={handlePrint}
             className="flex-1 py-2 rounded-lg border
-              border-gray-300 text-gray-700
-              dark:border-gray-600 dark:text-gray-200
-              hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+      border-gray-300 text-gray-700
+      dark:border-gray-600 dark:text-gray-200"
           >
             Print Receipt
           </button>
