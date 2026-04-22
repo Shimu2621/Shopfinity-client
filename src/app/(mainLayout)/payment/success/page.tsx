@@ -48,6 +48,21 @@ export default function PaymentSuccessPage() {
     printWindow.print();
   };
 
+  const handleDownload = async () => {
+    if (!receiptRef.current) return;
+
+    const canvas = await html2canvas(receiptRef.current);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF();
+    const imgWidth = 190;
+    const pageHeight = 290;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save("receipt.pdf");
+  };
+
   if (isLoading) {
     return (
       <div className="text-center mt-20 text-gray-700 dark:text-gray-300">
