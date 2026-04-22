@@ -107,9 +107,14 @@ export default function PaymentSuccessPage() {
         {/* Receipt */}
         <div
           ref={receiptRef}
-          className="rounded-xl p-5 space-y-4 border
-            bg-gray-50 border-gray-200
-            dark:bg-gray-800 dark:border-gray-700"
+          style={{
+            background: "#ffffff",
+            color: "#000000",
+          }}
+          className="rounded-xl p-5 space-y-4 border"
+          // className="rounded-xl p-5 space-y-4 border
+          //   bg-gray-50 border-gray-200
+          //   dark:bg-gray-800 dark:border-gray-700"
         >
           <h2 className="text-lg font-semibold text-center">
             🧾 Payment Receipt
