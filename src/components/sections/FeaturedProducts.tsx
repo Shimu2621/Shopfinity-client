@@ -278,14 +278,18 @@ export default function FeaturedProducts() {
                 <CardContent className="p-4 flex flex-col flex-1">
                   <div className="flex justify-between">
                     {product.brand && (
-                      <Badge variant="secondary">{product.brand.name}</Badge>
+                      <Badge className="text-sm" variant="secondary">
+                        {product.brand.name}
+                      </Badge>
                     )}
 
                     {product.category && (
-                      <Badge variant="secondary">{product.category.name}</Badge>
+                      <Badge className="text-sm" variant="secondary">
+                        {product.category.name}
+                      </Badge>
                     )}
                   </div>
-                  <h3 className="font-semibold pt-3 text-rose-600 text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">
+                  <h3 className="font-bold pt-3 text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">
                     {product.name}
                   </h3>
 

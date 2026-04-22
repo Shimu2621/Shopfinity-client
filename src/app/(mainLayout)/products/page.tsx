@@ -256,7 +256,7 @@ export default function ProductsPage() {
                         </Badge>
                       )}
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-rose-600 transition-colors">
+                    <h3 className="font-bold text-md line-clamp-2 group-hover:text-rose-600 transition-colors">
                       {product.name}
                     </h3>
 

@@ -30,7 +30,11 @@ export default function PaymentSuccessPage() {
   };
 
   if (isLoading) {
-    return <div className="text-white text-center mt-20">Loading...</div>;
+    return (
+      <div className="text-center mt-20 text-gray-700 dark:text-gray-300">
+        Loading...
+      </div>
+    );
   }
 
   if (error) {
@@ -44,15 +48,24 @@ export default function PaymentSuccessPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4 py-10 text-white">
-      <div className="max-w-xl w-full bg-gray-900/80 backdrop-blur-lg border border-gray-700 shadow-2xl rounded-2xl p-6 space-y-6">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-10
+      bg-gradient-to-br from-gray-100 via-white to-gray-200
+      dark:from-gray-900 dark:via-gray-800 dark:to-black
+      text-gray-900 dark:text-white"
+    >
+      <div
+        className="max-w-xl w-full rounded-2xl p-6 space-y-6 shadow-xl
+        bg-white border border-gray-200
+        dark:bg-gray-900/80 dark:border-gray-700 backdrop-blur-lg"
+      >
         {/* Header */}
         <div className="text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h1 className="text-3xl font-bold text-green-400">
+          <h1 className="text-3xl font-bold text-green-600 dark:text-green-400">
             Payment Successful
           </h1>
-          <p className="text-gray-400 text-sm mt-2">
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
             Your transaction has been completed successfully
           </p>
         </div>
@@ -60,7 +73,9 @@ export default function PaymentSuccessPage() {
         {/* Receipt */}
         <div
           ref={receiptRef}
-          className="bg-gray-800 border border-gray-700 rounded-xl p-5 space-y-4"
+          className="rounded-xl p-5 space-y-4 border
+            bg-gray-50 border-gray-200
+            dark:bg-gray-800 dark:border-gray-700"
         >
           <h2 className="text-lg font-semibold text-center">
             🧾 Payment Receipt
@@ -68,19 +83,21 @@ export default function PaymentSuccessPage() {
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-400">Payment ID:</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Payment ID:
+              </span>
               <span>{payment._id}</span>
             </div>
 
             <div className="flex justify-between">
-              <span className="text-gray-400">Status:</span>
-              <span className="text-green-400 font-semibold">
+              <span className="text-gray-500 dark:text-gray-400">Status:</span>
+              <span className="text-green-600 dark:text-green-400 font-semibold capitalize">
                 {payment.paymentStatus}
               </span>
             </div>
 
             <div className="flex justify-between">
-              <span className="text-gray-400">Date:</span>
+              <span className="text-gray-500 dark:text-gray-400">Date:</span>
               <span>
                 {payment?.createdAt
                   ? new Date(payment.createdAt).toLocaleString()
@@ -89,10 +106,12 @@ export default function PaymentSuccessPage() {
             </div>
           </div>
 
-          <div className="border-t border-gray-700 pt-4">
+          <div className="border-t pt-4 border-gray-200 dark:border-gray-700">
             <div className="flex justify-between text-xl font-bold">
               <span>Total Amount</span>
-              <span className="text-green-400">${payment.amount}</span>
+              <span className="text-green-600 dark:text-green-400">
+                ${payment.amount}
+              </span>
             </div>
           </div>
         </div>
@@ -101,20 +120,25 @@ export default function PaymentSuccessPage() {
         <div className="flex gap-3">
           <button
             onClick={handlePrint}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 py-2 rounded-lg"
+            className="flex-1 py-2 rounded-lg text-white
+              bg-gradient-to-r from-blue-600 to-indigo-600
+              hover:opacity-90 transition"
           >
             Download Receipt
           </button>
 
           <button
             onClick={handlePrint}
-            className="flex-1 border border-gray-600 py-2 rounded-lg"
+            className="flex-1 py-2 rounded-lg border
+              border-gray-300 text-gray-700
+              dark:border-gray-600 dark:text-gray-200
+              hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
             Print Receipt
           </button>
         </div>
 
-        <p className="text-xs text-gray-500 text-center">
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
           Thank you for your purchase 💙
         </p>
       </div>
