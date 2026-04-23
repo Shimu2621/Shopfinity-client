@@ -51,9 +51,6 @@ export default function PaymentSuccessPage() {
   const handleDownload = async () => {
     if (!receiptRef.current) return;
 
-    // temporarily force light theme
-    document.documentElement.classList.remove("dark");
-
     const canvas = await html2canvas(receiptRef.current, {
       backgroundColor: "#ffffff",
     });
@@ -66,9 +63,6 @@ export default function PaymentSuccessPage() {
 
     pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
     pdf.save("receipt.pdf");
-
-    // restore dark mode
-    document.documentElement.classList.add("dark");
   };
 
   if (isLoading) {
