@@ -49,20 +49,32 @@ export default function PaymentSuccessPage() {
   };
 
   const handleDownload = async () => {
-    if (!receiptRef.current) return;
+    if (!receiptRef.current || !payment) return; // ✅ ADD THIS
 
-    const canvas = await html2canvas(receiptRef.current, {
+    const element = receiptRef.current.cloneNode(true) as HTMLElement;
+
+    element.style.background = "#ffffff";
+    element.style.color = "#000000";
+    element.style.padding = "20px";
+
+    document.body.appendChild(element);
+
+    const canvas = await html2canvas(element, {
       backgroundColor: "#ffffff",
+      scale: 2,
     });
+
+    document.body.removeChild(element);
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF();
+    const pdf = new jsPDF("p", "mm", "a4");
     const imgWidth = 190;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-    pdf.save("receipt.pdf");
+
+    pdf.save(`receipt-${payment._id}.pdf`); // ✅ SAFE NOW
   };
 
   if (isLoading) {
@@ -112,11 +124,8 @@ export default function PaymentSuccessPage() {
           style={{
             background: "#ffffff",
             color: "#000000",
+            width: "100%",
           }}
-          className="rounded-xl p-5 space-y-4 border"
-          // className="rounded-xl p-5 space-y-4 border
-          //   bg-gray-50 border-gray-200
-          //   dark:bg-gray-800 dark:border-gray-700"
         >
           <h2 className="text-lg font-semibold text-center">
             🧾 Payment Receipt
