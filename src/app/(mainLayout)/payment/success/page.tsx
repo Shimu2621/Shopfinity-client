@@ -6,7 +6,7 @@ import { useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { toPng } from "html-to-image";
+// import { toPng } from "html-to-image";
 
 export default function PaymentSuccessPage() {
   const params = useSearchParams();
@@ -140,9 +140,7 @@ export default function PaymentSuccessPage() {
           //   width: "100%",
           // }}
         >
-          <h2 className="text-lg font-semibold text-center">
-            🧾 Payment Receipt
-          </h2>
+          <h2>🧾 Payment Receipt</h2>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
