@@ -49,9 +49,21 @@ export default function PaymentSuccessPage() {
   };
 
   const handleDownload = async () => {
-    if (!receiptRef.current || !payment) return; // ✅ ADD THIS
+    if (!receiptRef.current || !payment) return;
 
+    // Clone element
     const element = receiptRef.current.cloneNode(true) as HTMLElement;
+
+    // ✅ FORCE SAFE COLORS (VERY IMPORTANT)
+    const allElements = element.querySelectorAll("*");
+
+    allElements.forEach((el) => {
+      const htmlEl = el as HTMLElement;
+
+      htmlEl.style.color = "#000000";
+      htmlEl.style.backgroundColor = "#ffffff";
+      htmlEl.style.borderColor = "#dddddd";
+    });
 
     element.style.background = "#ffffff";
     element.style.color = "#000000";
@@ -73,8 +85,7 @@ export default function PaymentSuccessPage() {
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-
-    pdf.save(`receipt-${payment._id}.pdf`); // ✅ SAFE NOW
+    pdf.save(`receipt-${payment._id}.pdf`);
   };
 
   if (isLoading) {
