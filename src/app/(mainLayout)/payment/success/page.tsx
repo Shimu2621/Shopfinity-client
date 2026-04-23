@@ -144,9 +144,7 @@ export default function PaymentSuccessPage() {
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                Payment ID:
-              </span>
+              <span style={{ color: "#555" }}>Payment ID:</span>
               <span>{payment._id}</span>
             </div>
 
