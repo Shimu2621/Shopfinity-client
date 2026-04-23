@@ -6,6 +6,7 @@ import { useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { toPng } from "html-to-image";
 
 export default function PaymentSuccessPage() {
   const params = useSearchParams();
@@ -132,11 +133,12 @@ export default function PaymentSuccessPage() {
         {/* Receipt */}
         <div
           ref={receiptRef}
-          style={{
-            background: "#ffffff",
-            color: "#000000",
-            width: "100%",
-          }}
+          className="hidden"
+          // style={{
+          //   background: "#ffffff",
+          //   color: "#000000",
+          //   width: "100%",
+          // }}
         >
           <h2 className="text-lg font-semibold text-center">
             🧾 Payment Receipt
