@@ -45,7 +45,7 @@ const UserPage = () => {
         </div>
         <p className="text-muted-foreground">
           Manage and monitor all users, control roles and permissions, and
-          ensure secure access across your platform
+          ensure secure access across your platforms
         </p>
       </motion.div>
 
