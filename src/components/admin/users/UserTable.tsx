@@ -140,12 +140,12 @@ const UserTable = ({
       </div>
 
       {/* Modal */}
-      {/* {selectedUser && (
+      {selectedUser && (
         <UserRoleModal
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
         />
-      )} */}
+      )}
     </div>
   );
 };
