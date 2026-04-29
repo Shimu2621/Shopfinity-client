@@ -35,7 +35,7 @@ export default function AdminDashboardPage() {
           Admin Dashboard
         </h1>
         <p className="text-sm text-muted-foreground">
-          Overview of store performances
+          Overview of store performances.
         </p>
       </div>
 
