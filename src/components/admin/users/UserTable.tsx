@@ -41,13 +41,13 @@ const UserTable = ({
     <div
       className="p-5 rounded-2xl shadow-md 
                  bg-white dark:bg-gray-900 
-                 border border-gray-200 dark:border-gray-800"
+                 border border-gray-200 dark:border-zinc-800"
     >
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-zinc-800">
               <th className="py-3">User</th>
               <th>Email</th>
               <th>Role</th>
