@@ -75,7 +75,7 @@ const UserStats = ({ users }: { users: IUser[] }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             className="group p-6 rounded-2xl shadow-md 
-                       bg-white dark:bg-gray-900 
+                       bg-white dark:bg-black 
                        border border-gray-200 dark:border-gray-800
                        hover:shadow-xl transition duration-300"
           >
