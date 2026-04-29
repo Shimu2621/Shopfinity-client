@@ -1,5 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Trash2, ShieldCheck, User } from "lucide-react";
 import { IUser } from "@/types/user/user";
 import UserRoleModal from "../users/UserRoleModal";
 import { useDeleteUserMutation } from "@/redux/api/user/userApi";
@@ -27,84 +30,122 @@ const UserTable = ({
   const totalPages = Math.ceil(total / limit);
 
   if (isLoading) {
-    return <p className="text-center py-10">Loading users...</p>;
+    return (
+      <p className="text-center py-10 text-gray-500 dark:text-gray-400">
+        Loading users...
+      </p>
+    );
   }
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left text-gray-500">
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Phone</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+    <div
+      className="p-5 rounded-2xl shadow-md 
+                 bg-white dark:bg-gray-900 
+                 border border-gray-200 dark:border-gray-800"
+    >
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+              <th className="py-3">User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Phone</th>
+              <th className="text-right">Action</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {users.map((u, index) => (
-            <motion.tr
-              key={u.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.05 }}
-              className="border-t"
-            >
-              <td>{u.name}</td>
-              <td>{u.email}</td>
+          <tbody>
+            {users.map((u, index) => (
+              <motion.tr
+                key={u.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+              >
+                {/* User */}
+                <td className="py-3 font-medium text-gray-700 dark:text-gray-200">
+                  {u.name}
+                </td>
 
-              <td>
-                <button
-                  onClick={() => setSelectedUser(u)}
-                  className={`px-3 py-1 rounded capitalize ${
-                    u.role === "admin"
-                      ? "bg-green-100 text-green-600"
-                      : "bg-gray-100"
-                  }`}
-                >
-                  {u.role}
-                </button>
-              </td>
+                {/* Email */}
+                <td className="text-gray-500 dark:text-gray-400">{u.email}</td>
 
-              <td>{u.phone || "-"}</td>
+                {/* Role */}
+                <td>
+                  <button
+                    onClick={() => setSelectedUser(u)}
+                    className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium capitalize transition
+                      ${
+                        u.role === "admin"
+                          ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
+                          : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                      }`}
+                  >
+                    {u.role === "admin" ? (
+                      <ShieldCheck size={14} />
+                    ) : (
+                      <User size={14} />
+                    )}
+                    {u.role}
+                  </button>
+                </td>
 
-              <td className="space-x-2">
-                <button
-                  onClick={() => deleteUser(u.id)}
-                  className="px-2 py-1 bg-red-500 text-white rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </motion.tr>
-          ))}
-        </tbody>
-      </table>
+                {/* Phone */}
+                <td className="text-gray-500 dark:text-gray-400">
+                  {u.phone || "-"}
+                </td>
+
+                {/* Action */}
+                <td className="text-right">
+                  <button
+                    onClick={() => deleteUser(u.id)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg 
+                               bg-red-500/10 text-red-600 
+                               hover:bg-red-500 hover:text-white 
+                               transition"
+                  >
+                    <Trash2 size={14} />
+                    Delete
+                  </button>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Pagination */}
-      <div className="flex justify-end mt-4 gap-2">
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              page === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
+      <div className="flex justify-end mt-6 gap-2 flex-wrap">
+        {[...Array(totalPages)].map((_, i) => {
+          const isActive = page === i + 1;
+
+          return (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-3 py-1.5 rounded-lg text-sm transition
+                ${
+                  isActive
+                    ? "bg-blue-600 text-white shadow"
+                    : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`}
+            >
+              {i + 1}
+            </button>
+          );
+        })}
       </div>
 
       {/* Modal */}
-      {selectedUser && (
+      {/* {selectedUser && (
         <UserRoleModal
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
         />
-      )}
+      )} */}
     </div>
   );
 };
