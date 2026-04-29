@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useRef } from "react";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 // import { toPng } from "html-to-image";
 
@@ -52,41 +51,35 @@ export default function PaymentSuccessPage() {
   const handleDownload = async () => {
     if (!receiptRef.current || !payment) return;
 
-    // Clone element
     const element = receiptRef.current.cloneNode(true) as HTMLElement;
 
-    // ✅ FORCE SAFE COLORS (VERY IMPORTANT)
-    const allElements = element.querySelectorAll("*");
-
-    allElements.forEach((el) => {
-      const htmlEl = el as HTMLElement;
-
-      htmlEl.style.color = "#000000";
-      htmlEl.style.backgroundColor = "#ffffff";
-      htmlEl.style.borderColor = "#dddddd";
-    });
-
+    // ✅ Force safe styles (avoid oklch issue)
     element.style.background = "#ffffff";
     element.style.color = "#000000";
     element.style.padding = "20px";
 
     document.body.appendChild(element);
 
-    const canvas = await html2canvas(element, {
-      backgroundColor: "#ffffff",
-      scale: 2,
-    });
+    try {
+      const dataUrl = await toPng(element); // ✅ correct usage
+
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const img = new Image();
+      img.src = dataUrl;
+
+      img.onload = () => {
+        const imgWidth = 190;
+        const imgHeight = (img.height * imgWidth) / img.width;
+
+        pdf.addImage(img, "PNG", 10, 10, imgWidth, imgHeight);
+        pdf.save(`receipt-${payment._id}.pdf`);
+      };
+    } catch (error) {
+      console.error("Download error:", error);
+    }
 
     document.body.removeChild(element);
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-    const imgWidth = 190;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-    pdf.save(`receipt-${payment._id}.pdf`);
   };
 
   if (isLoading) {
@@ -133,12 +126,14 @@ export default function PaymentSuccessPage() {
         {/* Receipt */}
         <div
           ref={receiptRef}
-          className="hidden"
-          // style={{
-          //   background: "#ffffff",
-          //   color: "#000000",
-          //   width: "100%",
-          // }}
+          style={{
+            position: "absolute",
+            top: "-9999px",
+            left: "-9999px",
+            background: "#fff",
+            color: "#000",
+            padding: "20px",
+          }}
         >
           <h2>🧾 Payment Receipt</h2>
 
