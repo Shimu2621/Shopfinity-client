@@ -10,6 +10,16 @@ interface Props {
   orders: IOrder[];
 }
 
+type ColorKey = "blue" | "yellow" | "green" | "purple";
+
+type CardItem = {
+  title: string;
+  value: number;
+  icon: JSX.Element;
+  color: ColorKey;
+  isMoney?: boolean;
+};
+
 const OrderStats = ({ orders }: Props) => {
   const total = orders.length;
   const pending = orders.filter((o) => o.status === "pending").length;
@@ -43,16 +53,6 @@ const OrderStats = ({ orders }: Props) => {
       color: "purple",
     },
   ];
-
-  type ColorKey = "blue" | "yellow" | "green" | "purple";
-
-  type CardItem = {
-    title: string;
-    value: number;
-    icon: JSX.Element;
-    color: ColorKey;
-    isMoney?: boolean;
-  };
 
   const colorStyles: Record<ColorKey, { light: string; dark: string }> = {
     blue: {
