@@ -86,13 +86,13 @@ const UserTable = ({
                   <button
                     onClick={() => setSelectedUser(u)}
                     className={`
-                      flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium capitalize transition
-                      ${
-                        u.role === "admin"
-                          ? "border border-white text-white"
-                          : "border border-gray-400 text-gray-400"
-                      }
-                    `}
+  flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium capitalize transition
+  ${
+    u.role === "admin"
+      ? "border border-black text-black dark:border-white dark:text-white"
+      : "border border-gray-400 text-gray-600 dark:border-gray-600 dark:text-gray-400"
+  }
+`}
                   >
                     {u.role === "admin" ? (
                       <ShieldCheck size={14} />
