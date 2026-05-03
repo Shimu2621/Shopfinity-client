@@ -32,7 +32,7 @@ const UserTable = ({
   if (isLoading) {
     return (
       <p className="text-center py-10 text-gray-500 dark:text-gray-400">
-        Loading users...
+        Loading users list...
       </p>
     );
   }
