@@ -39,15 +39,17 @@ const UserTable = ({
 
   return (
     <div
-      className="p-5 rounded-2xl shadow-md 
-                 bg-white dark:bg-gray-900 
-                 border border-gray-200 dark:border-zinc-800"
+      className="
+        p-4 sm:p-5 rounded-2xl shadow-md
+        bg-white dark:bg-black
+        border border-gray-200 dark:border-zinc-900
+      "
     >
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm min-w-[600px]">
           <thead>
-            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-zinc-800">
+            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-zinc-900">
               <th className="py-3">User</th>
               <th>Email</th>
               <th>Role</th>
@@ -63,26 +65,34 @@ const UserTable = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="border-b border-gray-100 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-900 transition"
+                className="
+                  border-b border-gray-100 dark:border-zinc-900
+                  hover:bg-gray-50 dark:hover:bg-black
+                  transition
+                "
               >
                 {/* User */}
-                <td className="py-3 font-medium text-gray-700 dark:text-gray-200">
+                <td className="py-3 font-medium text-gray-700 dark:text-white whitespace-nowrap">
                   {u.name}
                 </td>
 
                 {/* Email */}
-                <td className="text-gray-500 dark:text-gray-400">{u.email}</td>
+                <td className="text-gray-500 dark:text-gray-400 break-all">
+                  {u.email}
+                </td>
 
                 {/* Role */}
                 <td>
                   <button
                     onClick={() => setSelectedUser(u)}
-                    className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium capitalize transition
+                    className={`
+                      flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium capitalize transition
                       ${
                         u.role === "admin"
-                          ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
-                          : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-                      }`}
+                          ? "border border-white text-white"
+                          : "border border-gray-400 text-gray-400"
+                      }
+                    `}
                   >
                     {u.role === "admin" ? (
                       <ShieldCheck size={14} />
@@ -102,13 +112,15 @@ const UserTable = ({
                 <td className="text-right">
                   <button
                     onClick={() => deleteUser(u.id)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg 
-                               bg-red-500/10 text-red-600 
-                               hover:bg-red-500 hover:text-white 
-                               transition"
+                    className="
+                      inline-flex items-center gap-1 px-3 py-1.5 rounded-lg
+                      border border-red-500 text-red-500
+                      hover:bg-red-500 hover:text-white
+                      transition
+                    "
                   >
                     <Trash2 size={14} />
-                    Delete
+                    <span className="hidden sm:inline">Delete</span>
                   </button>
                 </td>
               </motion.tr>
@@ -118,7 +130,7 @@ const UserTable = ({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-end mt-6 gap-2 flex-wrap">
+      <div className="flex justify-center sm:justify-end mt-6 gap-2 flex-wrap">
         {[...Array(totalPages)].map((_, i) => {
           const isActive = page === i + 1;
 
@@ -126,12 +138,14 @@ const UserTable = ({
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`px-3 py-1.5 rounded-lg text-sm transition
+              className={`
+                px-3 py-1.5 rounded-lg text-sm transition
                 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow"
-                    : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
+                    ? "bg-white text-black"
+                    : "border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black"
+                }
+              `}
             >
               {i + 1}
             </button>
