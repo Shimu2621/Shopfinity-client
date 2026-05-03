@@ -46,6 +46,14 @@ const OrderStats = ({ orders }: Props) => {
 
   type ColorKey = "blue" | "yellow" | "green" | "purple";
 
+  type CardItem = {
+    title: string;
+    value: number;
+    icon: JSX.Element;
+    color: ColorKey;
+    isMoney?: boolean;
+  };
+
   const colorStyles: Record<ColorKey, { light: string; dark: string }> = {
     blue: {
       light: "bg-blue-50 text-blue-600 border-blue-200",
