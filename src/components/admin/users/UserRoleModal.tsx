@@ -54,14 +54,14 @@ const UserRoleModal = ({
                 key={role}
                 onClick={() => handleUpdate(role)}
                 className={`
-                  w-full p-2.5 rounded-lg text-sm font-medium capitalize transition
-                  ${
-                    isActive
-                      ? "border border-black text-black dark:border-white dark:text-white"
-                      : "border border-gray-300 text-gray-600 dark:border-gray-700 dark:text-gray-400"
-                  }
-                  hover:bg-gray-100 dark:hover:bg-black
-                `}
+    w-full p-2.5 rounded-lg text-sm font-medium capitalize transition
+    ${
+      isActive
+        ? "border border-black text-black dark:border-white dark:text-white"
+        : "border border-gray-300 text-gray-600 dark:border-gray-700 dark:text-gray-400"
+    }
+    hover:bg-gray-100 dark:hover:bg-black
+  `}
               >
                 {role}
               </button>
