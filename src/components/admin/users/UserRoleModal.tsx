@@ -57,8 +57,8 @@ const UserRoleModal = ({
                   w-full p-2.5 rounded-lg text-sm font-medium capitalize transition
                   ${
                     isActive
-                      ? "border border-white text-white"
-                      : "border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                      ? "border border-black text-black dark:border-white dark:text-white"
+                      : "border border-gray-300 text-gray-600 dark:border-gray-700 dark:text-gray-400"
                   }
                   hover:bg-gray-100 dark:hover:bg-black
                 `}
