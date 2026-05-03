@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -30,21 +32,41 @@ const UserRoleModal = ({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent
+        className="
+          rounded-2xl p-6
+          bg-white dark:bg-black
+          border border-gray-200 dark:border-zinc-900
+        "
+      >
         <DialogHeader>
-          <DialogTitle>Update User Role</DialogTitle>
+          <DialogTitle className="text-gray-800 dark:text-white text-lg font-semibold">
+            Update User Role
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="grid gap-3">
-          {roles.map((role) => (
-            <button
-              key={role}
-              onClick={() => handleUpdate(role)}
-              className="p-2 rounded bg-gray-100 hover:bg-blue-500 hover:text-white capitalize"
-            >
-              {role}
-            </button>
-          ))}
+        <div className="grid gap-3 mt-2">
+          {roles.map((role) => {
+            const isActive = user.role === role;
+
+            return (
+              <button
+                key={role}
+                onClick={() => handleUpdate(role)}
+                className={`
+                  w-full p-2.5 rounded-lg text-sm font-medium capitalize transition
+                  ${
+                    isActive
+                      ? "border border-white text-white"
+                      : "border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                  }
+                  hover:bg-gray-100 dark:hover:bg-black
+                `}
+              >
+                {role}
+              </button>
+            );
+          })}
         </div>
       </DialogContent>
     </Dialog>
