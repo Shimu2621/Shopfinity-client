@@ -26,7 +26,7 @@ const OrderStats = ({ orders }: Props) => {
   const delivered = orders.filter((o) => o.status === "delivered").length;
   const revenue = orders.reduce((acc, o) => acc + o.totalAmount, 0);
 
-  const cards = [
+  const cards: CardItem[] = [
     {
       title: "Total Orders",
       value: total,
