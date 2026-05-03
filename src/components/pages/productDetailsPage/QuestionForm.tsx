@@ -65,7 +65,7 @@ export default function QuestionForm({ productId }: QuestionFormProps) {
       <Card>
         <CardContent className="text-center py-8">
           <p className="text-muted-foreground">
-            Please login to ask a question.
+            Please login to ask a question
           </p>
         </CardContent>
       </Card>
