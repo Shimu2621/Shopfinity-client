@@ -44,7 +44,9 @@ const OrderStats = ({ orders }: Props) => {
     },
   ];
 
-  const colorStyles: any = {
+  type ColorKey = "blue" | "yellow" | "green" | "purple";
+
+  const colorStyles: Record<ColorKey, { light: string; dark: string }> = {
     blue: {
       light: "bg-blue-50 text-blue-600 border-blue-200",
       dark: "dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20",
