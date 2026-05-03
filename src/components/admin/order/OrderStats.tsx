@@ -12,52 +12,60 @@ interface Props {
 
 const OrderStats = ({ orders }: Props) => {
   const total = orders.length;
-
   const pending = orders.filter((o) => o.status === "pending").length;
   const delivered = orders.filter((o) => o.status === "delivered").length;
-
   const revenue = orders.reduce((acc, o) => acc + o.totalAmount, 0);
 
   const cards = [
     {
       title: "Total Orders",
       value: total,
-      icon: <ShoppingCart className="text-blue-600" />,
-      bg: "from-blue-500/20 to-blue-100",
+      icon: <ShoppingCart size={20} />,
     },
     {
       title: "Pending",
       value: pending,
-      icon: <Clock className="text-yellow-600" />,
-      bg: "from-yellow-500/20 to-yellow-100",
+      icon: <Clock size={20} />,
     },
     {
       title: "Delivered",
       value: delivered,
-      icon: <CheckCircle className="text-green-600" />,
-      bg: "from-green-500/20 to-green-100",
+      icon: <CheckCircle size={20} />,
     },
     {
       title: "Revenue",
       value: revenue,
       isMoney: true,
-      icon: <DollarSign className="text-purple-600" />,
-      bg: "from-purple-500/20 to-purple-100",
+      icon: <DollarSign size={20} />,
     },
   ];
 
   return (
-    <div className="grid md:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {cards.map((card, i) => (
-        <motion.div key={i} whileHover={{ scale: 1.05 }}>
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.05 }}
+          whileHover={{ y: -4 }}
+        >
           <Card
-            className={`bg-gradient-to-br ${card.bg} backdrop-blur-xl border border-white/20 shadow-xl dark:border-gray-600`}
+            className="
+              rounded-2xl shadow-sm
+              bg-white dark:bg-black
+              border border-gray-200 dark:border-zinc-900
+              transition
+            "
           >
-            <CardContent className="p-6 flex justify-between items-center">
+            <CardContent className="p-5 flex items-center justify-between">
+              {/* Left */}
               <div>
-                <p className="text-sm text-muted-foreground">{card.title}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {card.title}
+                </p>
 
-                <h2 className="text-3xl font-bold">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white mt-1">
                   {card.isMoney ? (
                     <>
                       $
@@ -73,7 +81,17 @@ const OrderStats = ({ orders }: Props) => {
                 </h2>
               </div>
 
-              <div className="text-3xl">{card.icon}</div>
+              {/* Right Icon */}
+              <div
+                className="
+                  p-2 rounded-lg
+                  border border-gray-300
+                  dark:border-zinc-800
+                  text-gray-700 dark:text-gray-300
+                "
+              >
+                {card.icon}
+              </div>
             </CardContent>
           </Card>
         </motion.div>
