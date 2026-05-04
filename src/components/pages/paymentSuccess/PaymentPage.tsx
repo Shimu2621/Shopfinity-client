@@ -64,7 +64,7 @@ export default function PaymentPage() {
       <h1 className="text-xl font-bold">Complete Your Payment</h1>
 
       <p className="text-gray-500">
-        Amount to pay: <strong>${order.totalAmount.toFixed(2)}</strong>
+        Amount to pay-: <strong>${order.totalAmount.toFixed(2)}</strong>
       </p>
 
       <button
