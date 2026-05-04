@@ -88,7 +88,7 @@ export default function PaymentMethod({
             <p className="font-medium text-blue-700">Secure Payment</p>
             <p className="text-blue-600">
               Your payment information is encrypted and secure. We accept all
-              major credit cards
+              major credit cards only
             </p>
           </div>
         </div>
