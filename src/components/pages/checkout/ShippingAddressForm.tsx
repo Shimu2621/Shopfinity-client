@@ -65,7 +65,7 @@ const ShippingAddressForm = ({ userId }: ShippingAddressFormProps) => {
         </div>
 
         {isLoading ? (
-          <p className="text-sm text-gray-500">Loading shipping info...</p>
+          <p className="text-sm text-gray-500">Loading shipping info!...</p>
         ) : (
           <div className="space-y-4">
             {/* User Name */}
