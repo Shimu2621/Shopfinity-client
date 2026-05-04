@@ -74,7 +74,7 @@ export default function PaymentPage() {
       >
         {isProcessing
           ? "Processing..."
-          : `Pay Now- - $${order.totalAmount.toFixed(2)}`}
+          : `Pay Now - $${order.totalAmount.toFixed(2)}`}
       </button>
     </div>
   );
