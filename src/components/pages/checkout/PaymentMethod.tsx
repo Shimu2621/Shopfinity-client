@@ -75,7 +75,7 @@ export default function PaymentMethod({
             Cash on Delivery
           </div>
           <p className="text-sm text-gray-500">
-            Pay when your order is delivered.
+            Pay when your order is delivered
           </p>
         </div>
       </label>
