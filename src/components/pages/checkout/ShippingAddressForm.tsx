@@ -74,7 +74,7 @@ const ShippingAddressForm = ({ userId }: ShippingAddressFormProps) => {
                 <User className="h-5 w-5 text-blue-500" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-muted-foreground">Full Name-</p>
+                <p className="text-sm text-muted-foreground">Full Name</p>
                 <p className="text-sm font-medium">{formData.name}</p>
               </div>
             </div>
