@@ -110,7 +110,7 @@ const ProfilePage = () => {
 
     // Frontend validation
     if (!formData.name || !formData.phone || !formData.address) {
-      toast.error("Please fill in all required fields:");
+      toast.error("Please fill in all required fields");
       return;
     }
 
