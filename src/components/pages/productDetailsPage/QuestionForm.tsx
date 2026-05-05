@@ -55,7 +55,7 @@ export default function QuestionForm({ productId }: QuestionFormProps) {
       toast.success("Question submitted successfully");
       form.reset();
     } catch (error) {
-      toast.error("Failed to submit question. Please try again.");
+      toast.error("Failed to submit question. Please try again-.");
       console.error(error);
     }
   };
