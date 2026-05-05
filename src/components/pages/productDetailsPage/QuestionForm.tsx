@@ -41,7 +41,7 @@ export default function QuestionForm({ productId }: QuestionFormProps) {
 
   const onSubmit = async (values: QuestionFormValues) => {
     if (!user) {
-      toast.error("Please login to ask a question");
+      toast.error("Please login to ask a question!");
       return;
     }
 
