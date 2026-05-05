@@ -52,7 +52,7 @@ export default function QuestionForm({ productId }: QuestionFormProps) {
         userId: user.id,
       }).unwrap();
 
-      toast.success("Question submitted successfully");
+      toast.success("Question submitted successfully!");
       form.reset();
     } catch (error) {
       toast.error("Failed to submit question. Please try again.");
