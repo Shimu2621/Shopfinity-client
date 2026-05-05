@@ -136,7 +136,7 @@ const ProfilePage = () => {
       type ErrorWithData = { data?: { message?: string } };
       const err = error as ErrorWithData;
 
-      const message = err?.data?.message || "Failed to update profile.";
+      const message = err?.data?.message || "Failed to update profile!";
       toast.error(message);
     }
   };
