@@ -113,7 +113,7 @@ export default function OrderPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold">My Orders</h1>
-        <p className="text-sm text-gray-500">Track and manage your orders:</p>
+        <p className="text-sm text-gray-500">Track and manage your orders</p>
       </div>
 
       {/* Tabs */}
