@@ -73,7 +73,7 @@ const OrderSummary = ({ userId, paymentMethod }: OrderSummaryProps) => {
         router.push(`/order-success/${orderId}`);
       }
     } catch (error) {
-      console.error("Order creation failed:", error);
+      console.error("Order creation failed-:", error);
     } finally {
       setIsProcessing(false);
     }
