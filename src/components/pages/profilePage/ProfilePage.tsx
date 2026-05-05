@@ -110,7 +110,7 @@ const ProfilePage = () => {
 
     // Frontend validation
     if (!formData.name || !formData.phone || !formData.address) {
-      toast.error("Please fill in all required fields.");
+      toast.error("Please fill in all required fields:");
       return;
     }
 
@@ -412,7 +412,7 @@ const ProfilePage = () => {
                 <span className="text-gray-600">Member Since:</span>
                 <span>
                   {formatDate(
-                    profileData?.createdAt || new Date().toISOString()
+                    profileData?.createdAt || new Date().toISOString(),
                   )}
                 </span>
               </div>
