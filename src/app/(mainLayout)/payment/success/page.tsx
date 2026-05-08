@@ -155,7 +155,14 @@ export default function PaymentSuccessPage() {
 
             <div className="flex justify-between">
               <span style={{ color: "#555" }}>Status:</span>
-              <span className="text-green-600 dark:text-green-400 font-semibold capitalize">
+
+              <span
+                style={{
+                  color: "green",
+                  fontWeight: "600",
+                  textTransform: "capitalize",
+                }}
+              >
                 {payment.paymentStatus}
               </span>
             </div>
