@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react";
 import { useGetPaymentByIdQuery } from "@/redux/api/baseApi";
 import { useRef } from "react";
 import jsPDF from "jspdf";
-// import { toPng } from "html-to-image";
+import { toPng } from "html-to-image";
 
 export default function PaymentSuccessPage() {
   const params = useSearchParams();
