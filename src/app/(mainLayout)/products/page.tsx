@@ -110,7 +110,7 @@ export default function ProductsPage() {
     return (
       <section className="py-16 px-4 max-w-7xl mx-auto text-center">
         <div className="text-destructive">
-          <h2 className="text-2xl font-bold mb-4">Error Loading Products:</h2>
+          <h2 className="text-2xl font-bold mb-4">Error Loading Products</h2>
           <p>{isError}</p>
         </div>
       </section>
