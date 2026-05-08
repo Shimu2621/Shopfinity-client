@@ -126,7 +126,7 @@ export default function ProductsPage() {
         </ShinyButton>
 
         <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-6">
-          Browse ours{" "}
+          Browse our{" "}
           <AuroraText className="text-blue-800 italic">complete</AuroraText>
           <br /> collection of products!
         </h2>
