@@ -132,12 +132,16 @@ export default function PaymentSuccessPage() {
         <div
           ref={receiptRef}
           style={{
-            position: "absolute",
-            top: "-9999px",
-            left: "-9999px",
+            position: "fixed",
+            top: "0",
+            left: "0",
+            zIndex: "-1",
+            opacity: "0",
+            pointerEvents: "none",
             background: "#fff",
             color: "#000",
             padding: "20px",
+            width: "500px",
           }}
         >
           <h2>🧾 Payment Receipt</h2>
