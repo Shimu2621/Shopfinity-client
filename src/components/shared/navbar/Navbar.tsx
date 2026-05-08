@@ -72,6 +72,10 @@ export default function Navbar() {
     ? 0
     : (wishlistData?.data?.length ?? 0);
 
+  const showCartBadge = isAuthenticated && cartItems !== undefined;
+
+  const showWishlistBadge = isAuthenticated && wishlistData !== undefined;
+
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Categories", href: "/categories" },
@@ -172,7 +176,7 @@ export default function Navbar() {
               >
                 <Heart className="h-4 w-4" />
 
-                {wishlistCount > 0 && (
+                {showWishlistBadge && (
                   <span className="absolute -top-4 -right-4 bg-rose-700 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                     {wishlistCount}
                   </span>
@@ -189,7 +193,7 @@ export default function Navbar() {
                 onClick={() => setIsCartOpen(true)}
               >
                 <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
+                {showCartBadge && (
                   <span className="absolute -top-2 -right-2 bg-rose-700 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                     {cartCount}
                   </span>
