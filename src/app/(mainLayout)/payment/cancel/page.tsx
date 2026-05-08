@@ -39,7 +39,7 @@ export default function PaymentCancelPage() {
             className="flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition"
           >
             <ArrowLeft size={16} />
-            Continue Shopping
+            Continue Shopping!
           </Link>
         </div>
       </div>
