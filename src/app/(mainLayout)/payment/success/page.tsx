@@ -168,7 +168,8 @@ export default function PaymentSuccessPage() {
             </div>
 
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-gray-400">Date:</span>
+              <span style={{ color: "#555" }}>Date:</span>
+
               <span>
                 {payment?.createdAt
                   ? new Date(payment.createdAt).toLocaleString()
