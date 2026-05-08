@@ -53,7 +53,6 @@ export default function PaymentSuccessPage() {
 
     const element = receiptRef.current.cloneNode(true) as HTMLElement;
 
-    // ✅ Force safe styles (avoid oklch issue)
     element.style.background = "#ffffff";
     element.style.color = "#000000";
     element.style.padding = "20px";
@@ -61,25 +60,31 @@ export default function PaymentSuccessPage() {
     document.body.appendChild(element);
 
     try {
-      const dataUrl = await toPng(element); // ✅ correct usage
+      const dataUrl = await toPng(element);
 
       const pdf = new jsPDF("p", "mm", "a4");
 
       const img = new Image();
+
       img.src = dataUrl;
 
-      img.onload = () => {
-        const imgWidth = 190;
-        const imgHeight = (img.height * imgWidth) / img.width;
+      await new Promise<void>((resolve) => {
+        img.onload = () => {
+          const imgWidth = 190;
+          const imgHeight = (img.height * imgWidth) / img.width;
 
-        pdf.addImage(img, "PNG", 10, 10, imgWidth, imgHeight);
-        pdf.save(`receipt-${payment._id}.pdf`);
-      };
+          pdf.addImage(img, "PNG", 10, 10, imgWidth, imgHeight);
+
+          pdf.save(`receipt-${payment._id}.pdf`);
+
+          resolve();
+        };
+      });
     } catch (error) {
       console.error("Download error:", error);
+    } finally {
+      document.body.removeChild(element);
     }
-
-    document.body.removeChild(element);
   };
 
   if (isLoading) {
