@@ -60,7 +60,11 @@ export default function PaymentSuccessPage() {
     document.body.appendChild(element);
 
     try {
-      const dataUrl = await toPng(element);
+      const dataUrl = await toPng(element, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+      });
 
       const pdf = new jsPDF("p", "mm", "a4");
 
