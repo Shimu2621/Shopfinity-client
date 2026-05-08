@@ -178,12 +178,24 @@ export default function PaymentSuccessPage() {
             </div>
           </div>
 
-          <div className="border-t pt-4 border-gray-200 dark:border-gray-700">
-            <div className="flex justify-between text-xl font-bold">
+          <div
+            style={{
+              borderTop: "1px solid #ddd",
+              paddingTop: "16px",
+              marginTop: "16px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "20px",
+                fontWeight: "bold",
+              }}
+            >
               <span>Total Amount</span>
-              <span className="text-green-600 dark:text-green-400">
-                ${payment.amount}
-              </span>
+
+              <span style={{ color: "green" }}>${payment.amount}</span>
             </div>
           </div>
         </div>
