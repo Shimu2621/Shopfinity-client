@@ -131,6 +131,7 @@ export default function PaymentSuccessPage() {
         {/* Receipt */}
         <div
           ref={receiptRef}
+          className="text-gray-500 dark:text-gray-400"
           style={{
             position: "fixed",
             top: "0",
