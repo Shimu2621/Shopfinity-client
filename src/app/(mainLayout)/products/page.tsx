@@ -122,7 +122,7 @@ export default function ProductsPage() {
       <div className="container mx-auto px-4 flex flex-col items-center">
         {/* Section Heading */}
         <ShinyButton className="relative inline-block px-6 py-3 rounded-full text-lg font-bold mb-4 bg-badge text-black overflow-hidden">
-          🛒 All Featured Products:
+          🛒 All Featured Products
         </ShinyButton>
 
         <h2 className="text-4xl lg:text-5xl text-center font-bold text-forground mb-6">
