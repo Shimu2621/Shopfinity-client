@@ -133,7 +133,7 @@ export default function ProductsPage() {
 
         <p className="text-center text-muted-foreground max-w-2xl mb-8">
           Explore our full range of products, including the latest arrivals and
-          top-rated items. Find everything you need in one place
+          top-rated items. Find everything you need in one places
         </p>
 
         {/* Product Grid */}
