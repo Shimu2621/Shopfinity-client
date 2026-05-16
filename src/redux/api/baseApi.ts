@@ -106,6 +106,7 @@ export const {
   useGetAllPaymentsQuery,
   useGetPaymentByIdQuery,
   useCreatePaymentMutation,
+  useUpdatePaymentMutation,
   useCreateStripeSessionMutation,
   usePaymentSuccessMutation,
   usePaymentCancelMutation,
