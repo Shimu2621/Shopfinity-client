@@ -28,42 +28,55 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
     {
       title: "Total Payments",
       value: total,
-      icon: <CreditCard className="text-blue-600" />,
-      bg: "from-blue-500/20 to-blue-100",
+      icon: <CreditCard className="text-blue-500 dark:text-blue-400" />,
+      bg: "from-blue-500/10 to-blue-100 dark:from-blue-900/40 dark:to-blue-950",
     },
     {
       title: "Completed",
       value: completed,
-      icon: <CheckCircle className="text-green-600" />,
-      bg: "from-green-500/20 to-green-100",
+      icon: <CheckCircle className="text-green-500 dark:text-green-400" />,
+      bg: "from-green-500/10 to-green-100 dark:from-green-900/40 dark:to-green-950",
     },
     {
       title: "Pending",
       value: pending,
-      icon: <Clock className="text-yellow-600" />,
-      bg: "from-yellow-500/20 to-yellow-100",
+      icon: <Clock className="text-yellow-500 dark:text-yellow-400" />,
+      bg: "from-yellow-500/10 to-yellow-100 dark:from-yellow-900/40 dark:to-yellow-950",
     },
     {
       title: "Total Amount",
       value: totalAmount,
       isMoney: true,
-      icon: <DollarSign className="text-purple-600" />,
-      bg: "from-purple-500/20 to-purple-100",
+      icon: <DollarSign className="text-purple-500 dark:text-purple-400" />,
+      bg: "from-purple-500/10 to-purple-100 dark:from-purple-900/40 dark:to-purple-950",
     },
   ];
 
   return (
-    <div className="grid md:grid-cols-4 gap-6">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       {cards.map((card, i) => (
-        <motion.div key={i} whileHover={{ scale: 1.05 }}>
+        <motion.div
+          key={i}
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.2 }}
+        >
           <Card
-            className={`bg-gradient-to-br ${card.bg} backdrop-blur-xl border border-white/20 shadow-xl dark:border-gray-600`}
+            className={`
+              bg-gradient-to-br ${card.bg}
+              border border-gray-200 dark:border-gray-800
+              shadow-md hover:shadow-xl
+              transition-all duration-300
+              backdrop-blur-xl
+              dark:bg-black
+            `}
           >
-            <CardContent className="p-6 flex justify-between items-center">
+            <CardContent className="flex items-center justify-between p-6">
               <div>
-                <p className="text-sm text-muted-foreground">{card.title}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  {card.title}
+                </p>
 
-                <h2 className="text-3xl font-bold">
+                <h2 className="mt-2 text-3xl font-bold text-black dark:text-white">
                   {card.isMoney ? (
                     <>
                       $
@@ -79,7 +92,9 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
                 </h2>
               </div>
 
-              <div className="text-3xl">{card.icon}</div>
+              <div className="rounded-2xl bg-white/60 p-4 dark:bg-white/10">
+                <div className="text-3xl">{card.icon}</div>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
