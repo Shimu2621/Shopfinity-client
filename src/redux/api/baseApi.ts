@@ -58,6 +58,19 @@ export const baseApi = createApi({
       },
     ),
 
+    // ✅ Update Payment Status
+    updatePayment: builder.mutation<
+      { success: boolean; data: IPayment },
+      { id: string; paymentStatus: string }
+    >({
+      query: ({ id, paymentStatus }) => ({
+        url: `/payment/${id}`,
+        method: "PATCH",
+        body: { paymentStatus },
+      }),
+      invalidatesTags: ["PAYMENT"],
+    }),
+
     // Stripe session
     createStripeSession: builder.mutation<
       { url: string },
