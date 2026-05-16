@@ -6,37 +6,65 @@ import {
 } from "@/components/ui/dialog";
 
 import { useUpdatePaymentMutation } from "@/redux/api/baseApi";
+import { motion } from "framer-motion";
 
 const statuses = ["pending", "paid", "cancelled", "refund"];
 
 const PaymentStatusModal = ({ payment, onClose }: any) => {
-  const [updatePayment] = useUpdatePaymentMutation();
+  const [updatePayment, { isLoading }] = useUpdatePaymentMutation();
 
   const handleUpdate = async (status: string) => {
-    await updatePayment({
-      id: payment._id,
-      paymentStatus: status,
-    });
+    try {
+      await updatePayment({
+        id: payment._id,
+        paymentStatus: status,
+      }).unwrap();
 
-    onClose();
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent
+        className="
+          border border-gray-200 dark:border-gray-800
+          bg-white dark:bg-black
+          text-black dark:text-white
+          shadow-2xl
+        "
+      >
         <DialogHeader>
-          <DialogTitle>Update Payment Status</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">
+            Update Payment Status
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="grid gap-3">
+        <div className="grid gap-4 mt-4">
           {statuses.map((status) => (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               key={status}
+              disabled={isLoading}
               onClick={() => handleUpdate(status)}
-              className="p-2 rounded bg-gray-100 hover:bg-blue-500 hover:text-white"
+              className="
+                rounded-xl
+                border border-gray-200 dark:border-gray-700
+                bg-gray-100 dark:bg-zinc-900
+                px-4 py-3
+                font-medium capitalize
+                text-black dark:text-white
+                transition-all duration-300
+                hover:bg-blue-500
+                hover:text-white
+                dark:hover:bg-blue-600
+              "
             >
               {status}
-            </button>
+            </motion.button>
           ))}
         </div>
       </DialogContent>
