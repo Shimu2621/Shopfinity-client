@@ -7,10 +7,16 @@ import {
 
 import { useUpdatePaymentMutation } from "@/redux/api/baseApi";
 import { motion } from "framer-motion";
+import { IPayment } from "@/types/payment/payment";
+
+interface PaymentStatusModalProps {
+  payment: IPayment;
+  onClose: () => void;
+}
 
 const statuses = ["pending", "paid", "cancelled", "refund"];
 
-const PaymentStatusModal = ({ payment, onClose }: any) => {
+const PaymentStatusModal = ({ payment, onClose }: PaymentStatusModalProps) => {
   const [updatePayment, { isLoading }] = useUpdatePaymentMutation();
 
   const handleUpdate = async (status: string) => {
