@@ -117,7 +117,7 @@ export default function FeaturedProducts() {
         </h2>
 
         <p className="text-center text-muted-foreground max-w-2xl mb-8">
-          Explore our most popular and trending products, carefully curated to
+          Explore our most popular and trending product, carefully curated to
           give you the best shopping experiences.
         </p>
 
