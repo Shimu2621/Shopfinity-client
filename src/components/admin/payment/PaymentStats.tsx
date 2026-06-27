@@ -63,7 +63,7 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
           <Card
             className={`
               bg-gradient-to-br ${card.bg}
-              border border-gray-200 dark:border-gray-800
+              border border-gray-100 dark:border-gray-800
               shadow-md hover:shadow-xl
               transition-all duration-300
               backdrop-blur-xl
