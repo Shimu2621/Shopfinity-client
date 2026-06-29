@@ -72,7 +72,7 @@ const PaymentStats = ({ payments }: PaymentStatsProps) => {
           >
             <CardContent className="flex items-center justify-between p-6">
               <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="text-md font-medium text-gray-600 dark:text-gray-400">
                   {card.title}
                 </p>
 
