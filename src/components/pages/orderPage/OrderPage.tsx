@@ -66,7 +66,7 @@ export default function OrderPage() {
   // const handlePayNow = async (orderId: string) => {
   //   try {
   //     const res = await fetch(
-  //       "http://localhost:5000/api/payment/create-stripe-session",
+  //       "https://shopfinity-server.onrender.com/api/payment/create-stripe-session",
   //       {
   //         method: "POST",
   //         headers: { "Content-Type": "application/json" },
