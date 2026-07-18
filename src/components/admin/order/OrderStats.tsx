@@ -5,6 +5,7 @@ import CountUp from "react-countup";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingCart, Clock, CheckCircle, DollarSign } from "lucide-react";
 import { IOrder } from "@/types/order/order";
+import type { ReactNode } from "react";
 
 interface Props {
   orders: IOrder[];
@@ -15,7 +16,7 @@ type ColorKey = "blue" | "yellow" | "green" | "purple";
 type CardItem = {
   title: string;
   value: number;
-  icon: JSX.Element;
+  icon: ReactNode;
   color: ColorKey;
   isMoney?: boolean;
 };
