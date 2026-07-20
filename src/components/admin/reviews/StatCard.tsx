@@ -10,7 +10,7 @@ export default function StatCard({
   title: string;
   value: string | number;
   icon: string;
-  variant: "blue" | "yellow" | "green" | "purple";
+  variant: "blue" | "yellow" | "green" | "purple" | "red";
 }) {
   const variants = {
     blue: "from-blue-500/20 to-indigo-500/20 border-blue-300/30",
