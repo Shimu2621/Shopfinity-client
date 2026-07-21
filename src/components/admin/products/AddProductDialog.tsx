@@ -61,7 +61,7 @@ const AddProductDialog = ({ open, onOpenChange }: Props) => {
 
       await createProduct(payload).unwrap();
 
-      toast.success("Product created successfully");
+      toast.success("Product created successfully!");
       onOpenChange(false);
     } catch (error) {
       console.error(error);
