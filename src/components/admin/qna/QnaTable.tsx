@@ -30,7 +30,7 @@ export default function QnaTable({ questions }: Props) {
       <CardHeader className="border-b bg-muted/50 dark:bg-black">
         <CardTitle className="flex items-center space-x-2 pt-4">
           <MessageSquare className="h-5 w-5 text-rose-700" />
-          <span className="">Customer Questions & Answers!</span>
+          <span className="">Customer Questions & Answers</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
