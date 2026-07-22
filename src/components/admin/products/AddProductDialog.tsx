@@ -65,7 +65,7 @@ const AddProductDialog = ({ open, onOpenChange }: Props) => {
       onOpenChange(false);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to create product");
+      toast.error("Failed to create product!");
     }
   };
 
