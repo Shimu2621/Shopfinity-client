@@ -145,7 +145,7 @@ export default function NotFound() {
 
         {/* Main Text */}
         <motion.div variants={itemVariants} className="mb-4">
-          {/* Updated text colors for rose and blue theme */}
+       
           <h2 className="text-3xl sm:text-4xl font-bold text-rose-900 mb-2">
             Oops! Page Not Found
           </h2>
