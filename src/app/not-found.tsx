@@ -86,7 +86,7 @@ export default function NotFound() {
         }}
         transition={{
           duration: 15,
-          
+          repeat: Number.POSITIVE_INFINITY,
           ease: "easeInOut",
         }}
       />
