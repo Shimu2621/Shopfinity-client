@@ -94,7 +94,7 @@ export default function PaymentSuccessPage() {
   if (isLoading) {
     return (
       <div className="text-center mt-20 text-gray-700 dark:text-gray-300">
-        Loading...
+        
       </div>
     );
   }
