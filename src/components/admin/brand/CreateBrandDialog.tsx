@@ -31,7 +31,7 @@ export default function CreateBrandDialog() {
       toast.success("Brand Created!");
       setOpen(false);
     } catch {
-      toast.error("Error creating brand");
+      toast.error("Error creating brand!");
     }
   };
 
